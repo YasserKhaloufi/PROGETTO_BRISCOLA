@@ -1,0 +1,81 @@
+        
+        //CREAZIONE DOCUMENT XML DA ZERO (ESEMPIO)
+        DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
+        DocumentBuilder b = f.newDocumentBuilder();
+        Document d= b.newDocument();
+       
+        Element radice = d.createElement("persone");
+        d.appendChild(radice);
+
+        Element persona = d.createElement("persona");
+        radice.appendChild(persona);
+
+        Element elementoNome = d.createElement("nome");
+        elementoNome.appendChild(d.createTextNode("MARIO"));
+        persona.appendChild(elementoNome);
+
+        Element elementoCognome = d.createElement("cognome");
+        elementoCognome.appendChild(d.createTextNode("ROSSI"));
+        persona.appendChild(elementoCognome);
+
+       
+        //SALVARE DOCUMENT XML SU STRINGA (stringfy)
+        // Creare un oggetto Transformer per la trasformazione in stringa
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        Transformer transformer = transformerFactory.newTransformer();
+        //transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        StringWriter writer = new StringWriter();
+        transformer.transform(new DOMSource(d), new StreamResult(writer));
+        String xmlString = writer.toString();
+        //System.out.println(xmlString);
+
+
+        //SALVARE DOCUMENT XML SU FILE
+        TransformerFactory tf = TransformerFactory.newInstance();
+        Transformer t = tf.newTransformer();
+
+        t.setOutputProperty(OutputKeys.INDENT, "yes");
+	//t.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes"); // se volessi omettere la dichiarazione xml
+
+        StreamResult result = new StreamResult(new File(filePath));
+        t.transform(new DOMSource(d), result);
+
+
+        //LETTURA DA FILE XML
+        //CREAZIONE DI UN DOCUMENT A PARTIRE DA UN FILE XML
+        DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
+        DocumentBuilder b = f.newDocumentBuilder();
+        Document d = b.parse(filePath); //PASSI IL FILE DA CUI VUOI LEGGERE A DOCUMENT
+
+        //ESEMPIO DI PARSING DOCUMENT XML
+        List<Cassiere> ls = new ArrayList<Cassiere>();
+
+        NodeList unParsedList = d.getElementsByTagName("Cassiere");
+
+        for (int i = 0; i < unParsedList.getLength(); i++) {
+            Element unParsedCassiere = (Element) unParsedList.item(i);
+
+            String lettera = unParsedCassiere.getElementsByTagName("lettera").item(0).getTextContent();
+
+            /*
+             * Effettuare il parse dell'ordine non serve quando
+             * ho bisogno semplicemente di estrarre la lista dei cassieri dall'apposito file
+             * (in quel caso infatti i cassieri non hanno ordini)
+             */
+
+            Cassiere c = new Cassiere(lettera);
+
+            ls.add(c);
+        }
+        return ls;
+
+        //CREAZIONE DI UN DOCUMENT XML A PARTIRE DA UNA STRINGA XML
+        DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
+        DocumentBuilder b = f.newDocumentBuilder();
+
+        // Il metodo parse del dbuilder lavora solo con file o stream, quindi
+        // convertiamo la stringa prima di passarla
+        InputSource is = new InputSource(new StringReader(recieved));
+        Document d = b.parse(is);
+
+        // dopdichè puoi parsarlo/salvarlo o farne quello che vuoi come se fosse un normale document

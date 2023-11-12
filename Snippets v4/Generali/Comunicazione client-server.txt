@@ -1,0 +1,51 @@
+JAVA: 
+
+//creazione di una socket ( se non specifichiamo la porta ci viene assegnata una porta a caso ) 
+DatagramSocket socket = new DatagramSocket(12345);
+
+//ricezione
+byte[] buffer = new byte[1500];
+DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+socket.receive(packet);
+String messaggio = new String(packet.getData());
+
+//ottenere IP e Porta dal messaggio ricevuto
+InetAddress indirizzoMittente = packet.getAddress();
+int portaMittente= packet.getPort();
+
+//invio 
+String risposta = "ciao";
+byte[] buffer = risposta.getBytes();
+DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+packet.setAddress(InetAddress.getByName("127.0.0.1"));    //IP/nome del destinatario
+packet.setPort(12345);      //porta del destinatario
+socket.send(packet);
+
+
+
+C#
+
+//creazione oggetto UdpClient ed invio del messaggio
+
+UdpClient client = new UdpClient();
+
+byte[] data = Encoding.ASCII.GetBytes("CIAO SERVER");
+
+client.Send(data, data.Length, "localhost", 12345);
+
+
+
+
+
+//Ricezione di un pacchetto dalla stessa porta associata durante UdpClient client = new UdpClient();
+
+IPEndPoint riceveEP = new IPEndPoint(IPAddress.Any, 0);
+
+//dentro riceveEP  troverete ( dopo la Receive ) l'indirizzo e la porta del mittente ( server ) 
+
+byte[] dataReceived = client.Receive(ref riceveEP);
+
+String risposta=Encoding.ASCII.GetString(dataReceived);
+
+Console.WriteLine(risposta);
+

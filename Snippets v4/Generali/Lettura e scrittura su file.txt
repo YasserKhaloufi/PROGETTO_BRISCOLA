@@ -1,0 +1,27 @@
+Controllare se un file esiste 
+
+   File file = new File(path);
+        if (file.exists())
+            System.out.println("Il file " + path + " esiste");
+
+Scrivere su un file ( il file aperto, viene creato se non esiste o viene SOVRASCRITTO se esiste ) 
+
+        File file = new File(path);
+        FileWriter fw = new FileWriter(file);
+        fw.write("Questo è il nostro primo file");
+        fw.flush();      //svuota il buffer di scrittura, forza la scrittura sul disco 
+        fw.close();     //chiude il file, occorre riaprirlo se si vorrà fare un altra scrittura
+
+se non vogliamo perdere il contenuto occorre creare l'oggetto FileWriter passando un valore booleano "true" nel costruttore, definendo l'apertura in append:
+
+        FileWriter fw = new FileWriter(file,true);
+
+Leggere da file:
+   
+        FileReader fr = new FileReader(path);
+        BufferedReader reader = new BufferedReader(fr);
+        String line;
+        while((line = reader.readLine()) != null)
+        {
+              System.out.println(line);
+        }
