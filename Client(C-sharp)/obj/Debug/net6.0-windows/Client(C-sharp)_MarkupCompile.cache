@@ -1,5 +1,5 @@
 ﻿Client(C-sharp)
-1.0.0.0
+
 
 winexe
 C#
@@ -12,9 +12,9 @@ TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 D:\documenti\scuola\5INF\tecnologia\PROGETTO_BRISCOLA\PROGETTO_BRISCOLA\Client(C-sharp)\App.xaml
 11407045341
 
-5-1525903544
+3-1233169557
 194-164764702
 MainWindow.xaml;
 
-True
+False
 

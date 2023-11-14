@@ -24,5 +24,13 @@ namespace Client_C_sharp_
         {
             InitializeComponent();
         }
+
+        private void btnStart_Click(object sender, RoutedEventArgs e)
+        {
+            if(txtNome.Text != "")
+            {
+                GridStart.Visibility = Visibility.Collapsed;
+            }
+        }
     }
 }

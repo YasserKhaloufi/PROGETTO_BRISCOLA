@@ -7,6 +7,18 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Grid Margin="10,10,506,155" x:Name="GridStart">
+            <Rectangle HorizontalAlignment="Center" Height="262" Stroke="White" VerticalAlignment="Center" Width="281" Fill="#FFA7A7A7"/>
+            <TextBox HorizontalAlignment="Center" Height="26" Margin="0,121,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="191" x:Name="txtNome" FontSize="15" FontWeight="Normal">
+                <TextBox.Background>
+                    <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.ActiveBorderColorKey}}"/>
+                </TextBox.Background>
+            </TextBox>
+            <Label Content="Nome Utente:" HorizontalAlignment="Left" Height="34" Margin="50,82,0,0" VerticalAlignment="Top" Width="104" FontSize="14" FontWeight="Bold"/>
+            <Label Content="BRISCOLA" HorizontalAlignment="Center" Height="48" Margin="0,23,0,0" VerticalAlignment="Top" Width="181" FontSize="30" FontWeight="Bold" FontFamily="Gill Sans MT" FontStyle="Normal"/>
+            <Button Content="Start Game" HorizontalAlignment="Center" Height="39" Margin="0,204,0,0" VerticalAlignment="Top" Width="181" FontSize="15" FontWeight="Bold" Background="#FFB0ADAD" x:Name="btnStart" Click="btnStart_Click"/>
+
+        </Grid>
 
     </Grid>
 </Window>
