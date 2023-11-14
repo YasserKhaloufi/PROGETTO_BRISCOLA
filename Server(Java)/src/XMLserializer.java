@@ -101,12 +101,12 @@ public class XMLserializer {
     }
 
     // Nel caso servisse buttare in un file direttamente un oggetto serializzato in append
-    public static void saveOggetto(Carta o, String filePath)
+    public static void saveOggetto(Carta c, String filePath)
             throws ParserConfigurationException, IOException, TransformerException {
 
         File file = new File(filePath);
         FileWriter fw = new FileWriter(file, true);
-        Document d = o.serialize();
+        Document d = c.serialize();
         fw.write(stringfy(d));
         fw.flush(); // svuota il buffer di scrittura, forza la scrittura sul disco
         fw.close(); // chiude il file, occorre riaprirlo se si vorrà fare un altra scrittura
