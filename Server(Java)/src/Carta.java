@@ -17,7 +17,7 @@ public class Carta{
     //costruttore parser XML
     public Carta(Element e){
         this.seed = XMLserializer.parseTagName(e, "seed");
-        this.number = XMLserializer.parseTagName(e, "number");
+        this.number = XMLserializer.parseTagName(e, "number").charAt(0);
         this.value = Integer.parseInt(XMLserializer.parseTagName(e, "value"));
         this.img_path = XMLserializer.parseTagName(e, "img_path");
     }
