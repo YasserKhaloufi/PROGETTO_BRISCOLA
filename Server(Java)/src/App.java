@@ -2,6 +2,9 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+
 public class App {
 
     // DEFINISCI QUI LE EVENTUALI LISTE DA MANTENERE IN RAM 
@@ -9,8 +12,27 @@ public class App {
 
     // Settings generali
     static int porta = 777;
-    public static void main(String[] args) throws IOException
+    public static void main(String[] args) throws IOException, TransformerException, ParserConfigurationException
     {
+        // Codice per generare il mazzo
+        /*String[] semi = {"cuori", "quadri", "fiori", "picche"}; // Semi italiani o francesi
+        int[] numeri = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}; // 1=asso, 8=fante, 9=cavallo, 10=re
+        int[] valori = {11, 0, 10, 0, 0, 0, 0, 2, 3, 4}; // Valori di presa
+
+        List<Carta> mazzo = new ArrayList<>();
+
+        for (String seme : semi) {
+            for (int i = 0; i < numeri.length; i++) {
+                int numero = numeri[i];
+                int valore = valori[i];
+                String img_path = "/path/to/images/" + seme + "/" + numero + ".jpg";
+
+                Carta carta = new Carta(seme, numero, valore, img_path);
+                mazzo.add(carta);
+            }
+        }
+        XMLserializer.saveLista("./Server(Java)/src/Mazzo.xml", mazzo);*/
+
         // Definizione buffer e packet
         byte[] buffer = new byte[1500];
         DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
