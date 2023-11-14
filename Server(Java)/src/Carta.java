@@ -7,23 +7,23 @@ import org.w3c.dom.Element;
 
 public class Carta{
 
-    private String seed;
-    private char number;
-    private int value;
+    private String seme;
+    private char numero;
+    private int valore;
     private String img_path;
     
-    public Carta(String seed, char number, int value, String img_path) {
-        this.seed = seed;
-        this.number = number;
-        this.value = value;
+    public Carta(String seme, char numero, int valore, String img_path) {
+        this.seme = seme;
+        this.numero = numero;
+        this.valore = valore;
         this.img_path = img_path;
     }
     
     //costruttore parser XML
     public Carta(Element e){
-        this.seed = XMLserializer.parseTagName(e, "seed");
-        this.number =  XMLserializer.parseTagName(e, "number").charAt(0);
-        this.value = Integer.parseInt(XMLserializer.parseTagName(e, "value"));
+        this.seme = XMLserializer.parseTagName(e, "seed");
+        this.numero =  XMLserializer.parseTagName(e, "number").charAt(0);
+        this.valore = Integer.parseInt(XMLserializer.parseTagName(e, "value"));
         this.img_path = XMLserializer.parseTagName(e, "img_path");
     }
 
@@ -37,11 +37,11 @@ public class Carta{
 
         Element elementoCarta = d.createElement("Carta");
         
-        Element elementoSeed = d.createElement("seed"); elementoSeed.appendChild(d.createTextNode(seed));
+        Element elementoSeed = d.createElement("seed"); elementoSeed.appendChild(d.createTextNode(seme));
         
-        Element elementoNumber = d.createElement("number"); elementoNumber.appendChild(d.createTextNode(String.valueOf(number)));
+        Element elementoNumber = d.createElement("number"); elementoNumber.appendChild(d.createTextNode(String.valueOf(numero)));
 
-        Element elementoValue = d.createElement("value"); elementoValue.appendChild(d.createTextNode(String.valueOf(value)));
+        Element elementoValue = d.createElement("value"); elementoValue.appendChild(d.createTextNode(String.valueOf(valore)));
         
         Element elementoPath = d.createElement("img_path"); elementoPath.appendChild(d.createTextNode(img_path));
 
@@ -70,16 +70,16 @@ public class Carta{
     }
 
 
-    public String getSeed() {
-        return seed;
+    public String getSeme() {
+        return seme;
     }
 
-    public int getNumber() {
-        return number;
+    public int getNumero() {
+        return numero;
     }
 
-    public int getValue() {
-        return value;
+    public int getValore() {
+        return valore;
     }
 
     public String getImg_path() {

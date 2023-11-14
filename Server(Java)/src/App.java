@@ -17,7 +17,7 @@ public class App {
     public static void main(String[] args) throws IOException, TransformerException, ParserConfigurationException
     {
         // Codice per generare il mazzo
-        /*String[] semi = {"cuori", "quadri", "fiori", "picche"}; // Semi italiani o francesi
+        /*String[] semi = {"bastoni", "coppe", "denari", "spade"}; // Semi napoletani
         char[] numeri = {'A', '2', '3', '4', '5', '6', '7', 'F', 'C', 'R'}; // 1=asso, 8=fante, 9=cavallo, 10=re
         int[] valori = {11, 0, 10, 0, 0, 0, 0, 2, 3, 4}; // Valori di presa
 

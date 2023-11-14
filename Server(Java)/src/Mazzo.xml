@@ -1,243 +1,243 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Carte>
     <Carta>
-        <seed>cuori</seed>
+        <seed>bastoni</seed>
         <number>A</number>
         <value>11</value>
-        <img_path>A-cuori.jpg</img_path>
+        <img_path>A-bastoni.jpg</img_path>
     </Carta>
     <Carta>
-        <seed>cuori</seed>
+        <seed>bastoni</seed>
         <number>2</number>
         <value>0</value>
-        <img_path>2-cuori.jpg</img_path>
+        <img_path>2-bastoni.jpg</img_path>
     </Carta>
     <Carta>
-        <seed>cuori</seed>
+        <seed>bastoni</seed>
         <number>3</number>
         <value>10</value>
-        <img_path>3-cuori.jpg</img_path>
+        <img_path>3-bastoni.jpg</img_path>
     </Carta>
     <Carta>
-        <seed>cuori</seed>
+        <seed>bastoni</seed>
         <number>4</number>
         <value>0</value>
-        <img_path>4-cuori.jpg</img_path>
+        <img_path>4-bastoni.jpg</img_path>
     </Carta>
     <Carta>
-        <seed>cuori</seed>
+        <seed>bastoni</seed>
         <number>5</number>
         <value>0</value>
-        <img_path>5-cuori.jpg</img_path>
+        <img_path>5-bastoni.jpg</img_path>
     </Carta>
     <Carta>
-        <seed>cuori</seed>
+        <seed>bastoni</seed>
         <number>6</number>
         <value>0</value>
-        <img_path>6-cuori.jpg</img_path>
+        <img_path>6-bastoni.jpg</img_path>
     </Carta>
     <Carta>
-        <seed>cuori</seed>
+        <seed>bastoni</seed>
         <number>7</number>
         <value>0</value>
-        <img_path>7-cuori.jpg</img_path>
+        <img_path>7-bastoni.jpg</img_path>
     </Carta>
     <Carta>
-        <seed>cuori</seed>
+        <seed>bastoni</seed>
         <number>F</number>
         <value>2</value>
-        <img_path>F-cuori.jpg</img_path>
+        <img_path>F-bastoni.jpg</img_path>
     </Carta>
     <Carta>
-        <seed>cuori</seed>
+        <seed>bastoni</seed>
         <number>C</number>
         <value>3</value>
-        <img_path>C-cuori.jpg</img_path>
+        <img_path>C-bastoni.jpg</img_path>
     </Carta>
     <Carta>
-        <seed>cuori</seed>
+        <seed>bastoni</seed>
         <number>R</number>
         <value>4</value>
-        <img_path>R-cuori.jpg</img_path>
+        <img_path>R-bastoni.jpg</img_path>
     </Carta>
     <Carta>
-        <seed>quadri</seed>
+        <seed>coppe</seed>
         <number>A</number>
         <value>11</value>
-        <img_path>A-quadri.jpg</img_path>
+        <img_path>A-coppe.jpg</img_path>
     </Carta>
     <Carta>
-        <seed>quadri</seed>
+        <seed>coppe</seed>
         <number>2</number>
         <value>0</value>
-        <img_path>2-quadri.jpg</img_path>
+        <img_path>2-coppe.jpg</img_path>
     </Carta>
     <Carta>
-        <seed>quadri</seed>
+        <seed>coppe</seed>
         <number>3</number>
         <value>10</value>
-        <img_path>3-quadri.jpg</img_path>
+        <img_path>3-coppe.jpg</img_path>
     </Carta>
     <Carta>
-        <seed>quadri</seed>
+        <seed>coppe</seed>
         <number>4</number>
         <value>0</value>
-        <img_path>4-quadri.jpg</img_path>
+        <img_path>4-coppe.jpg</img_path>
     </Carta>
     <Carta>
-        <seed>quadri</seed>
+        <seed>coppe</seed>
         <number>5</number>
         <value>0</value>
-        <img_path>5-quadri.jpg</img_path>
+        <img_path>5-coppe.jpg</img_path>
     </Carta>
     <Carta>
-        <seed>quadri</seed>
+        <seed>coppe</seed>
         <number>6</number>
         <value>0</value>
-        <img_path>6-quadri.jpg</img_path>
+        <img_path>6-coppe.jpg</img_path>
     </Carta>
     <Carta>
-        <seed>quadri</seed>
+        <seed>coppe</seed>
         <number>7</number>
         <value>0</value>
-        <img_path>7-quadri.jpg</img_path>
+        <img_path>7-coppe.jpg</img_path>
     </Carta>
     <Carta>
-        <seed>quadri</seed>
+        <seed>coppe</seed>
         <number>F</number>
         <value>2</value>
-        <img_path>F-quadri.jpg</img_path>
+        <img_path>F-coppe.jpg</img_path>
     </Carta>
     <Carta>
-        <seed>quadri</seed>
+        <seed>coppe</seed>
         <number>C</number>
         <value>3</value>
-        <img_path>C-quadri.jpg</img_path>
+        <img_path>C-coppe.jpg</img_path>
     </Carta>
     <Carta>
-        <seed>quadri</seed>
+        <seed>coppe</seed>
         <number>R</number>
         <value>4</value>
-        <img_path>R-quadri.jpg</img_path>
+        <img_path>R-coppe.jpg</img_path>
     </Carta>
     <Carta>
-        <seed>fiori</seed>
+        <seed>denari</seed>
         <number>A</number>
         <value>11</value>
-        <img_path>A-fiori.jpg</img_path>
+        <img_path>A-denari.jpg</img_path>
     </Carta>
     <Carta>
-        <seed>fiori</seed>
+        <seed>denari</seed>
         <number>2</number>
         <value>0</value>
-        <img_path>2-fiori.jpg</img_path>
+        <img_path>2-denari.jpg</img_path>
     </Carta>
     <Carta>
-        <seed>fiori</seed>
+        <seed>denari</seed>
         <number>3</number>
         <value>10</value>
-        <img_path>3-fiori.jpg</img_path>
+        <img_path>3-denari.jpg</img_path>
     </Carta>
     <Carta>
-        <seed>fiori</seed>
+        <seed>denari</seed>
         <number>4</number>
         <value>0</value>
-        <img_path>4-fiori.jpg</img_path>
+        <img_path>4-denari.jpg</img_path>
     </Carta>
     <Carta>
-        <seed>fiori</seed>
+        <seed>denari</seed>
         <number>5</number>
         <value>0</value>
-        <img_path>5-fiori.jpg</img_path>
+        <img_path>5-denari.jpg</img_path>
     </Carta>
     <Carta>
-        <seed>fiori</seed>
+        <seed>denari</seed>
         <number>6</number>
         <value>0</value>
-        <img_path>6-fiori.jpg</img_path>
+        <img_path>6-denari.jpg</img_path>
     </Carta>
     <Carta>
-        <seed>fiori</seed>
+        <seed>denari</seed>
         <number>7</number>
         <value>0</value>
-        <img_path>7-fiori.jpg</img_path>
+        <img_path>7-denari.jpg</img_path>
     </Carta>
     <Carta>
-        <seed>fiori</seed>
+        <seed>denari</seed>
         <number>F</number>
         <value>2</value>
-        <img_path>F-fiori.jpg</img_path>
+        <img_path>F-denari.jpg</img_path>
     </Carta>
     <Carta>
-        <seed>fiori</seed>
+        <seed>denari</seed>
         <number>C</number>
         <value>3</value>
-        <img_path>C-fiori.jpg</img_path>
+        <img_path>C-denari.jpg</img_path>
     </Carta>
     <Carta>
-        <seed>fiori</seed>
+        <seed>denari</seed>
         <number>R</number>
         <value>4</value>
-        <img_path>R-fiori.jpg</img_path>
+        <img_path>R-denari.jpg</img_path>
     </Carta>
     <Carta>
-        <seed>picche</seed>
+        <seed>spade</seed>
         <number>A</number>
         <value>11</value>
-        <img_path>A-picche.jpg</img_path>
+        <img_path>A-spade.jpg</img_path>
     </Carta>
     <Carta>
-        <seed>picche</seed>
+        <seed>spade</seed>
         <number>2</number>
         <value>0</value>
-        <img_path>2-picche.jpg</img_path>
+        <img_path>2-spade.jpg</img_path>
     </Carta>
     <Carta>
-        <seed>picche</seed>
+        <seed>spade</seed>
         <number>3</number>
         <value>10</value>
-        <img_path>3-picche.jpg</img_path>
+        <img_path>3-spade.jpg</img_path>
     </Carta>
     <Carta>
-        <seed>picche</seed>
+        <seed>spade</seed>
         <number>4</number>
         <value>0</value>
-        <img_path>4-picche.jpg</img_path>
+        <img_path>4-spade.jpg</img_path>
     </Carta>
     <Carta>
-        <seed>picche</seed>
+        <seed>spade</seed>
         <number>5</number>
         <value>0</value>
-        <img_path>5-picche.jpg</img_path>
+        <img_path>5-spade.jpg</img_path>
     </Carta>
     <Carta>
-        <seed>picche</seed>
+        <seed>spade</seed>
         <number>6</number>
         <value>0</value>
-        <img_path>6-picche.jpg</img_path>
+        <img_path>6-spade.jpg</img_path>
     </Carta>
     <Carta>
-        <seed>picche</seed>
+        <seed>spade</seed>
         <number>7</number>
         <value>0</value>
-        <img_path>7-picche.jpg</img_path>
+        <img_path>7-spade.jpg</img_path>
     </Carta>
     <Carta>
-        <seed>picche</seed>
+        <seed>spade</seed>
         <number>F</number>
         <value>2</value>
-        <img_path>F-picche.jpg</img_path>
+        <img_path>F-spade.jpg</img_path>
     </Carta>
     <Carta>
-        <seed>picche</seed>
+        <seed>spade</seed>
         <number>C</number>
         <value>3</value>
-        <img_path>C-picche.jpg</img_path>
+        <img_path>C-spade.jpg</img_path>
     </Carta>
     <Carta>
-        <seed>picche</seed>
+        <seed>spade</seed>
         <number>R</number>
         <value>4</value>
-        <img_path>R-picche.jpg</img_path>
+        <img_path>R-spade.jpg</img_path>
     </Carta>
 </Carte>
