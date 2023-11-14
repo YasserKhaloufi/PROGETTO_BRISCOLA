@@ -1,6 +1,8 @@
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -16,16 +18,16 @@ public class App {
     {
         // Codice per generare il mazzo
         /*String[] semi = {"cuori", "quadri", "fiori", "picche"}; // Semi italiani o francesi
-        int[] numeri = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}; // 1=asso, 8=fante, 9=cavallo, 10=re
+        char[] numeri = {'A', '2', '3', '4', '5', '6', '7', 'F', 'C', 'R'}; // 1=asso, 8=fante, 9=cavallo, 10=re
         int[] valori = {11, 0, 10, 0, 0, 0, 0, 2, 3, 4}; // Valori di presa
 
         List<Carta> mazzo = new ArrayList<>();
 
         for (String seme : semi) {
             for (int i = 0; i < numeri.length; i++) {
-                int numero = numeri[i];
+                char numero = numeri[i];
                 int valore = valori[i];
-                String img_path = "/path/to/images/" + seme + "/" + numero + ".jpg";
+                String img_path = numero + "-" + seme + ".jpg";
 
                 Carta carta = new Carta(seme, numero, valore, img_path);
                 mazzo.add(carta);
