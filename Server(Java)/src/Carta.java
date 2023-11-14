@@ -2,9 +2,9 @@ import org.w3c.dom.Element;
 
 public class Carta{
 
-    private String seed;
-    private char number;
-    private int value;
+    private String seed;    //denari,coppe,spade,bastoni
+    private char number;    //A, 2, 3,4,5,6,7,F,C,R
+    private int value;      //11,0,10,0,0,0,0,2,3,4
     private String img_path;
     
     public Carta(String seed, char number, int value, String img_path) {
@@ -37,9 +37,4 @@ public class Carta{
     public String getImg_path() {
         return img_path;
     }
-
-    
-
-
-
 }
