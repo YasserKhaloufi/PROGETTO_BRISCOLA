@@ -18,7 +18,17 @@ public class Carta{
         this.valore = valore;
         this.img_path = img_path;
     }
-    
+
+    //costruttore da stringa
+    public Carta(String s){
+        //seme;numero;valore;img_path
+        String[] stringaSplittata=s.split(s, ';');
+        this.seme=stringaSplittata[0];
+        this.numero=stringaSplittata[1].charAt(0);
+        this.valore=Integer.parseInt(stringaSplittata[2]);
+        this.img_path=stringaSplittata[3];
+    }
+
     //costruttore parser XML
     public Carta(Element e){
         this.seme = XMLserializer.parseTagName(e, "seed");
@@ -85,4 +95,13 @@ public class Carta{
     public String getImg_path() {
         return img_path;
     }
+    public String ToString(){
+        return seme+";"+numero+";"+valore+";"+img_path;
+    }
+    public Carta ToCarta(String s){
+        Carta c=new Carta(s);
+        return c;
+    }
+
+
 }
