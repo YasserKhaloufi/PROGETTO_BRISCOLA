@@ -10,9 +10,9 @@ namespace Client_C_sharp_
 {
     internal class Client
     {
-        private String _indirizzoIP;
-        private int _numPorta;
-        private TcpClient client=null;
+        private String _IPserver;
+        private int _PORTserver;
+        private TcpClient client = null;
         private TcpListener listener = null;
 
         //property
@@ -20,32 +20,33 @@ namespace Client_C_sharp_
         {
             get
             {
-                return _indirizzoIP;
+                return _IPserver;
             }
         }
         public int NumPorta
         {
             get
             {
-                return _numPorta;
+                return _PORTserver;
             }
         }
 
         public Client(string indirizzoIP, int numPorta)
         {
-            _indirizzoIP = indirizzoIP;
-            _numPorta = numPorta;
-            TcpClient client = new TcpClient(_indirizzoIP, _numPorta);
-            client.Connect(_indirizzoIP, _numPorta);
+            _IPserver = indirizzoIP;
+            _PORTserver = numPorta;
+            client = new TcpClient(_IPserver, _PORTserver);
         }
         public void Send(String messaggio)
         {
-            // Ottenere il flusso di rete dal client
-            NetworkStream stream = client.GetStream();
-            // Convertire il messaggio in un array di byte
+            // Converti il messaggio in un array di byte
             byte[] data = Encoding.ASCII.GetBytes(messaggio);
-            // Invio del messaggio al server
+            // Ottieni il flusso di rete dal client
+            NetworkStream stream = client.GetStream();
+            // Invia il messaggio al server
             stream.Write(data, 0, data.Length);
+            // Chiudi la connessione e il flusso di rete
+            stream.Close();
         }
         public String Receive()
         {
@@ -53,12 +54,13 @@ namespace Client_C_sharp_
             byte[] data = new byte[1024];
             int bytes = stream.Read(data, 0, data.Length);
             string receivedMessage = Encoding.ASCII.GetString(data, 0, bytes);
+            stream.Close();
             return receivedMessage;
         }
 
-        
 
-       
+
+
 
     }
 }

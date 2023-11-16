@@ -20,16 +20,36 @@ namespace Client_C_sharp_
     /// </summary>
     public partial class MainWindow : Window
     {
+        Client client = null;
         public MainWindow()
         {
             InitializeComponent();
+            client = new Client("127.0.0.1", 8080);
         }
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
-            if(txtNome.Text != "")
+            if (txtNome.Text != "" && txtNome.Text != "Inserisci nome:")
             {
                 GridStart.Visibility = Visibility.Collapsed;
+                String messaggio = "<username>" + txtNome.Text + "</username>";
+                client.Send(messaggio);
+            }
+        }
+
+        private void txtNome_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (txtNome.Text == "Inserisci nome:")
+            {
+                txtNome.Text = string.Empty;
+            }
+        }
+
+        private void txtNome_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtNome.Text))
+            {
+                txtNome.Text = "Inserisci nome:";
             }
         }
     }
