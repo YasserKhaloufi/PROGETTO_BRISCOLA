@@ -41,3 +41,26 @@ D:\documenti\scuola\5INF\tecnologia\BRISCOLA\PROGETTO_BRISCOLA\Client(C-sharp)\o
 D:\documenti\scuola\5INF\tecnologia\BRISCOLA\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\ref\Client(C-sharp).dll
 D:\documenti\scuola\5INF\tecnologia\BRISCOLA\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\Client(C-sharp).pdb
 D:\documenti\scuola\5INF\tecnologia\BRISCOLA\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\Client(C-sharp).genruntimeconfig.cache
+C:\Users\Yasser\Desktop\Scuola\Projects\Progettazione\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\Client(C-sharp).csproj.AssemblyReference.cache
+C:\Users\Yasser\Desktop\Scuola\Projects\Progettazione\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\Impostazioni.g.cs
+C:\Users\Yasser\Desktop\Scuola\Projects\Progettazione\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\MainWindow.g.cs
+C:\Users\Yasser\Desktop\Scuola\Projects\Progettazione\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\App.g.cs
+C:\Users\Yasser\Desktop\Scuola\Projects\Progettazione\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\Client(C-sharp)_MarkupCompile.cache
+C:\Users\Yasser\Desktop\Scuola\Projects\Progettazione\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\Client(C-sharp)_MarkupCompile.lref
+C:\Users\Yasser\Desktop\Scuola\Projects\Progettazione\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\Client(C-sharp).dll
+C:\Users\Yasser\Desktop\Scuola\Projects\Progettazione\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\Client(C-sharp).pdb
+C:\Users\Yasser\Desktop\Scuola\Projects\Progettazione\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\Client(C-sharp).exe
+C:\Users\Yasser\Desktop\Scuola\Projects\Progettazione\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\Client(C-sharp).deps.json
+C:\Users\Yasser\Desktop\Scuola\Projects\Progettazione\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\Client(C-sharp).runtimeconfig.json
+C:\Users\Yasser\Desktop\Scuola\Projects\Progettazione\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\Client(C-sharp).dll
+C:\Users\Yasser\Desktop\Scuola\Projects\Progettazione\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\Client(C-sharp).pdb
+C:\Users\Yasser\Desktop\Scuola\Projects\Progettazione\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\Impostazioni.baml
+C:\Users\Yasser\Desktop\Scuola\Projects\Progettazione\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\MainWindow.baml
+C:\Users\Yasser\Desktop\Scuola\Projects\Progettazione\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\Client(C-sharp).g.resources
+C:\Users\Yasser\Desktop\Scuola\Projects\Progettazione\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\Client(C-sharp).GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Yasser\Desktop\Scuola\Projects\Progettazione\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\Client(C-sharp).AssemblyInfoInputs.cache
+C:\Users\Yasser\Desktop\Scuola\Projects\Progettazione\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\Client(C-sharp).AssemblyInfo.cs
+C:\Users\Yasser\Desktop\Scuola\Projects\Progettazione\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\Client(C-sharp).csproj.CoreCompileInputs.cache
+C:\Users\Yasser\Desktop\Scuola\Projects\Progettazione\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\refint\Client(C-sharp).dll
+C:\Users\Yasser\Desktop\Scuola\Projects\Progettazione\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\Client(C-sharp).genruntimeconfig.cache
+C:\Users\Yasser\Desktop\Scuola\Projects\Progettazione\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\ref\Client(C-sharp).dll

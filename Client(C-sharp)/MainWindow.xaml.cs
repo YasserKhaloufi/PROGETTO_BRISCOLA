@@ -20,20 +20,23 @@ namespace Client_C_sharp_
     /// </summary>
     public partial class MainWindow : Window
     {
-        Client client = null;
+        Server srv = new Server("127.0.0.1", 777);
+        String username = "";
+
         public MainWindow()
         {
             InitializeComponent();
-            client = new Client("127.0.0.1", 8080);
+            this.Background = new SolidColorBrush(Color.FromRgb(0, 255, 0)); // RGB for green
         }
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
             if (txtNome.Text != "" && txtNome.Text != "Inserisci nome:")
             {
-                GridStart.Visibility = Visibility.Collapsed;
+                username = txtNome.Text;
                 String messaggio = "<username>" + txtNome.Text + "</username>";
-                client.Send(messaggio);
+                srv.Send(messaggio);
+                MessageBox.Show( srv.Receive());
             }
         }
 
@@ -50,6 +53,22 @@ namespace Client_C_sharp_
             if (string.IsNullOrWhiteSpace(txtNome.Text))
             {
                 txtNome.Text = "Inserisci nome:";
+            }
+        }
+        private void btnImpostazioni_Click(object sender, RoutedEventArgs e)
+        {
+            Impostazioni imp = new Impostazioni();
+
+            this.Hide(); // Nascondo la finestra principale
+
+            imp.ShowDialog(); //...
+
+            this.Show(); // La rivisualizzo
+
+            if (imp.ipAndPort != null) //Controllo nel caso chiudessi la finestra con la x
+            {
+                srv.IP = imp.ipAndPort.ElementAt(0);
+                srv.PORT = int.Parse(imp.ipAndPort.ElementAt(1));
             }
         }
     }
