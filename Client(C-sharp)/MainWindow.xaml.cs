@@ -36,7 +36,7 @@ namespace Client_C_sharp_
         {
             if (txtNome.Text != "" && txtNome.Text != "Inserisci nome:")
             {
-                String messaggio = "<Connect></Connect>\n";
+                String messaggio = "<Connect>"+txtNome.Text+"</Connect>\n";
                 srv.Send(messaggio);
 
                 // Da qui in poi dovrei aspettare di ricevere la lista di room esistenti

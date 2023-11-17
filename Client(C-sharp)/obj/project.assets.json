@@ -8,23 +8,23 @@
     "net6.0-windows7.0": []
   },
   "packageFolders": {
-    "C:\\Users\\yasse\\.nuget\\packages\\": {}
+    "C:\\Users\\ricca\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\yasse\\Desktop\\Scuola\\Pro\\A.S. 23-24\\Briscola\\PROGETTO_BRISCOLA\\Client(C-sharp)\\Client(C-sharp).csproj",
+      "projectUniqueName": "D:\\documenti\\scuola\\5INF\\tecnologia\\BRISCOLA\\PROGETTO_BRISCOLA\\Client(C-sharp)\\Client(C-sharp).csproj",
       "projectName": "Client(C-sharp)",
-      "projectPath": "C:\\Users\\yasse\\Desktop\\Scuola\\Pro\\A.S. 23-24\\Briscola\\PROGETTO_BRISCOLA\\Client(C-sharp)\\Client(C-sharp).csproj",
-      "packagesPath": "C:\\Users\\yasse\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\yasse\\Desktop\\Scuola\\Pro\\A.S. 23-24\\Briscola\\PROGETTO_BRISCOLA\\Client(C-sharp)\\obj\\",
+      "projectPath": "D:\\documenti\\scuola\\5INF\\tecnologia\\BRISCOLA\\PROGETTO_BRISCOLA\\Client(C-sharp)\\Client(C-sharp).csproj",
+      "packagesPath": "C:\\Users\\ricca\\.nuget\\packages\\",
+      "outputPath": "D:\\documenti\\scuola\\5INF\\tecnologia\\BRISCOLA\\PROGETTO_BRISCOLA\\Client(C-sharp)\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\yasse\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\ricca\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
-        "net6.0-windows"
+        "net6.0-windows7.0"
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
@@ -51,8 +51,7 @@
           "net47",
           "net471",
           "net472",
-          "net48",
-          "net481"
+          "net48"
         ],
         "assetTargetFallback": true,
         "warn": true,
@@ -64,7 +63,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }
