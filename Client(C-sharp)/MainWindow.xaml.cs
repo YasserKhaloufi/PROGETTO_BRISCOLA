@@ -21,55 +21,27 @@ namespace Client_C_sharp_
     /// </summary>
     public partial class MainWindow : Window
     {
-        //Server srv = new Server("127.0.0.1", 777);
+        // Settings
+        Server srv = new Server("127.0.0.1", 777);
+        String username = "";
 
         public MainWindow()
         {
             InitializeComponent();
-            this.Background = new SolidColorBrush(Color.FromRgb(0, 255, 0)); // RGB for green
-            txtNome.Text = "Giovanni";
+            this.Background = new SolidColorBrush(Color.FromRgb(0, 255, 0)); // Setto lo sfondo (giusto per provare)
+            txtNome.Text = "Giovanni"; // Per debug
         }
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
-            //if (txtNome.Text != "" && txtNome.Text != "Inserisci nome:")
-            //{
-            //    String messaggio = "<username>" + txtNome.Text + "</username>";
-            //    //srv.Send(messaggio);
-            //}
-
-            TcpClient client = new TcpClient("localhost", 777);
-            NetworkStream stream = client.GetStream();
-
-            string message = "Hello, Server!\n";
-            byte[] data = Encoding.ASCII.GetBytes(message);
-
-            stream.Write(data, 0, data.Length);
-            Console.WriteLine("Sent to server: " + message);
-
-            data = new byte[256];
-            string responseData = String.Empty;
-            int bytes = stream.Read(data, 0, data.Length);
-            responseData = Encoding.ASCII.GetString(data, 0, bytes);
-            MessageBox.Show("Received from server: " + responseData);
-
-            stream.Close();
-            client.Close();
-        }
-
-        private void txtNome_GotFocus(object sender, RoutedEventArgs e)
-        {
-            if (txtNome.Text == "Inserisci nome:")
+            if (txtNome.Text != "" && txtNome.Text != "Inserisci nome:")
             {
-                txtNome.Text = string.Empty;
-            }
-        }
+                String messaggio = "<Connect></Connect>\n";
+                srv.Send(messaggio);
 
-        private void txtNome_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(txtNome.Text))
-            {
-                txtNome.Text = "Inserisci nome:";
+                // Da qui in poi dovrei aspettare di ricevere la lista di room esistenti
+                MessageBox.Show(srv.Receive());
+                srv.close();
             }
         }
         private void btnImpostazioni_Click(object sender, RoutedEventArgs e)
@@ -86,6 +58,23 @@ namespace Client_C_sharp_
             {
                 //srv.IP = imp.ipAndPort.ElementAt(0);
                 //srv.PORT = int.Parse(imp.ipAndPort.ElementAt(1));
+            }
+        }
+
+        // Roba di grafica
+        private void txtNome_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (txtNome.Text == "Inserisci nome:")
+            {
+                txtNome.Text = string.Empty;
+            }
+        }
+
+        private void txtNome_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtNome.Text))
+            {
+                txtNome.Text = "Inserisci nome:";
             }
         }
     }
