@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,24 +21,40 @@ namespace Client_C_sharp_
     /// </summary>
     public partial class MainWindow : Window
     {
-        Server srv = new Server("127.0.0.1", 777);
-        String username = "";
+        //Server srv = new Server("127.0.0.1", 777);
 
         public MainWindow()
         {
             InitializeComponent();
             this.Background = new SolidColorBrush(Color.FromRgb(0, 255, 0)); // RGB for green
+            txtNome.Text = "Giovanni";
         }
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
-            if (txtNome.Text != "" && txtNome.Text != "Inserisci nome:")
-            {
-                username = txtNome.Text;
-                String messaggio = "<username>" + txtNome.Text + "</username>";
-                srv.Send(messaggio);
-                MessageBox.Show( srv.Receive());
-            }
+            //if (txtNome.Text != "" && txtNome.Text != "Inserisci nome:")
+            //{
+            //    String messaggio = "<username>" + txtNome.Text + "</username>";
+            //    //srv.Send(messaggio);
+            //}
+
+            TcpClient client = new TcpClient("localhost", 777);
+            NetworkStream stream = client.GetStream();
+
+            string message = "Hello, Server!\n";
+            byte[] data = Encoding.ASCII.GetBytes(message);
+
+            stream.Write(data, 0, data.Length);
+            Console.WriteLine("Sent to server: " + message);
+
+            data = new byte[256];
+            string responseData = String.Empty;
+            int bytes = stream.Read(data, 0, data.Length);
+            responseData = Encoding.ASCII.GetString(data, 0, bytes);
+            MessageBox.Show("Received from server: " + responseData);
+
+            stream.Close();
+            client.Close();
         }
 
         private void txtNome_GotFocus(object sender, RoutedEventArgs e)
@@ -67,8 +84,8 @@ namespace Client_C_sharp_
 
             if (imp.ipAndPort != null) //Controllo nel caso chiudessi la finestra con la x
             {
-                srv.IP = imp.ipAndPort.ElementAt(0);
-                srv.PORT = int.Parse(imp.ipAndPort.ElementAt(1));
+                //srv.IP = imp.ipAndPort.ElementAt(0);
+                //srv.PORT = int.Parse(imp.ipAndPort.ElementAt(1));
             }
         }
     }
