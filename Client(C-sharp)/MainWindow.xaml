@@ -9,7 +9,7 @@
     <Grid Margin="34,30,0,0" x:Name="GridStart" HorizontalAlignment="Left" Width="284" Height="269" VerticalAlignment="Top">
         <Rectangle HorizontalAlignment="Center" Height="262" Stroke="White" VerticalAlignment="Center" Width="281">
             <Rectangle.Fill>
-                <ImageBrush ImageSource="/sfondo1.jpg" Stretch="UniformToFill" TileMode="None"/>
+                <ImageBrush ImageSource="img/sfondo1.jpg" Stretch="UniformToFill" TileMode="None"/>
             </Rectangle.Fill>
         </Rectangle>
         <TextBox HorizontalAlignment="Center" Height="26" Margin="0,121,0,0" TextWrapping="Wrap" Text="Inserisci nome:" VerticalAlignment="Top" Width="191" x:Name="txtNome" FontSize="15" FontWeight="Normal" GotFocus="txtNome_GotFocus" LostFocus="txtNome_LostFocus"/>
