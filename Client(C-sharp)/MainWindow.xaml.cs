@@ -16,9 +16,6 @@ using System.Windows.Shapes;
 
 namespace Client_C_sharp_
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         // Settings
@@ -41,7 +38,6 @@ namespace Client_C_sharp_
 
                 // Da qui in poi dovrei aspettare di ricevere la lista di room esistenti
                 MessageBox.Show(srv.Receive());
-                srv.close();
             }
         }
         private void btnImpostazioni_Click(object sender, RoutedEventArgs e)

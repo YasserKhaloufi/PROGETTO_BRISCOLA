@@ -25,7 +25,7 @@ public class Server {
 
         List<Carta> mazzo = new ArrayList<>();
 
-        for (String seme : semi) {ò
+        for (String seme : semi) {
             for (int i = 0; i < numeri.length; i++) {
                 char numero = numeri[i];
                 int valore = valori[i];
@@ -38,53 +38,60 @@ public class Server {
         XMLserializer.saveLista("./Server(Java)/src/Mazzo.xml", mazzo);*/}
 
         // Elementi di ricezione
-        String recieved;    // Stringa ricevuta, ricavata a partire dal contenuto del buffer in ricezione
+        String ricevuto;    // Stringa ricevuta, ricavata a partire dal contenuto del buffer in ricezione
         
         // Definisci qui eventuali elementi che verranno inizializzati parsando recieved
-        String command = "";
+        String comando = "";
         // Object argomento;
 
         // Elementi di invio
         ServerSocket serverSocket = new ServerSocket(Settings.porta);
-        System.out.println("Server is running and waiting for a client...");
-        String answer = "";  // La risposta cambierà in base a ciò che chiede il client
+        System.out.println("Server in esecuzione...");
+        String risposta = "";  // La risposta cambierà in base a ciò che chiede il client
 
         // Sentinella per dettare lo spegnimento del server in caso ci fosse lato client un pulsante che permetta di farlo (exit)
-        boolean shut = false;
+        boolean spegni = false;
 
-        while (!shut) {
+        try 
+        {
+            while (!spegni) 
+            {
+                // Aspetto connessioni TCP dai client
+                Socket connectionSocket = serverSocket.accept();
+                // Creo il flusso di ricezione
+                BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
+                // Creo  il flusso di invio
+                DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
 
-            // Aspetto connessioni TCP dai client
-            Socket connectionSocket = serverSocket.accept();
-            // Creo il flusso di ricezione
-            BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
-            // Creo  il flusso di invio
-            DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
+                ricevuto = inFromClient.readLine();
+                System.out.println("Ricevuto: " + ricevuto);
 
-            recieved = inFromClient.readLine();
-            System.out.println("Received from client: " + recieved);
+                // Parsing messaggio ricevuto
+                comando = XMLserializer.getCommand(ricevuto);
+                // argomento = XMLserializer.getArgomento(recieved); // Forse è meglio farlo quando sei sicuro che esiste, ovvero nell'opportuno blocco dello switch
 
-            // Parsing messaggio ricevuto
-            command = XMLserializer.getCommand(recieved);
-            // argomento = XMLserializer.getArgomento(recieved); // Forse è meglio farlo quando sei sicuro che esiste, ovvero nell'opportuno blocco dello switch
+                // SPECIFICA QUI QUALE SARA' IL COMPORTAMENTO DEL SERVER IN BASE AL COMANDO RICEVUTO
+                switch (comando) {
+                    default:
+                        // lista.add(argomento);
+                        risposta = "esempio\n";
+                        break;
 
-            // SPECIFICA QUI QUALE SARA' IL COMPORTAMENTO DEL SERVER IN BASE AL COMANDO RICEVUTO
-            switch (command) {
-                default:
-                    // lista.add(argomento);
-                    answer = "esempio\n";
-                    break;
+                    /*    
+                    case "exit":
+                        shut = true;
+                        break; */
+                }
 
-                /*    
-                case "exit":
-                    shut = true;
-                    break; */
+                // INVIO
+                outToClient.writeBytes(risposta);
             }
-
-            // INVIO
-            outToClient.writeBytes(answer);
-
+        } 
+        catch (Exception e) 
+        {
+            System.out.println("Connessione interrotta");
         }
+        
         serverSocket.close();
     }
 }

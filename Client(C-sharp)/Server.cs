@@ -25,6 +25,12 @@ namespace Client_C_sharp_
             stream = client.GetStream();
         }
 
+        public Server()
+        {
+            IP = "";
+            PORT = 0;
+        }
+
         public void Send(String messaggio)
         {
             // Converti il messaggio (una stringa) in un array di byte
