@@ -33,7 +33,7 @@ namespace Client_C_sharp_
         {
             if (txtNome.Text != "" && txtNome.Text != "Inserisci nome:")
             {
-                String messaggio = "<Connect>"+txtNome.Text+"</Connect>\n";
+                String messaggio = "<Username>"+txtNome.Text+"</Username>\n";
                 srv.Send(messaggio);
 
                 // Da qui in poi dovrei aspettare di ricevere la lista di room esistenti
@@ -51,10 +51,7 @@ namespace Client_C_sharp_
             this.Show(); // La rivisualizzo
 
             if (imp.ipAndPort != null) //Controllo nel caso chiudessi la finestra con la x
-            {
-                //srv.IP = imp.ipAndPort.ElementAt(0);
-                //srv.PORT = int.Parse(imp.ipAndPort.ElementAt(1));
-            }
+                srv = new Server(imp.ipAndPort.ElementAt(0), int.Parse(imp.ipAndPort.ElementAt(1)));
         }
 
         // Roba di grafica

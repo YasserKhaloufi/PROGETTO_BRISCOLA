@@ -1,36 +1,38 @@
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.Socket;
 
 public class Giocatore {
-    private Socket connectionSocket;
-    private BufferedReader inFromClient;
-    private DataOutputStream outToClient;
 
-    public Giocatore(Socket connectionSocket) throws IOException {
-        // Aspetto connessioni TCP dai client
-        inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
-        // Creo  il flusso di invio
-        outToClient = new DataOutputStream(connectionSocket.getOutputStream());
+    // Salvo le seguenti informazioni per ogni client, in modo tale da poter rilasciare le risorse impiegate quando server
+    private Socket connectionSocket;
+    public BufferedReader inFromClient;
+    public DataOutputStream outToClient;
+
+    private String username;
+
+    public Giocatore(Socket connectionSocket, BufferedReader inFromClient, DataOutputStream outToClient) throws IOException {
+        this.connectionSocket = connectionSocket;
+        this.inFromClient = inFromClient;
+        this.outToClient = outToClient;
     }
+
+    public void closeConnection() throws IOException {
+        connectionSocket.close();
+        inFromClient.close();
+        outToClient.close();
+    }
+
+    // Get e set vari
     public Socket getConnectionSocket() {
         return connectionSocket;
     }
-    public void setConnectionSocket(Socket socketConnection) {
-        this.connectionSocket = socketConnection;
+
+    public String getUsername() {
+        return username;
     }
-    public BufferedReader getInFromClient() {
-        return inFromClient;
-    }
-    public void setInFromClient(BufferedReader inFromClient) {
-        this.inFromClient = inFromClient;
-    }
-    public DataOutputStream getOutToClient() {
-        return outToClient;
-    }
-    public void setOutToClient(DataOutputStream outToClient) {
-        this.outToClient = outToClient;
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

@@ -102,6 +102,4 @@ public class Carta{
         Carta c=new Carta(s);
         return c;
     }
-
-
 }

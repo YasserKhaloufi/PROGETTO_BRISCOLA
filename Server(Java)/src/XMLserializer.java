@@ -25,6 +25,8 @@ import org.xml.sax.SAXException;
 
 public class XMLserializer {
 
+    // METODI PER SERIAlIZZARE E PARSARE LE CARTE
+
     public static void saveLista(String filePath, List<Carta> lista) throws TransformerException, ParserConfigurationException {
         // SALVA SU FILE 
         Document d = serializzaLista(lista);
@@ -86,6 +88,7 @@ public class XMLserializer {
         return lista;
     }
 
+    // Per poter parsare il contenuto di un elemento a partire da un tag ben noto
     public static String parseTagName(Element oggetto, String tagName) {
         NodeList tmp = oggetto.getElementsByTagName(tagName);
         if (tmp.getLength() == 0)
@@ -94,6 +97,7 @@ public class XMLserializer {
         return tmp.item(0).getTextContent();
     }
 
+    // Per poter parsare il contenuto di un elemento a partire da un attributo ben noto
     public static String parseAttribute(Element oggetto, String attributeName) {
         String attribute = oggetto.getAttribute(attributeName);
 
@@ -127,17 +131,12 @@ public class XMLserializer {
         return xmlString;
     }
 
-    // I METODI DA QUI IN POI NON SONO ANCORA FINITI, NON SONO NEMMENO SICURO VERRANNO USATI
+    // METODI PER PARSARE I MESSAGGI DEI CLIENT
 
     // Per ricavare il comando inviato dal client a partire dalla stringa recieved, posizionato come primo elemento
-    public static String getCommand(String recieved) throws SAXException, IOException, ParserConfigurationException {
-        DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
-        DocumentBuilder b = f.newDocumentBuilder();
-
-        // Il metodo parse del dbuilder lavora solo con file o stream, quindi
-        // convertiamo la stringa prima di passarla
-        InputSource is = new InputSource(new StringReader(recieved));
-        Document d = b.parse(is);
+    public static String getCommand(String ricevuto) throws SAXException, IOException, ParserConfigurationException {
+        
+        Document d = creaDocumento(ricevuto);
 
         // Il primo elemento presente nell'XML inviato dal client identifica il comando
         // da eseguire
@@ -147,19 +146,39 @@ public class XMLserializer {
     }
 
     // Potrebbe servire per estrarre una carta (?)
-    public static Carta getArgomento(String recieved) throws ParserConfigurationException, SAXException, IOException {
-        DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
-        DocumentBuilder b = f.newDocumentBuilder();
+    public static String getUsername(String ricevuto) throws ParserConfigurationException, SAXException, IOException {
+        
+        Document d = creaDocumento(ricevuto);
 
-        // Il metodo parse del dbuilder lavora solo con file o stream, quindi
-        // convertiamo la stringa prima di passarla
-        InputSource is = new InputSource(new StringReader(recieved));
-        Document d = b.parse(is);
+        // TO DO: è ancora da vedere dove sarà posizionata la carta in un comando 
+        Element root = (Element) d.getDocumentElement();
+
+        return root.getTextContent();
+    }
+
+    // Potrebbe servire per estrarre una carta (?)
+    public static Carta getArgomento(String ricevuto) throws ParserConfigurationException, SAXException, IOException {
+        
+        Document d = creaDocumento(ricevuto);
 
         // TO DO: è ancora da vedere dove sarà posizionata la carta in un comando 
         Element o = (Element) d.getDocumentElement().getFirstChild();
         Carta c = new Carta(o);
 
         return c;
+    }
+
+    // Per creare documento a a partire dal messaggio ricevuto (così non devo sempre riscrivere sempre la stessa cosa per ogni metodo di parsing)
+    private static Document creaDocumento(String ricevuto) throws ParserConfigurationException, SAXException, IOException
+    {
+        DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
+        DocumentBuilder b = f.newDocumentBuilder();
+
+        // Il metodo parse del dbuilder lavora solo con file o stream, quindi
+        // convertiamo la stringa prima di passarla
+        InputSource is = new InputSource(new StringReader(ricevuto));
+        Document d = b.parse(is);
+
+        return d;
     }
 }
