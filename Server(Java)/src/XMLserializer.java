@@ -73,7 +73,8 @@ public class XMLserializer {
 
         List<Carta> lista = new ArrayList<Carta>();
 
-        NodeList nList = d.getElementsByTagName("Carte"); // Lista di oggetti non parsata
+        Element root = d.getDocumentElement(); // Lista di oggetti non parsata
+        NodeList nList = root.getElementsByTagName("Carta");
 
         if (nList.getLength() > 0) {
             for (int i = 0; i < nList.getLength(); i++) {
@@ -134,7 +135,7 @@ public class XMLserializer {
     // METODI PER PARSARE I MESSAGGI DEI CLIENT
 
     // Per ricavare il comando inviato dal client a partire dalla stringa recieved, posizionato come primo elemento
-    public static String getCommand(String ricevuto) throws SAXException, IOException, ParserConfigurationException {
+    public static String getComando(String ricevuto) throws SAXException, IOException, ParserConfigurationException {
         
         Document d = creaDocumento(ricevuto);
 

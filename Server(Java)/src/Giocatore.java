@@ -18,7 +18,7 @@ public class Giocatore {
         this.outToClient = outToClient;
     }
 
-    public void closeConnection() throws IOException {
+    public void abbattiConnessione() throws IOException {
         connectionSocket.close();
         inFromClient.close();
         outToClient.close();

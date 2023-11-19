@@ -16,11 +16,11 @@ public class Server {
 
     public static void main(String[] args) throws IOException, TransformerException, ParserConfigurationException, SAXException
     {
-        // Elementi di gestione partita
+        // Elementi di gioco
         List<Giocatore> giocatori =  new ArrayList<Giocatore>(); // Da 2 a 4 giocatori 
 
+        // Sentinelle
         boolean spegni = false; // Sentinella di spegnimento server
-        boolean endGame = false; // Sentinella di fine game
         boolean gameStarted = false; // Sentinella partita iniziata
         
         // Codice per generare il mazzo in formato XML
@@ -43,16 +43,11 @@ public class Server {
         }
         XMLserializer.saveLista("./Server(Java)/src/Mazzo.xml", mazzo);*/}
 
-        // Elementi di ricezione
-        String ricevuto;    // Stringa ricevuta, ricavata a partire dal contenuto del buffer in ricezione
-        
-        // Definisci qui eventuali elementi che verranno inizializzati parsando recieved
-        String comando = "";
-        // Object argomento;
+        // Elementi di comunicazione
+        ServerSocket serverSocket = new ServerSocket(Settings.porta); System.out.println("Server in esecuzione...");
 
-        // Elementi di invio
-        ServerSocket serverSocket = new ServerSocket(Settings.porta);
-        System.out.println("Server in esecuzione...");
+        String ricevuto;     // Stringa ricevuta, ricavata a partire dal contenuto del buffer in ricezione
+        String comando = ""; // Da ricavare a partire dal soprastante
         String risposta = "";  // La risposta cambierà in base a ciò che chiede il client
 
         try 
@@ -65,17 +60,15 @@ public class Server {
                     BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream())); //  Creo  il flusso di ricezione
                     DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream()); // Creo  il flusso di invio
 
-                    ricevuto = inFromClient.readLine(); // Aspetto di ricevere un messaggio dal client che si è connsesso
-                    
+                    ricevuto = ricevi(inFromClient); // Aspetto di ricevere un messaggio dal client che si è connesso 
                     System.out.println("Ricevuto: " + ricevuto); // Per debug
-
-                    comando = XMLserializer.getCommand(ricevuto); // Parsing messaggio ricevuto, ricavando il comando
+                    comando = XMLserializer.getComando(ricevuto); // Parsing messaggio ricevuto, ricavando il comando
 
                     // SPECIFICA QUI QUALE SARA' IL COMPORTAMENTO DEL SERVER IN BASE AL COMANDO RICEVUTO
                     switch (comando) {
                         default:
                             // lista.add(argomento);
-                            risposta = "Test\n";
+                            risposta = "Test";
                             break;
 
                         case "Username": // Quando il client invia il proprio username è la prima volta che si connette
@@ -83,28 +76,28 @@ public class Server {
                             Giocatore g = new Giocatore(connectionSocket, inFromClient, outToClient); // Il client è nuovo giocatore
                             String username = XMLserializer.getUsername(ricevuto); g.setUsername(username);
                             giocatori.add(g); // aggiungo il client alla lista di giocatori connessi per poterlo ricontattare in futuro
-                            
-                            risposta = "Giocatore " + username +" inzializzato con successo\n";
+                        
+                            risposta = "Giocatore " + username +" inzializzato con successo";
                             break;
                         
                         case "Start":
                             gameStarted = true;
+                            risposta = "Partita iniziata";
                             break;
                         
                         case "Exit":
                             spegni = true;
+                            risposta = "Chiusura effettuata";
                             break;
                     }
 
                     // INVIO
-                    outToClient.writeBytes(risposta);
+                    invia(outToClient, risposta);
                 }
-                else    // FASE DI GIOCO
+                else // FASE DI GIOCO
                 {
-                    while(!endGame)
-                    {
-                        
-                    }
+                    
+                    
                 }
             }
         } 
@@ -114,5 +107,15 @@ public class Server {
         }
         
         serverSocket.close();
+    }
+
+    public static void invia(DataOutputStream outToClient, String messaggio) throws IOException
+    {
+        outToClient.writeBytes(messaggio + "\n"); // \n Perchè se non viene rilevato un new line il messaggio non viene "raccolto"
+    }
+
+    public static String ricevi(BufferedReader inFromClient) throws IOException
+    {
+        return inFromClient.readLine();
     }
 }
