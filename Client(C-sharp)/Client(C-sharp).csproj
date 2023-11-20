@@ -9,10 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="carta-retro.jpg" />
     <None Remove="sfondo1.jpg" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="carta-retro.jpg" />
     <Resource Include="sfondo1.jpg" />
   </ItemGroup>
 

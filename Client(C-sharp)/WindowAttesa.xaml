@@ -10,6 +10,6 @@
         <Button Content="Start Game" HorizontalAlignment="Center" Height="35" Margin="0,169,0,0" VerticalAlignment="Top" Width="164" x:Name="btnStartGame" IsEnabled="False" Click="btnStartGame_Click"/>
         <Label Content="In attesa di altri giocatori" HorizontalAlignment="Left" Height="28" Margin="24,79,0,0" VerticalAlignment="Top" Width="148" x:Name="lblAttesa"/>
         <Label Content="Giocatori connessi: " HorizontalAlignment="Left" Height="26" Margin="24,37,0,0" VerticalAlignment="Top" Width="114"/>
-        <TextBox HorizontalAlignment="Left" Height="18" Margin="143,41,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="65" x:Name="txtNgiocatori"/>
+        <TextBox HorizontalAlignment="Left" Height="18" Margin="143,41,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="65" x:Name="txtNgiocatori" IsReadOnly="True"/>
     </Grid>
 </Window>

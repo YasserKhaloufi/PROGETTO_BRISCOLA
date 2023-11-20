@@ -24,6 +24,7 @@ namespace Client_C_sharp_
         public WindowAttesa()
         {
             InitializeComponent();
+            RicercaGiocatori();
 
         }
         public void RicercaGiocatori()

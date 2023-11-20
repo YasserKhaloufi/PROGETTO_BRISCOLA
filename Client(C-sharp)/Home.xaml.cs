@@ -40,7 +40,7 @@ namespace Client_C_sharp_
 
                 WindowAttesa attesa=new WindowAttesa();
                 this.Hide();
-                attesa.ShowDialog();
+                attesa.ShowDialog();    //mostra finestra d'attesa
 
                 this.Close(); // Passo alla main window
             }
