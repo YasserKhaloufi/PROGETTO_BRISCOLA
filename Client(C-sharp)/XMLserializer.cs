@@ -10,6 +10,7 @@ namespace Client_C_sharp_
 {
     internal class XMLserializer
     {
+        // Questo metodo verrà principalmente usato per generare automaticamente il mazzo
         public static void SaveLista(string filePath, List<Carta> lista)
         {
             // SALVA SU FILE 
@@ -27,6 +28,7 @@ namespace Client_C_sharp_
             }
         }
 
+        // Serializza una serie di oggetti Carta in formato XML (al client non dovrebbe servire)
         private static XmlDocument SerializzaLista(List<Carta> lista)
         {
             XmlDocument d = new XmlDocument();
@@ -41,6 +43,7 @@ namespace Client_C_sharp_
             return d;
         }
 
+        // Legge da file XML e ricava la corrispondente lista di oggetti Carta
         public static List<Carta> Read(string filePath)
         {
             XmlDocument d = new XmlDocument();
@@ -48,7 +51,8 @@ namespace Client_C_sharp_
 
             List<Carta> lista = new List<Carta>();
 
-            XmlNodeList nList = d.GetElementsByTagName("Carte");
+            XmlElement root = d.DocumentElement; //<Carte> // (So per certo che root non sarà mai null, dato che il server non mi invierà mai una stringa vuota) 
+            XmlNodeList nList = root.GetElementsByTagName("Carta");
 
             if (nList.Count > 0)
             {
@@ -61,36 +65,54 @@ namespace Client_C_sharp_
                     }
                 }
             }
-
             return lista;
         }
 
-        public static string ParseTagName(XmlElement oggetto, string tagName)
+        // Come sopra, ma legge da stringa in formato XML invece che file
+        public static List<Carta> ReadFromString(string xmlString)
         {
-            XmlNodeList tmp = oggetto.GetElementsByTagName(tagName);
-            if (tmp.Count == 0)
-                return null;
+            XmlDocument d = new XmlDocument();
+            d.LoadXml(xmlString);
 
-            return tmp[0].InnerText;
-        }
+            List<Carta> lista = new List<Carta>();
 
-        public static string ParseAttribute(XmlElement oggetto, string attributeName)
-        {
-            string attribute = oggetto.GetAttribute(attributeName);
-            return attribute;
-        }
+            // 
+            XmlElement root = d.DocumentElement; //<Carte> // (So per certo che root non sarà mai null) 
+            XmlNodeList nList = root.GetElementsByTagName("Carta");
 
-        public static void SaveOggetto(Carta c, string filePath)
-        {
-            XmlDocument d = c.Serialize();
-            string xmlString = Stringfy(d);
-
-            using (StreamWriter sw = File.AppendText(filePath))
+            if (nList.Count > 0)
             {
-                sw.Write(xmlString);
+                foreach (XmlNode node in nList)
+                {
+                    if (node is XmlElement carta)
+                    {
+                        Carta o = new Carta(carta);
+                        lista.Add(o);
+                    }
+                }
             }
+            return lista;
         }
 
+        // Serve alla finestra di attesa, per capire che istruzioni eseguire in base al comando ricevuto dal server
+        public static string getComando(string xmlString)
+        {
+            XmlDocument d = new XmlDocument();
+            d.LoadXml(xmlString);
+            XmlElement root = d.DocumentElement; // Il comando inviato dal server è sempre il primo elemento del documento
+            return root.Name; // Ritorno il nome del comando
+        }
+
+        // Serve ad estrarre l'eventuale argomento del comando ricevuto
+        public static string getArgomento(string xmlString)
+        {
+            XmlDocument d = new XmlDocument();
+            d.LoadXml(xmlString);
+            XmlElement root = d.DocumentElement;
+            return root.InnerText;
+        }
+
+        // Metodi meno utilizzati:
         public static string Stringfy(XmlDocument d)
         {
             StringWriter writer = new StringWriter();
@@ -106,6 +128,32 @@ namespace Client_C_sharp_
             }
 
             return writer.ToString();
+        }
+
+        public static void SaveOggetto(Carta c, string filePath)
+        {
+            XmlDocument d = c.Serialize();
+            string xmlString = Stringfy(d);
+
+            using (StreamWriter sw = File.AppendText(filePath))
+            {
+                sw.Write(xmlString);
+            }
+        }
+
+        public static string ParseTagName(XmlElement oggetto, string tagName)
+        {
+            XmlNodeList tmp = oggetto.GetElementsByTagName(tagName);
+            if (tmp.Count == 0)
+                return null;
+
+            return tmp[0].InnerText;
+        }
+
+        public static string ParseAttribute(XmlElement oggetto, string attributeName)
+        {
+            string attribute = oggetto.GetAttribute(attributeName);
+            return attribute;
         }
     }
 }

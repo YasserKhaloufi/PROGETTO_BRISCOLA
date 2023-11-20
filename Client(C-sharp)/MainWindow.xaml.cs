@@ -24,17 +24,17 @@ namespace Client_C_sharp_
         public MainWindow()
         {
             // Impostazioni finestra
-            InitializeComponent();
-
-            // Mostro la finestra iniziale
-            Home home = new Home();
+            InitializeComponent(); 
 
             this.Hide(); // Nascondo la finestra principale
 
+            // Mostro la finestra iniziale
+            Home home = new Home();
             home.ShowDialog(); //...
 
-            this.Show(); // La rivisualizzo
-
+            // Finito con la finestra iniziale mostro quella di attesa
+            WindowAttesa windowAttesa = new WindowAttesa();
+            windowAttesa.ShowDialog();
 
         }
     }

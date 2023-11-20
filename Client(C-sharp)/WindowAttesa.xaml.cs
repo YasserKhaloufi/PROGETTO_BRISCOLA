@@ -15,48 +15,51 @@ using System.Text.RegularExpressions;
 
 namespace Client_C_sharp_
 {
-    /// <summary>
-    /// Logica di interazione per WindowAttesa.xaml
-    /// </summary>
     public partial class WindowAttesa : Window
     {
         bool ContinuaCiclo = true;
         public WindowAttesa()
         {
             InitializeComponent();
-            RicercaGiocatori();
+            btnStartGame.IsEnabled = false;
 
+            /* Affido il compito di aggiornare la GUI ascoltando il server ad un altro thread, cosi da poter permettere la pressione dei vari pulsanti nel frattempo*/
+            Task.Run(() => RicercaGiocatori());
         }
+
         public void RicercaGiocatori()
         {
-            String s = "";
-            while (ContinuaCiclo)
+            String ricevuto = "";
+            while (ContinuaCiclo) // Finchè la partita non inizia
             {
-                try
-                {
-                    s = Server.Receive();
-                    //s="<utenti>...</utenti>"
-                    if (s !=null&&s!="")
-                    {
-                        EstraiNumeroUtenti(s);
-                    }
-                }
-                catch (Exception)
-                {
+                ricevuto = Server.Receive(); // Mi faccio aggiornare dal server sullo stato di preparazione della partita
+                String comando = XMLserializer.getComando(ricevuto); // Ricevendo comandi da esso
 
-                    throw;
+                switch (comando)
+                {
+                    case "Joined":
+                        Dispatcher.Invoke(() => txtNgiocatori.Text = XMLserializer.getArgomento(ricevuto)); // Aggiorno il contatore
+
+                        if (int.Parse(txtNgiocatori.Text) >= 2) // Se è connesso un minimo di due giocatori
+                            Dispatcher.Invoke(() => btnStartGame.IsEnabled = true); // Do la possibilita di iniziare la partita premendo l'apposito pulsante
+                        break;
+
+                    case "Start":
+                        ContinuaCiclo = false;
+                        break;
                 }
-                
             }
-            
+            this.Close();
         }
 
         private void btnStartGame_Click(object sender, RoutedEventArgs e)
         {
-            ContinuaCiclo = false;
-            this.Close();
+            // (Anche se sono io stesso a premere il pulsante, affiderò al server il compito di dirmi cosa devo fare (passerò comunque per lo switch soprastante), quindi non c'è bisogno di fare nulla qui)
+            Server.Send("<Start></Start>");
         }
-        public void EstraiNumeroUtenti(string input)
+
+        // Da vedere
+        /*public void EstraiNumeroUtenti(string input)
         {
             string pattern = @"<utenti>(\d+)</utenti>"; // Pattern per trovare il numero tra <utenti> e </utenti>
             int nGiocatori = 0;
@@ -72,11 +75,9 @@ namespace Client_C_sharp_
                     lblAttesa.Visibility = Visibility.Collapsed;
                     txtNgiocatori.Text = nGiocatori.ToString();
                     btnStartGame.IsEnabled = true;
-                }
-                    
-
+                }  
             }
             
-        }
+        }*/
     }
 }

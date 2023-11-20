@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Client_C_sharp_"
         mc:Ignorable="d"
-        Title="WindowAttesa" Height="266" Width="299">
+        Title="Attesa..." Height="266" Width="299">
     <Grid>
         <Button Content="Start Game" HorizontalAlignment="Center" Height="35" Margin="0,169,0,0" VerticalAlignment="Top" Width="164" x:Name="btnStartGame" IsEnabled="False" Click="btnStartGame_Click"/>
         <Label Content="In attesa di altri giocatori" HorizontalAlignment="Left" Height="28" Margin="24,79,0,0" VerticalAlignment="Top" Width="148" x:Name="lblAttesa"/>

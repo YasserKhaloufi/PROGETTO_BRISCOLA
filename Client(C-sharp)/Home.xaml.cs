@@ -14,35 +14,24 @@ using System.Windows.Shapes;
 
 namespace Client_C_sharp_
 {
-    /// <summary>
-    /// Logica di interazione per Home.xaml
-    /// </summary>
     public partial class Home : Window
     {
         // Questa finestra si aprirà prima della main window
         public Home()
         {
             InitializeComponent();
-
             this.Background = new SolidColorBrush(Color.FromRgb(0, 255, 0)); // Setto lo sfondo (giusto per provare)
-
             txtNome.Text = "Giovanni"; // Per debug
         }
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
             if (txtNome.Text != "" && txtNome.Text != "Inserisci nome:")
             {
-                String messaggio = "<Connect>" + txtNome.Text + "</Connect>\n";
-                Server.Send(messaggio);
+                String messaggio = "<Connect>" + txtNome.Text + "</Connect>\n"; Server.Send(messaggio); // Avviso il server che mi sto connettendo, inviando il mio nome
+                
+                /*MessageBox.Show(Server.Receive());*/
 
-                // Da qui in poi dovrei aspettare di ricevere la lista di room esistenti
-                MessageBox.Show(Server.Receive());
-
-                WindowAttesa attesa=new WindowAttesa();
-                this.Hide();
-                attesa.ShowDialog();    //mostra finestra d'attesa
-
-                this.Close(); // Passo alla main window
+                this.Close(); // Torno al codice della main window
             }
         }
         private void btnImpostazioni_Click(object sender, RoutedEventArgs e)

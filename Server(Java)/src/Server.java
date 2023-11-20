@@ -48,14 +48,13 @@ public class Server {
 
         String ricevuto;     // Stringa ricevuta, ricavata a partire dal contenuto del buffer in ricezione
         String comando = ""; // Da ricavare a partire dal soprastante
-        String risposta = "";  // La risposta cambierà in base a ciò che chiede il client
 
         try 
         {
             while (!spegni) 
             {
                 if(!gameStarted) // FASE DI RICERCA GIOCATORI
-                {
+                {    
                     Socket connectionSocket = serverSocket.accept(); // Aspetto finchè un client si connette
                     BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream())); //  Creo  il flusso di ricezione
                     DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream()); // Creo  il flusso di invio
@@ -66,33 +65,35 @@ public class Server {
 
                     // SPECIFICA QUI QUALE SARA' IL COMPORTAMENTO DEL SERVER IN BASE AL COMANDO RICEVUTO
                     switch (comando) {
+
                         default:
-                            // lista.add(argomento);
-                            risposta = "Test";
                             break;
 
-                        case "Username": // Quando il client invia il proprio username è la prima volta che si connette
+                        case "Connect": // Ogni volta che si connette un nuovo client invio a tutti i giocatori connessi il numero di giocatori attualmente connessi
                             
                             Giocatore g = new Giocatore(connectionSocket, inFromClient, outToClient); // Il client è nuovo giocatore
                             String username = XMLserializer.getUsername(ricevuto); g.setUsername(username);
+
                             giocatori.add(g); // aggiungo il client alla lista di giocatori connessi per poterlo ricontattare in futuro
-                        
-                            risposta = "Giocatore " + username +" inzializzato con successo";
+                            notificaGiocatori(giocatori, "Joined"); // Comunico a tutti i client che un nuovo giocatore si è unito alla partita
+                                                   
+                            System.out.println("Giocatore " + username +" inzializzato con successo"); 
+
                             break;
                         
                         case "Start":
                             gameStarted = true;
-                            risposta = "Partita iniziata";
+                            notificaGiocatori(giocatori, "Start"); // Comunico a tutti i client che la partita è iniziata
                             break;
                         
                         case "Exit":
                             spegni = true;
-                            risposta = "Chiusura effettuata";
                             break;
                     }
 
                     // INVIO
-                    invia(outToClient, risposta);
+                    /*if(inviaRisposta)
+                        invia(outToClient, risposta);*/
                 }
                 else // FASE DI GIOCO
                 {
@@ -110,13 +111,22 @@ public class Server {
         serverSocket.close();
     }
 
+    // Invia un messaggio a un client con il quale è stato instaurato un flusso di invio
     public static void invia(DataOutputStream outToClient, String messaggio) throws IOException
     {
         outToClient.writeBytes(messaggio + "\n"); // \n Perchè se non viene rilevato un new line il messaggio non viene "raccolto"
     }
 
+    // Riceve un messaggio da un client con il quale è stato instaurato un flusso di ricezione
     public static String ricevi(BufferedReader inFromClient) throws IOException
     {
         return inFromClient.readLine();
+    }
+
+    // Avvisa tutti i giocatori connessi di un evento
+    public static void notificaGiocatori(List<Giocatore> giocatori, String messaggio) throws IOException
+    {
+        for (Giocatore g : giocatori) 
+            invia(g.outToClient, "<" + messaggio + ">" + giocatori.size() + "</" +  messaggio + ">");
     }
 }

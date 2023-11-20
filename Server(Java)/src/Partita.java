@@ -56,7 +56,7 @@ public class Partita extends Thread {
                 mano += XMLserializer.stringfy(Mazzo.get(indice).serialize()); // Aggiungo la carta alla mano (in formato XML)
                 Mazzo.remove(indice);
             }
-            Server.invia(g.outToClient, mano);
+            Server.invia(g.outToClient, "<Carte>" + mano + "</Carte>"); // Invio la mano al giocatore
             conta += 3;
         }
     }

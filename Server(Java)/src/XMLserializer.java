@@ -85,7 +85,6 @@ public class XMLserializer {
                 lista.add(o);
             }
         }
-
         return lista;
     }
 
