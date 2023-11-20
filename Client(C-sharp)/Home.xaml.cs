@@ -32,11 +32,15 @@ namespace Client_C_sharp_
         {
             if (txtNome.Text != "" && txtNome.Text != "Inserisci nome:")
             {
-                String messaggio = "<Username>" + txtNome.Text + "</Username>\n";
+                String messaggio = "<Connect>" + txtNome.Text + "</Connect>\n";
                 Server.Send(messaggio);
 
                 // Da qui in poi dovrei aspettare di ricevere la lista di room esistenti
                 MessageBox.Show(Server.Receive());
+
+                WindowAttesa attesa=new WindowAttesa();
+                this.Hide();
+                attesa.ShowDialog();
 
                 this.Close(); // Passo alla main window
             }
