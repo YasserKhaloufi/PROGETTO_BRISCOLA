@@ -11,6 +11,7 @@ namespace Client_C_sharp_
         public static String bho(String messaggio)
         {
             String s = "";
+
             return s;
         }
     }

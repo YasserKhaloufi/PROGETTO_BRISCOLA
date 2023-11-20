@@ -20,15 +20,40 @@ namespace Client_C_sharp_
     /// </summary>
     public partial class WindowAttesa : Window
     {
+        bool ContinuaCiclo = true;
         public WindowAttesa()
         {
             InitializeComponent();
 
         }
+        public void RicercaGiocatori()
+        {
+            String s = "";
+            while (ContinuaCiclo)
+            {
+                try
+                {
+                    s = Server.Receive();
+                    //s="<utenti>...</utenti>"
+                    if (s !=null&&s!="")
+                    {
+                        EstraiNumeroUtenti(s);
+                    }
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+                
+            }
+            
+        }
 
         private void btnStartGame_Click(object sender, RoutedEventArgs e)
         {
-
+            ContinuaCiclo = false;
+            this.Close();
         }
         public void EstraiNumeroUtenti(string input)
         {
