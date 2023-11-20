@@ -19,14 +19,16 @@ namespace Client_C_sharp_
     public partial class MainWindow : Window
     {
         // Settings
-        Server srv = new Server("127.0.0.1", 777);
         String username = "";
 
         public MainWindow()
         {
+            // Impostazioni finestra
             InitializeComponent();
             this.Background = new SolidColorBrush(Color.FromRgb(0, 255, 0)); // Setto lo sfondo (giusto per provare)
+
             txtNome.Text = "Giovanni"; // Per debug
+
         }
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
@@ -34,10 +36,10 @@ namespace Client_C_sharp_
             if (txtNome.Text != "" && txtNome.Text != "Inserisci nome:")
             {
                 String messaggio = "<Username>"+txtNome.Text+"</Username>\n";
-                srv.Send(messaggio);
-
+                Server.Send(messaggio);
+                
                 // Da qui in poi dovrei aspettare di ricevere la lista di room esistenti
-                MessageBox.Show(srv.Receive());
+                MessageBox.Show(Server.Receive());
             }
         }
         private void btnImpostazioni_Click(object sender, RoutedEventArgs e)
@@ -51,7 +53,14 @@ namespace Client_C_sharp_
             this.Show(); // La rivisualizzo
 
             if (imp.ipAndPort != null) //Controllo nel caso chiudessi la finestra con la x
-                srv = new Server(imp.ipAndPort.ElementAt(0), int.Parse(imp.ipAndPort.ElementAt(1)));
+            {
+                String indirizzo = imp.ipAndPort.ElementAt(0); int porta = int.Parse(imp.ipAndPort.ElementAt(1));
+
+                if (!Server.isSameSrv(indirizzo, porta))
+                    Server.handShake(indirizzo, porta);
+                else
+                    MessageBox.Show("Il server indicato è già connesso");
+            }
         }
 
         // Roba di grafica

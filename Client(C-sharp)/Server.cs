@@ -8,16 +8,18 @@ using System.Windows;
 
 namespace Client_C_sharp_
 {
-    class Server
+    public static class Server
     {
-        public String IP { get; set; }
-        public int PORT { get; set; }
+        // Impostazioni default
+        public static String IP = "127.0.0.1";
+        public static int PORT = 777;
 
         // Elementi per trasferimento file
-        private TcpClient client;
-        private NetworkStream stream;
+        private static TcpClient client = new TcpClient(IP, PORT);
+        private static NetworkStream stream = client.GetStream();
 
-        public Server(string indirizzoIP, int numPorta)
+        // Per potersi connettere ad un server diverso dal default
+        public static void handShake(string indirizzoIP, int numPorta)
         {
             IP = indirizzoIP;
             PORT = numPorta;
@@ -25,20 +27,14 @@ namespace Client_C_sharp_
             stream = client.GetStream();
         }
 
-        public Server()
-        {
-            IP = "";
-            PORT = 0;
-        }
-
-        public void Send(String messaggio)
+        public static void Send(String messaggio)
         {
             // Converti il messaggio (una stringa) in un array di byte
             byte[] data = Encoding.ASCII.GetBytes(messaggio);
             // Invia il messaggio al server
             stream.Write(data, 0, data.Length);
         }
-        public String Receive()
+        public static String Receive()
         {
             byte[] data = new byte[1024]; // Preparo il buffer
             StringBuilder completeMessage = new StringBuilder(); // Necessario a ricostruire sottof. di stringa il messaggio ricevuto
@@ -50,18 +46,26 @@ namespace Client_C_sharp_
             {
                 numberOfBytesRead = stream.Read(data, 0, data.Length);
                 // Ricavo i byte ricevuti sottoforma di stringa e gli aggiungo al "messaggio completo"
-                completeMessage.AppendFormat("{0}", Encoding.ASCII.GetString(data, 0, numberOfBytesRead));
+                completeMessage.Append(Encoding.ASCII.GetString(data, 0, numberOfBytesRead));
             }
-            while (stream.DataAvailable);
+            while (!completeMessage.ToString().EndsWith("\n"));
 
-            return completeMessage.ToString();
+            return completeMessage.ToString().TrimEnd('\n');
         }
 
-        public void close()
+        public static void close()
         {
             // Chiudi la connessione e il flusso di rete
             stream.Close();
             client.Close();
+        }
+
+        public static bool isSameSrv(String indirizzo, int porta)
+        {
+            if(indirizzo == IP && porta == PORT)
+                return true;
+            
+            return false;
         }
     }
 }
