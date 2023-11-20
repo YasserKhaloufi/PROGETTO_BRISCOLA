@@ -6,7 +6,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 public class Carta{
-
+    //CARTA NAPOLETANA
     private String seme;
     private char numero;
     private int valore;
