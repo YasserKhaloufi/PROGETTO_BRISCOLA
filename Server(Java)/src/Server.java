@@ -96,8 +96,9 @@ public class Server {
                 }
                 else // FASE DI GIOCO
                 {
-                    
-                    
+                    Partita partita = new Partita(giocatori);
+                    partita.start();
+                    partita.join();
                 }
             }
         } 

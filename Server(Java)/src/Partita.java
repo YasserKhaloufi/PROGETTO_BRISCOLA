@@ -35,7 +35,6 @@ public class Partita extends Thread {
 
         while (!endGame) {
             
-                
         }
         
     }
