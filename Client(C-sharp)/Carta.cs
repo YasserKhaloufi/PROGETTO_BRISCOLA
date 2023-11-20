@@ -7,7 +7,7 @@ using System.Xml;
 
 namespace Client_C_sharp_
 {
-    internal class Carta
+    public class Carta
     {
         private string seme;
         private char numero;
