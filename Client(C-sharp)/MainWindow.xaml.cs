@@ -24,7 +24,7 @@ namespace Client_C_sharp_
         public MainWindow()
         {
             // Impostazioni finestra
-            InitializeComponent(); 
+            InitializeComponent();
 
             this.Hide(); // Nascondo la finestra principale
 
@@ -35,7 +35,6 @@ namespace Client_C_sharp_
             // Finito con la finestra iniziale mostro quella di attesa
             WindowAttesa windowAttesa = new WindowAttesa();
             windowAttesa.ShowDialog();
-
         }
     }
 }

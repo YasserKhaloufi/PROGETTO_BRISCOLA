@@ -27,10 +27,26 @@ namespace Client_C_sharp_
             stream = client.GetStream();
         }
 
+        // Metodi per invio comando specifico
+        public static void Connect(String username)
+        {
+            sendComando("Connect", username);
+        }
+
+        public static void startGame()
+        {
+            sendComando("Start", "");
+        }
+
+        public static void sendComando(String comando, String argomento)
+        {
+            Send("<" + comando + ">" + argomento + "</" + comando + ">");
+        }
+
         public static void Send(String messaggio)
         {
             // Converti il messaggio (una stringa) in un array di byte
-            byte[] data = Encoding.ASCII.GetBytes(messaggio);
+            byte[] data = Encoding.ASCII.GetBytes(messaggio + "\n"); // Aggiungo l'apposito new line alla fine
             // Invia il messaggio al server
             stream.Write(data, 0, data.Length);
         }

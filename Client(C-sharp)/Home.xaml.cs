@@ -27,13 +27,16 @@ namespace Client_C_sharp_
         {
             if (txtNome.Text != "" && txtNome.Text != "Inserisci nome:")
             {
-                String messaggio = "<Connect>" + txtNome.Text + "</Connect>\n"; Server.Send(messaggio); // Avviso il server che mi sto connettendo, inviando il mio nome
-                
-                /*MessageBox.Show(Server.Receive());*/
+                Server.Connect(txtNome.Text); // Avviso il server che mi sto connettendo, inviando il mio nome
 
-                this.Close(); // Torno al codice della main window
+                // TO DO: ricevere da server un feedback e scriverlo su console (per debug)
+
+                this.Close(); // Torno al codice della main window (passando alla fase di attesa)
             }
+            else
+                MessageBox.Show("Inserisci username");
         }
+
         private void btnImpostazioni_Click(object sender, RoutedEventArgs e)
         {
             Impostazioni imp = new Impostazioni();

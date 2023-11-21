@@ -35,9 +35,9 @@ namespace Client_C_sharp_
             XmlElement root = d.CreateElement("Carte");
             d.AppendChild(root);
 
-            foreach (Carta o in lista)
+            foreach (Carta c in lista)
             {
-                root.AppendChild(o.Serialize(d));
+                root.AppendChild(c.Serialize(d));
             }
 
             return d;
@@ -51,20 +51,25 @@ namespace Client_C_sharp_
 
             List<Carta> lista = new List<Carta>();
 
-            XmlElement root = d.DocumentElement; //<Carte> // (So per certo che root non sarà mai null, dato che il server non mi invierà mai una stringa vuota) 
-            XmlNodeList nList = root.GetElementsByTagName("Carta");
-
-            if (nList.Count > 0)
+            if(d.DocumentElement != null) // Se esiste effettivamente una lista di carte procedi a parsarla, altrimenti ritorna una lista vuota
             {
-                foreach (XmlNode node in nList)
+                XmlElement root = d.DocumentElement; //<Carte>
+
+                XmlNodeList nList = root.GetElementsByTagName("Carta");
+
+                if (nList.Count > 0)
                 {
-                    if (node is XmlElement carta)
+                    foreach (XmlNode node in nList)
                     {
-                        Carta o = new Carta(carta);
-                        lista.Add(o);
+                        if (node is XmlElement carta)
+                        {
+                            Carta c = new Carta(carta);
+                            lista.Add(c);
+                        }
                     }
                 }
             }
+            
             return lista;
         }
 
@@ -76,18 +81,20 @@ namespace Client_C_sharp_
 
             List<Carta> lista = new List<Carta>();
 
-            // 
-            XmlElement root = d.DocumentElement; //<Carte> // (So per certo che root non sarà mai null) 
+            /* So per certo che root non sarà mai null, dato che questo metodo lo uso esclusivamente
+               per parsare una lista di carte una volta ricevuta dal server, quest'ultimo non invierà
+               mai una lista vuota...*/
+            XmlElement root = d.DocumentElement; //<Carte>
             XmlNodeList nList = root.GetElementsByTagName("Carta");
 
             if (nList.Count > 0)
             {
-                foreach (XmlNode node in nList)
+                foreach (XmlNode node in nList) // Per ogni elemento xml carta nella lista
                 {
-                    if (node is XmlElement carta)
+                    if (node is XmlElement carta) // Casto il nodo in elemento
                     {
-                        Carta o = new Carta(carta);
-                        lista.Add(o);
+                        Carta c = new Carta(carta); // Creo un oggetto carta a partire da quell'elemento
+                        lista.Add(c);
                     }
                 }
             }

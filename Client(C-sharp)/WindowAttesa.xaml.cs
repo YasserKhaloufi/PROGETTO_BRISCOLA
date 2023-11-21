@@ -17,45 +17,53 @@ namespace Client_C_sharp_
 {
     public partial class WindowAttesa : Window
     {
-        bool ContinuaCiclo = true;
+        bool attendi = true; // true = attendi giocatori visualizzando finestra d'attesa, false = passerà alla finestra di gioco
         public WindowAttesa()
         {
             InitializeComponent();
             btnStartGame.IsEnabled = false;
 
-            /* Affido il compito di aggiornare la GUI ascoltando il server ad un altro thread, cosi da poter permettere la pressione dei vari pulsanti nel frattempo*/
+            /* Affido il compito di aggiornare la GUI (in base ai messaggi del srvr) ad un altro thread, 
+             * cosi da poter permettere comunque la pressione dei vari pulsanti nel frattempo*/
             Task.Run(() => RicercaGiocatori());
         }
 
         public void RicercaGiocatori()
         {
             String ricevuto = "";
-            while (ContinuaCiclo) // Finchè la partita non inizia
+            while (attendi) // Finchè non inizia la partita
             {
                 ricevuto = Server.Receive(); // Mi faccio aggiornare dal server sullo stato di preparazione della partita
-                String comando = XMLserializer.getComando(ricevuto); // Ricevendo comandi da esso
+                String comando = XMLserializer.getComando(ricevuto);
 
+                /* TO DO: gestire il caso in cui il client decida di disconnettersi tramite apposito pulsante o chiudendo la finestra
+                 * (dovrà inviare un apposito comando) */
                 switch (comando)
                 {
-                    case "Joined":
-                        Dispatcher.Invoke(() => txtNgiocatori.Text = XMLserializer.getArgomento(ricevuto)); // Aggiorno il contatore
-
-                        if (int.Parse(txtNgiocatori.Text) >= 2) // Se è connesso un minimo di due giocatori
-                            Dispatcher.Invoke(() => btnStartGame.IsEnabled = true); // Do la possibilita di iniziare la partita premendo l'apposito pulsante
+                    case "Joined": // Quando un nuovo giocatore si unisce, aggiorno il contatore e abilito il btnStart se i giocatori sono almeno 2
+                        Dispatcher.Invoke(() => {
+                            txtNgiocatori.Text = XMLserializer.getArgomento(ricevuto);
+                            if (int.Parse(txtNgiocatori.Text) >= 2)
+                                btnStartGame.IsEnabled = true;
+                        });
                         break;
 
-                    case "Start":
-                        ContinuaCiclo = false;
+                    case "Start": // Quando uno dei giocatori starta il gioco
+                        attendi = false; // Smetti di attendere
                         break;
                 }
             }
-            this.Close();
+            Dispatcher.Invoke(() => this.Close()); // Quindi chiudi la finestra di attesa e passa a quella di gioco
         }
 
         private void btnStartGame_Click(object sender, RoutedEventArgs e)
         {
-            // (Anche se sono io stesso a premere il pulsante, affiderò al server il compito di dirmi cosa devo fare (passerò comunque per lo switch soprastante), quindi non c'è bisogno di fare nulla qui)
-            Server.Send("<Start></Start>");
+            /* NOTA:
+                  Sapendo di aver premuto il pulsante potrei abilitarmi già a passare alla finestra di gioco,
+                  nonostante ciò affiderò comunque al server il compito di dirmi cosa devo fare 
+                  (prima di chiudere la finestra passerò comunque per lo switch soprastante ricevendo il comando Start dal server), 
+                  quindi faccio nulla qui*/
+            Server.startGame();
         }
 
         // Da vedere

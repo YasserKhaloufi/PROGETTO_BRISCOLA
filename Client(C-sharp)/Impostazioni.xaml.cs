@@ -15,9 +15,6 @@ using System.Windows.Shapes;
 
 namespace Client_C_sharp_
 {
-    /// <summary>
-    /// Logica di interazione per Impostazioni.xaml
-    /// </summary>
     public partial class Impostazioni : Window
     {
         public List<String> ipAndPort { get; set; }
@@ -26,6 +23,7 @@ namespace Client_C_sharp_
             InitializeComponent();
         }
 
+        // Una volta confermato, se le informazioni sono valide aggiornale e torna alla home
         private void btnConferma_Click(object sender, RoutedEventArgs e)
         {
             ipAndPort = new List<String>(); //Se non inizializzi non funziona
@@ -44,7 +42,6 @@ namespace Client_C_sharp_
         public bool ValidateIPAndPort()
         {
             /* 
-             * ringrazio chatGPT per avermi dato un accenno sulle regex
              * 
              * La @ indica che da li in poi i caratteri di escape saranno trattati come normali caratteri;
              * 

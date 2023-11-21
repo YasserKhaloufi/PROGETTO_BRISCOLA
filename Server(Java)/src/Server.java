@@ -64,11 +64,15 @@ public class Server {
                     comando = XMLserializer.getComando(ricevuto); // Parsing messaggio ricevuto, ricavando il comando
 
                     // SPECIFICA QUI QUALE SARA' IL COMPORTAMENTO DEL SERVER IN BASE AL COMANDO RICEVUTO
+                    /* TO DO: gestire il caso in cui il client decida di disconnettersi (il server riceve un apposito comando e identifica 
+                       il client da rimuovere dalla lista di giocatori connessi, attuando un procedimento simile alla parte iniziale di Connect) 
+                       cercandolo all'interno della stessa...
+                    */
                     switch (comando) {
 
                         default:
                             break;
-
+                        
                         case "Connect": // Ogni volta che si connette un nuovo client invio a tutti i giocatori connessi il numero di giocatori attualmente connessi
                             
                             Giocatore g = new Giocatore(connectionSocket, inFromClient, outToClient); // Il client è nuovo giocatore
@@ -77,13 +81,16 @@ public class Server {
                             giocatori.add(g); // aggiungo il client alla lista di giocatori connessi per poterlo ricontattare in futuro
                             notificaGiocatori(giocatori, "Joined"); // Comunico a tutti i client che un nuovo giocatore si è unito alla partita
                                                    
-                            System.out.println("Giocatore " + username +" inzializzato con successo"); 
+                            // TO DO: inviare al client che si è connesso un feedback (per debug)
+                            System.out.println("Giocatore " + username +" inzializzato con successo"); // Debug
 
                             break;
                         
                         case "Start":
                             gameStarted = true;
                             notificaGiocatori(giocatori, "Start"); // Comunico a tutti i client che la partita è iniziata
+                            
+                            System.out.println("Partita iniziata"); // Debug
                             break;
                         
                         case "Exit":
@@ -111,6 +118,12 @@ public class Server {
         serverSocket.close();
     }
 
+    //
+    public static void connect()
+    {
+        
+    }
+
     // Invia un messaggio a un client con il quale è stato instaurato un flusso di invio
     public static void invia(DataOutputStream outToClient, String messaggio) throws IOException
     {
@@ -124,9 +137,9 @@ public class Server {
     }
 
     // Avvisa tutti i giocatori connessi di un evento
-    public static void notificaGiocatori(List<Giocatore> giocatori, String messaggio) throws IOException
+    public static void notificaGiocatori(List<Giocatore> giocatori, String notifica) throws IOException
     {
         for (Giocatore g : giocatori) 
-            invia(g.outToClient, "<" + messaggio + ">" + giocatori.size() + "</" +  messaggio + ">");
+            invia(g.outToClient, "<" + notifica + ">" + giocatori.size() + "</" +  notifica + ">");
     }
 }
