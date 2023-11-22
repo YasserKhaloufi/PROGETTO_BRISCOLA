@@ -17,10 +17,12 @@ namespace Client_C_sharp_
 {
     public partial class WindowAttesa : Window
     {
+        private bool isClosingFromButton = false; // Sentinella per controllare se la finestra si sta chiudendo tramite il pulsante "X" o meno
         bool attendi = true; // true = attendi giocatori visualizzando finestra d'attesa, false = passerà alla finestra di gioco
         public WindowAttesa()
         {
             InitializeComponent();
+            this.Closing += MainWindow_Closing; // Nel caso la finestra venisse chiusa con la "X" in alto a destra, chiudo l'applicazione
             btnStartGame.IsEnabled = false;
 
             /* Affido il compito di aggiornare la GUI (in base ai messaggi del srvr) ad un altro thread, 
@@ -40,15 +42,18 @@ namespace Client_C_sharp_
                  * (dovrà inviare un apposito comando) */
                 switch (comando)
                 {
-                    case "Joined": // Quando un nuovo giocatore si unisce, aggiorno il contatore e abilito il btnStart se i giocatori sono almeno 2
+                    case "NumeroGiocatori": // Quando un nuovo giocatore si unisce, aggiorno il contatore e abilito il btnStart se i giocatori sono almeno 2
                         Dispatcher.Invoke(() => {
                             txtNgiocatori.Text = XMLserializer.getArgomento(ricevuto);
                             if (int.Parse(txtNgiocatori.Text) >= 2)
                                 btnStartGame.IsEnabled = true;
+                            else
+                                btnStartGame.IsEnabled = false;
                         });
                         break;
 
                     case "Start": // Quando uno dei giocatori starta il gioco
+                        isClosingFromButton = true; // Setto la sentinella a true, così il processo non verrà chiuso dal metodo MainWindow_Closing
                         attendi = false; // Smetti di attendere
                         break;
                 }
@@ -63,7 +68,21 @@ namespace Client_C_sharp_
                   nonostante ciò affiderò comunque al server il compito di dirmi cosa devo fare 
                   (prima di chiudere la finestra passerò comunque per lo switch soprastante ricevendo il comando Start dal server), 
                   quindi faccio nulla qui*/
+
             Server.startGame();
+            isClosingFromButton = true; // Setto la sentinella a true, così la finestra non verrà chiusa dal metodo MainWindow_Closing
+            this.Close(); // Torno al codice della main window (passando alla fase di gioco)
+        }
+
+        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (!isClosingFromButton)
+            {
+                Application.Current.Shutdown();
+                Server.Disconnect();
+            }
+
+            isClosingFromButton = false;
         }
 
         // Da vedere

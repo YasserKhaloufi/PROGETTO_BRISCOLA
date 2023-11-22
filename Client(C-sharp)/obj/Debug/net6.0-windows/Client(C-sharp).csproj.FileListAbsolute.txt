@@ -120,3 +120,4 @@ C:\Users\yasse\Desktop\Scuola\Pro\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C
 C:\Users\yasse\Desktop\Scuola\Pro\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\Client(C-sharp).pdb
 C:\Users\yasse\Desktop\Scuola\Pro\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\Client(C-sharp).genruntimeconfig.cache
 C:\Users\yasse\Desktop\Scuola\Pro\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\ref\Client(C-sharp).dll
+C:\Users\yasse\Desktop\Scuola\Pro\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\Client(C-sharp).csproj.AssemblyReference.cache

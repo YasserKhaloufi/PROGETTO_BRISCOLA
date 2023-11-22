@@ -35,6 +35,11 @@ namespace Client_C_sharp_
             // Finito con la finestra iniziale mostro quella di attesa
             WindowAttesa windowAttesa = new WindowAttesa();
             windowAttesa.ShowDialog();
+
+            MessageBox.Show("Partita iniziata");
+
+            Server.Disconnect(); // Mi disconnetto dal server per debugging
+            Application.Current.Shutdown(); // Chiudo l'applicazione per debug 
         }
     }
 }

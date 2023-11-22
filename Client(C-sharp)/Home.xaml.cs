@@ -16,10 +16,13 @@ namespace Client_C_sharp_
 {
     public partial class Home : Window
     {
+        private bool isClosingFromButton = false; // Sentinella per controllare se la finestra si sta chiudendo tramite il pulsante "X" o meno
+
         // Questa finestra si aprirà prima della main window
         public Home()
         {
             InitializeComponent();
+            this.Closing += MainWindow_Closing; // Nel caso la finestra venisse chiusa con la "X" in alto a destra, chiudo l'applicazione
             this.Background = new SolidColorBrush(Color.FromRgb(0, 255, 0)); // Setto lo sfondo (giusto per provare)
             txtNome.Text = "Giovanni"; // Per debug
         }
@@ -31,6 +34,7 @@ namespace Client_C_sharp_
 
                 // TO DO: ricevere da server un feedback e scriverlo su console (per debug)
 
+                isClosingFromButton = true; // Setto la sentinella a true, così il processo non verrà chiuso dal metodo MainWindow_Closing
                 this.Close(); // Torno al codice della main window (passando alla fase di attesa)
             }
             else
@@ -54,7 +58,7 @@ namespace Client_C_sharp_
                 if (!Server.isSameSrv(indirizzo, porta))
                     Server.handShake(indirizzo, porta);
                 else
-                    MessageBox.Show("Il server indicato è già connesso");
+                    MessageBox.Show("Il server indicato è già connesso"); 
             }
         }
 
@@ -62,17 +66,21 @@ namespace Client_C_sharp_
         private void txtNome_GotFocus(object sender, RoutedEventArgs e)
         {
             if (txtNome.Text == "Inserisci nome:")
-            {
                 txtNome.Text = string.Empty;
-            }
         }
 
         private void txtNome_LostFocus(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtNome.Text))
-            {
                 txtNome.Text = "Inserisci nome:";
-            }
+        }
+
+        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (!isClosingFromButton) // Controllo l'apposita sentinella se l'utente sta chiudendo l'app con "X" o sta procedendo a startare
+                Application.Current.Shutdown();
+
+            isClosingFromButton = false; // Resetto la sentinella
         }
     }
 }

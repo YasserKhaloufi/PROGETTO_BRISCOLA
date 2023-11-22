@@ -14,14 +14,17 @@ import org.xml.sax.SAXException;
 
 public class Server {    
 
+    static List<clientHandler> giocatori =  new ArrayList<clientHandler>(); // Predispongo una lista per memorizzare i giocatori connessi
+
+    /* Sentinelle */
+    static boolean spegni = false; // Sentinella di spegnimento server
+
+    // Sentinelle condivise tra i thread Giocatore
+    static boolean gameStarted = false; // Sentinella partita iniziata
+    static boolean endGame = false; // Sentinella partita iniziata
+    
     public static void main(String[] args) throws IOException, TransformerException, ParserConfigurationException, SAXException
     {
-        // Elementi di gioco
-        List<Giocatore> giocatori =  new ArrayList<Giocatore>(); // Da 2 a 4 giocatori 
-
-        // Sentinelle
-        boolean spegni = false; // Sentinella di spegnimento server
-        boolean gameStarted = false; // Sentinella partita iniziata
         
         // Codice per generare il mazzo in formato XML
         {
@@ -43,11 +46,7 @@ public class Server {
         }
         XMLserializer.saveLista("./Server(Java)/src/Mazzo.xml", mazzo);*/}
 
-        // Elementi di comunicazione
-        ServerSocket serverSocket = new ServerSocket(Settings.porta); System.out.println("Server in esecuzione...");
-
-        String ricevuto;     // Stringa ricevuta, ricavata a partire dal contenuto del buffer in ricezione
-        String comando = ""; // Da ricavare a partire dal soprastante
+        ServerSocket serverSocket = new ServerSocket(Settings.porta); System.out.println("Server in esecuzione..."); // Creo la socket sulla quale il server ascolterà le connessioni dei client
 
         try 
         {
@@ -55,58 +54,13 @@ public class Server {
             {
                 if(!gameStarted) // FASE DI RICERCA GIOCATORI
                 {    
-                    Socket connectionSocket = serverSocket.accept(); // Aspetto finchè un client si connette
-                    BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream())); //  Creo  il flusso di ricezione
-                    DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream()); // Creo  il flusso di invio
-
-                    ricevuto = ricevi(inFromClient); // Aspetto di ricevere un messaggio dal client che si è connesso 
-                    System.out.println("Ricevuto: " + ricevuto); // Per debug
-                    comando = XMLserializer.getComando(ricevuto); // Parsing messaggio ricevuto, ricavando il comando
-
-                    // SPECIFICA QUI QUALE SARA' IL COMPORTAMENTO DEL SERVER IN BASE AL COMANDO RICEVUTO
-                    /* TO DO: gestire il caso in cui il client decida di disconnettersi (il server riceve un apposito comando e identifica 
-                       il client da rimuovere dalla lista di giocatori connessi, attuando un procedimento simile alla parte iniziale di Connect) 
-                       cercandolo all'interno della stessa...
-                    */
-                    switch (comando) {
-
-                        default:
-                            break;
-                        
-                        case "Connect": // Ogni volta che si connette un nuovo client invio a tutti i giocatori connessi il numero di giocatori attualmente connessi
-                            
-                            Giocatore g = new Giocatore(connectionSocket, inFromClient, outToClient); // Il client è nuovo giocatore
-                            String username = XMLserializer.getUsername(ricevuto); g.setUsername(username);
-
-                            giocatori.add(g); // aggiungo il client alla lista di giocatori connessi per poterlo ricontattare in futuro
-                            notificaGiocatori(giocatori, "Joined"); // Comunico a tutti i client che un nuovo giocatore si è unito alla partita
-                                                   
-                            // TO DO: inviare al client che si è connesso un feedback (per debug)
-                            System.out.println("Giocatore " + username +" inzializzato con successo"); // Debug
-
-                            break;
-                        
-                        case "Start":
-                            gameStarted = true;
-                            notificaGiocatori(giocatori, "Start"); // Comunico a tutti i client che la partita è iniziata
-                            
-                            System.out.println("Partita iniziata"); // Debug
-                            break;
-                        
-                        case "Exit":
-                            spegni = true;
-                            break;
-                    }
-
-                    // INVIO
-                    /*if(inviaRisposta)
-                        invia(outToClient, risposta);*/
+                    System.out.println("In attesa di giocatori..."); // Debug
+                    cercaGiocatori(serverSocket);
                 }
                 else // FASE DI GIOCO
                 {
-                    Partita partita = new Partita(giocatori);
-                    partita.start();
-                    partita.join();
+                    System.out.println("Partita iniziata"); // Debug
+                    spegni = true; // TO DO: rimuovere questa riga di debug
                 }
             }
         } 
@@ -117,12 +71,45 @@ public class Server {
         
         serverSocket.close();
     }
+    
+    // TO DO: spostare i seguenti metodi in una classe statica adibita, in modo da sintetizzare il codice del main
 
-    //
-    public static void connect()
+    public static void cercaGiocatori(ServerSocket serverSocket) throws IOException, ParserConfigurationException, SAXException
     {
-        
+        String ricevuto; // Predispongo la variabile per memorizzare, ricavata a partire dal contenuto del buffer in ricezione
+         
+        Socket connectionSocket = serverSocket.accept(); // Aspetto finchè un client si connette
+        BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream())); //  Creo  il flusso di ricezione
+        DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream()); // Creo  il flusso di invio
+
+        ricevuto = ricevi(inFromClient); // Aspetto di ricevere un messaggio dal client che si è connesso 
+
+        clientHandler g = new clientHandler(connectionSocket, inFromClient, outToClient); // Il client è nuovo giocatore, creo un thread separato per ascoltare i suoi messaggi
+        String username = XMLserializer.getUsername(ricevuto); g.setUsername(username); // Prima di aggiungerlo ai giocatori connessi, ne estrapolo il nome utente assegnandoglielo
+
+        giocatori.add(g); // aggiungo il client alla lista di giocatori connessi per poterlo ricontattare in futuro
+        g.start(); // Avvio il thread per ascoltare i messaggi del client
+        notificaNgiocatori(); // Comunico a tutti i client già connessi che un nuovo giocatore si è unito alla partita
+                                                   
+        // TO DO: inviare al client che si è connesso un feedback (per debug)
+        System.out.println("Giocatore " + username +" inzializzato con successo"); // Debug
     }
+
+    // I SEGUENTI METODI SONO CONDIVISI CON I THREAD GIOCATORE clientHandler
+
+    /* Metodi per la comunicazione di un evento specifico ai client*/
+    public static void notificaInizioPartita() throws IOException
+    {
+        notificaGiocatori("Start", "");
+    }
+
+    // Avvisa tutti i giocatori connessi di una disconnessione/connesione, aggiornandoli sul numero di giocatori connessi
+    public static void notificaNgiocatori() throws IOException
+    {
+        notificaGiocatori("NumeroGiocatori", Integer.toString(giocatori.size()));
+    }
+
+    /* Metodi per comunicazione generica */
 
     // Invia un messaggio a un client con il quale è stato instaurato un flusso di invio
     public static void invia(DataOutputStream outToClient, String messaggio) throws IOException
@@ -136,10 +123,9 @@ public class Server {
         return inFromClient.readLine();
     }
 
-    // Avvisa tutti i giocatori connessi di un evento
-    public static void notificaGiocatori(List<Giocatore> giocatori, String notifica) throws IOException
+    public static void notificaGiocatori(String notifica, String messaggio) throws IOException
     {
-        for (Giocatore g : giocatori) 
-            invia(g.outToClient, "<" + notifica + ">" + giocatori.size() + "</" +  notifica + ">");
+        for (clientHandler g : Server.giocatori) 
+            invia(g.outToClient, "<" + notifica + ">" + messaggio + "</" +  notifica + ">");
     }
 }

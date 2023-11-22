@@ -33,6 +33,11 @@ namespace Client_C_sharp_
             sendComando("Connect", username);
         }
 
+        public static void Disconnect()
+        {
+            sendComando("Disconnect", "");
+        }
+
         public static void startGame()
         {
             sendComando("Start", "");
