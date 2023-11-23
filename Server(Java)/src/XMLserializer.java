@@ -123,7 +123,22 @@ public class XMLserializer {
         Transformer t = tf.newTransformer();
 
         t.setOutputProperty(OutputKeys.INDENT, "yes"); // Indentazione
-        //t.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes"); // se volessi omettere la dichiarazione xml
+        t.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes"); // se volessi omettere la dichiarazione xml
+
+        StringWriter writer = new StringWriter();
+        t.transform(new DOMSource(d), new StreamResult(writer));
+        String xmlString = writer.toString();
+        return xmlString;
+    }
+
+    // In questo caso ometto la dichiarazione per poter concatenare il documento XML a un altro, o semplicemente inviarlo al client
+    public static String stringfyOmitDeclaration(Document d) throws TransformerException {
+        // SALVA SU STRINGA
+        // Creare un oggetto Transformer per la trasformazione in stringa
+        TransformerFactory tf = TransformerFactory.newInstance();
+        Transformer t = tf.newTransformer();
+
+        t.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes"); // se volessi omettere la dichiarazione xml
 
         StringWriter writer = new StringWriter();
         t.transform(new DOMSource(d), new StreamResult(writer));

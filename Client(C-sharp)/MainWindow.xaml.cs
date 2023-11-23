@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
@@ -13,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Path = System.IO.Path;
 
 namespace Client_C_sharp_
 {
@@ -48,10 +50,14 @@ namespace Client_C_sharp_
 
         public void getBriscola() 
         {
-            String s=Server.Receive();
-            Carta c=new Carta(XMLserializer.ReadFromStringRawElements(s).ElementAt(0));
-            //imgboxBriscola.Source = c.GetImg_path();
-            txtDebug.Text = s;
+            String ricevuto=Server.Receive();
+            Carta c=new Carta(XMLserializer.ReadFromStringRawElements(ricevuto).ElementAt(0));
+
+            String path = c.GetImg_path();
+
+            imgboxBriscola.Source = new BitmapImage(new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "img", path)));
+
+            txtDebug.Text = ricevuto; // Debug
         }
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)

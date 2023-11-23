@@ -77,12 +77,10 @@ public class Carta{
         DocumentBuilder b = f.newDocumentBuilder();
         Document d = b.newDocument();
 
-        Element root = d.createElement("Carta");
+        Element root = serialize(d);
      
-        root.appendChild(serialize(d));
-        
         d.appendChild(root);
-
+        
         return d;   
     }
 
