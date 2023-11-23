@@ -8,33 +8,23 @@
     "net6.0-windows7.0": []
   },
   "packageFolders": {
-    "C:\\Users\\khaloufi_yasser\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
-    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\yasse\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Khaloufi\\Briscola\\PROGETTO_BRISCOLA\\Client(C-sharp)\\Client(C-sharp).csproj",
+      "projectUniqueName": "C:\\Users\\yasse\\Desktop\\Scuola\\Pro\\A.S. 23-24\\Briscola\\PROGETTO_BRISCOLA\\Client(C-sharp)\\Client(C-sharp).csproj",
       "projectName": "Client(C-sharp)",
-      "projectPath": "E:\\Khaloufi\\Briscola\\PROGETTO_BRISCOLA\\Client(C-sharp)\\Client(C-sharp).csproj",
-      "packagesPath": "C:\\Users\\khaloufi_yasser\\.nuget\\packages\\",
-      "outputPath": "E:\\Khaloufi\\Briscola\\PROGETTO_BRISCOLA\\Client(C-sharp)\\obj\\",
+      "projectPath": "C:\\Users\\yasse\\Desktop\\Scuola\\Pro\\A.S. 23-24\\Briscola\\PROGETTO_BRISCOLA\\Client(C-sharp)\\Client(C-sharp).csproj",
+      "packagesPath": "C:\\Users\\yasse\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\yasse\\Desktop\\Scuola\\Pro\\A.S. 23-24\\Briscola\\PROGETTO_BRISCOLA\\Client(C-sharp)\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\",
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\khaloufi_yasser\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        "C:\\Users\\yasse\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
-        "net6.0-windows7.0"
+        "net6.0-windows"
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
@@ -61,7 +51,8 @@
           "net47",
           "net471",
           "net472",
-          "net48"
+          "net48",
+          "net481"
         ],
         "assetTargetFallback": true,
         "warn": true,
@@ -73,7 +64,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }

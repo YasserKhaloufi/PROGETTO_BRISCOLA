@@ -15,8 +15,8 @@ public class threadPartita extends Thread {
     private List<Carta> mazzo;
 
     // Elementi di gioco
-    private List<Carta> tavolo;
-    private List <Carta> carteGiocate;
+    private List<Carta> tavolo; // Carte giocate in tutto il corso della partita
+    private List <Carta> carteGiocate; // E' un buffer di n carte, dove n è il numero di giocatori (tiene conto delle carte giocate in un giro)
     private Carta briscola;
 
     private boolean endGame; // Sentinella fine partita
@@ -34,10 +34,9 @@ public class threadPartita extends Thread {
 
     @Override
     public void run() {
-        Collections.shuffle(mazzo); // Mischio il mazzo
-        briscola = mazzo.get(mazzo.size() - 1); // Ricavo la briscola
-        mazzo.remove(mazzo.size() - 1); // Rimuovo la briscola dal mazzo
         
+        preparativi(); // Eseguo le operazioni di inizio partita
+
         // Distribuisco le carte ai giocatori
         try 
         {
@@ -55,12 +54,15 @@ public class threadPartita extends Thread {
 
         // Fase di gioco
         while (!endGame) {
+            
+            String feedback = "";
+
             for (clientHandler g : giocatori) 
             {
                 try 
                 {
                     toccaA(g);
-                    String feedback = g.responses.take(); // Aspetto la risposta del giocatore
+                    feedback = g.responses.take(); // Aspetto la risposta del giocatore
                     
                 } catch (IOException | InterruptedException e) 
                 {
@@ -68,7 +70,14 @@ public class threadPartita extends Thread {
                 }
             }
         }
-        
+
+    }
+
+    public void preparativi()
+    {
+        Collections.shuffle(mazzo); // Mischio il mazzo
+        briscola = mazzo.get(mazzo.size() - 1); // Ricavo la briscola
+        mazzo.remove(mazzo.size() - 1); // Rimuovo la briscola dal mazzo
     }
 
     public void distribuisciCarte() throws TransformerException, ParserConfigurationException, IOException
