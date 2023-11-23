@@ -22,6 +22,7 @@ namespace Client_C_sharp_
     {
         // Settings
         String username = "";
+        List<Image> imageBoxes = new List<Image>();
 
         public MainWindow()
         {
@@ -40,24 +41,35 @@ namespace Client_C_sharp_
 
             this.Show();
 
-            getBriscola();
-
-            //MessageBox.Show("Partita iniziata");
+            renderBriscola(); renderMano();
 
             //Server.Disconnect(); // Mi disconnetto dal server per debugging
             //Application.Current.Shutdown(); // Chiudo l'applicazione per debug 
         }
 
-        public void getBriscola() 
+        private void renderBriscola()
         {
-            String ricevuto=Server.Receive();
-            Carta c=new Carta(XMLserializer.ReadFromStringRawElements(ricevuto).ElementAt(0));
+            String path = Server.getBriscola().GetImg_path();
+            imgBoxBriscola.Source = new BitmapImage(new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "img", path)));
+        }
 
-            String path = c.GetImg_path();
+        private void renderMano()
+        {
+            List<Carta> mano = Server.getMano();
 
-            imgboxBriscola.Source = new BitmapImage(new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "img", path)));
 
-            txtDebug.Text = ricevuto; // Debug
+            // Assuming imgBox1, imgBox2, and imgBox3 are defined in XAML and have these names
+            imageBoxes.Add(imgBox1);
+            imageBoxes.Add(imgBox2);
+            imageBoxes.Add(imgBox3);
+
+            // Assegno ad ogni immagine il rispettivo path, estraendolo dalla lista di carte
+            for (int i = 0; i < imageBoxes.Count; i++)
+            {
+                String path = mano.ElementAt(i).GetImg_path();
+                imageBoxes.ElementAt(i).Source = new BitmapImage(new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "img", path)));
+            }   
+            
         }
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)

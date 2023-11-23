@@ -10,12 +10,27 @@
 
   <ItemGroup>
     <None Remove="carta-retro.jpg" />
+    <None Remove="Icon.png" />
+    <None Remove="Loading.jpg" />
     <None Remove="sfondo1.jpg" />
+    <None Remove="Wooden table.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Loading.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="carta-retro.jpg" />
+    <Resource Include="Icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="sfondo1.jpg" />
+    <Resource Include="Wooden table.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>

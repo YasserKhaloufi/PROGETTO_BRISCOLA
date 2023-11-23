@@ -5,6 +5,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media.Imaging;
 
 namespace Client_C_sharp_
 {
@@ -87,6 +88,21 @@ namespace Client_C_sharp_
                 return true;
             
             return false;
+        }
+
+        public static Carta getBriscola()
+        {
+            String ricevuto = Server.Receive();
+            Carta c = new Carta(XMLserializer.ReadFromStringRawElements(ricevuto).ElementAt(0));
+
+            return c;
+        }
+
+        public static List<Carta> getMano()
+        {
+            String ricevuto = Server.Receive();
+
+            return XMLserializer.ReadFromString(ricevuto);
         }
     }
 }

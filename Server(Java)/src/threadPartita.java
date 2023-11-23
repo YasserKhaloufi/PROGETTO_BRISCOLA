@@ -64,6 +64,7 @@ public class threadPartita extends Thread {
                     toccaA(g);
                     feedback = g.responses.take(); // Aspetto la risposta del giocatore
                     
+                    
                 } catch (IOException | InterruptedException e) 
                 {
                     e.printStackTrace();
@@ -93,7 +94,7 @@ public class threadPartita extends Thread {
             for(int i = 0; i < 3; i++)
             {
                 indice = mazzo.size() - i - 1 - conta; // Indice della carta da assegnare
-                mano += XMLserializer.stringfy(mazzo.get(indice).serialize()); // Aggiungo la carta alla mano (in formato XML)
+                mano += XMLserializer.stringfyOmitDeclaration(mazzo.get(indice).serialize()); // Aggiungo la carta alla mano (in formato XML)
                 mazzo.remove(indice);
             }
             inviaBriscola(g); // Assieme alla mano, invio anche la briscola

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Client_C_sharp_"
         mc:Ignorable="d"
-            Title="Briscola" Height="356" Width="354">
+            Title="Briscola" Height="356" Width="354" Icon="/Icon.png">
     <Grid Margin="34,30,0,0" x:Name="GridStart" HorizontalAlignment="Left" Width="284" Height="269" VerticalAlignment="Top">
         <Rectangle HorizontalAlignment="Center" Height="262" Stroke="White" VerticalAlignment="Center" Width="281">
             <Rectangle.Fill>

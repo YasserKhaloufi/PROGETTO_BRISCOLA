@@ -22,7 +22,7 @@ namespace Client_C_sharp_
         public Home()
         {
             InitializeComponent();
-            this.Closing += MainWindow_Closing; // Nel caso la finestra venisse chiusa con la "X" in alto a destra, chiudo l'applicazione
+            Closing += MainWindow_Closing; // Nel caso la finestra venisse chiusa con la "X" in alto a destra, chiudo l'applicazione
             this.Background = new SolidColorBrush(Color.FromRgb(0, 255, 0)); // Setto lo sfondo (giusto per provare)
             txtNome.Text = "Giovanni"; // Per debug
         }
