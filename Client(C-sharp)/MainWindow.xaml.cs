@@ -36,10 +36,22 @@ namespace Client_C_sharp_
             WindowAttesa windowAttesa = new WindowAttesa();
             windowAttesa.ShowDialog();
 
-            MessageBox.Show("Partita iniziata");
+            this.Show();
 
-            Server.Disconnect(); // Mi disconnetto dal server per debugging
-            Application.Current.Shutdown(); // Chiudo l'applicazione per debug 
+            Task.Run(() => getBriscola());
+
+            //MessageBox.Show("Partita iniziata");
+
+            //Server.Disconnect(); // Mi disconnetto dal server per debugging
+            //Application.Current.Shutdown(); // Chiudo l'applicazione per debug 
+        }
+
+        public void getBriscola() 
+        {
+            String s=Server.Receive();
+            txtDebug.Text = s;
+        }
+
         }
     }
 }

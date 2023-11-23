@@ -15,6 +15,7 @@
         <Image HorizontalAlignment="Left" Height="300" Margin="1239,26,0,0" VerticalAlignment="Top" Width="200" Source="/carta-retro.jpg" Stretch="Fill"/>
         <Label Content="Briscola" HorizontalAlignment="Left" Height="65" Margin="60,261,0,0" VerticalAlignment="Top" Width="267" FontSize="35"/>
         <Image HorizontalAlignment="Left" Height="409" Margin="60,326,0,0" VerticalAlignment="Top" Width="342" x:Name="imgboxBriscola"/>
+        <TextBox HorizontalAlignment="Left" Height="120" Margin="791,504,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="685" x:Name="txtDebug"/>
 
 
     </Grid>
