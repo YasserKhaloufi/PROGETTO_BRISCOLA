@@ -12,6 +12,13 @@ public class Carta{
     private int valore;
     private String img_path;
     
+    public Carta() {
+        seme = "null";
+        numero = '0';
+        valore = 0;
+        img_path = "null";
+    }
+
     public Carta(String seme, char numero, int valore, String img_path) {
         this.seme = seme;
         this.numero = numero;

@@ -21,7 +21,6 @@ public class Server {
 
     // Sentinelle condivise tra i thread Giocatore
     static boolean gameStarted = false; // Sentinella partita iniziata
-    static boolean endGame = false; // Sentinella partita iniziata
     
     public static void main(String[] args) throws IOException, TransformerException, ParserConfigurationException, SAXException
     {
@@ -60,7 +59,9 @@ public class Server {
                 else // FASE DI GIOCO
                 {
                     System.out.println("Partita iniziata"); // Debug
-                    spegni = true; // TO DO: rimuovere questa riga di debug
+                    threadPartita partita = new threadPartita(giocatori); // Creo un thread per gestire la partita
+                    partita.start(); // Avvio il thread
+                    partita.join(); // Aspetto che il thread termini
                 }
             }
         } 
@@ -92,10 +93,10 @@ public class Server {
         notificaNgiocatori(); // Comunico a tutti i client già connessi che un nuovo giocatore si è unito alla partita
                                                    
         // TO DO: inviare al client che si è connesso un feedback (per debug)
-        System.out.println("Giocatore " + username +" inzializzato con successo"); // Debug
+        System.out.println(username +" si è unito"); // Debug
     }
 
-    // I SEGUENTI METODI SONO CONDIVISI CON I THREAD GIOCATORE clientHandler
+    // I SEGUENTI METODI SONO CONDIVISI CON I THREAD clientHandler e threadPartita
 
     /* Metodi per la comunicazione di un evento specifico ai client*/
     public static void notificaInizioPartita() throws IOException

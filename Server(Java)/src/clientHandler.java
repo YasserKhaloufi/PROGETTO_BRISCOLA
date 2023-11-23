@@ -2,17 +2,22 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
+// Per ricevere dal e inviare messaggi al client
 public class clientHandler extends Thread{
 
     // Salvo le seguenti informazioni per ogni client, in modo tale da poter rilasciare le risorse impiegate quando server
     private Socket connectionSocket;
     public BufferedReader inFromClient;
     public DataOutputStream outToClient;
+
+    public BlockingQueue<String> responses;
 
     private String username;
 
@@ -23,7 +28,7 @@ public class clientHandler extends Thread{
         String comando = ""; // Da ricavare dal messaggio ricevuto
         Boolean disconnesso = false;
 
-        while (!Server.endGame && !disconnesso)  // finchè la partita non è finita
+        while (!disconnesso)  // finchè non ricevo un comando di disconnessione dal client, continuo ad ascoltare
         {
             // Continuo ad ascoltare il client
             try 
@@ -44,7 +49,11 @@ public class clientHandler extends Thread{
                             Server.gameStarted = true;
                             Server.notificaInizioPartita(); // Comunico a tutti i client che la partita è iniziata
                             break;
-                        
+
+                        case "Number":
+                            responses.put(XMLserializer.getArgomento(ricevuto)); // Inserisco il messaggio nella coda di risposte
+                            break;
+
                         case "Disconnect":
                             abbattiConnessione(); // Chiudo la connessione con il client
                             disconnesso = true;
@@ -57,7 +66,7 @@ public class clientHandler extends Thread{
                     
                 }
             } 
-            catch (IOException | SAXException | ParserConfigurationException e) 
+            catch (IOException | SAXException | ParserConfigurationException | InterruptedException e) 
             {
                 e.printStackTrace();
             }
@@ -69,6 +78,7 @@ public class clientHandler extends Thread{
         this.connectionSocket = connectionSocket;
         this.inFromClient = inFromClient;
         this.outToClient = outToClient;
+        this.responses = new LinkedBlockingQueue<>();
     }
 
     public void abbattiConnessione() throws IOException {

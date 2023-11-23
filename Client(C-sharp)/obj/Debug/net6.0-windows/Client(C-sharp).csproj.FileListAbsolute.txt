@@ -121,3 +121,30 @@ C:\Users\yasse\Desktop\Scuola\Pro\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C
 C:\Users\yasse\Desktop\Scuola\Pro\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\Client(C-sharp).genruntimeconfig.cache
 C:\Users\yasse\Desktop\Scuola\Pro\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\ref\Client(C-sharp).dll
 C:\Users\yasse\Desktop\Scuola\Pro\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\Client(C-sharp).csproj.AssemblyReference.cache
+E:\Khaloufi\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\Client(C-sharp).exe
+E:\Khaloufi\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\Client(C-sharp).deps.json
+E:\Khaloufi\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\Client(C-sharp).runtimeconfig.json
+E:\Khaloufi\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\Client(C-sharp).dll
+E:\Khaloufi\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\ref\Client(C-sharp).dll
+E:\Khaloufi\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\Client(C-sharp).pdb
+E:\Khaloufi\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\Client(C-sharp).csproj.AssemblyReference.cache
+E:\Khaloufi\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\Home.g.cs
+E:\Khaloufi\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\Impostazioni.g.cs
+E:\Khaloufi\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\MainWindow.g.cs
+E:\Khaloufi\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\WindowAttesa.g.cs
+E:\Khaloufi\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\App.g.cs
+E:\Khaloufi\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\Client(C-sharp)_MarkupCompile.cache
+E:\Khaloufi\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\Client(C-sharp)_MarkupCompile.lref
+E:\Khaloufi\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\Home.baml
+E:\Khaloufi\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\Impostazioni.baml
+E:\Khaloufi\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\MainWindow.baml
+E:\Khaloufi\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\WindowAttesa.baml
+E:\Khaloufi\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\Client(C-sharp).g.resources
+E:\Khaloufi\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\Client(C-sharp).GeneratedMSBuildEditorConfig.editorconfig
+E:\Khaloufi\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\Client(C-sharp).AssemblyInfoInputs.cache
+E:\Khaloufi\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\Client(C-sharp).AssemblyInfo.cs
+E:\Khaloufi\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\Client(C-sharp).csproj.CoreCompileInputs.cache
+E:\Khaloufi\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\Client(C-sharp).dll
+E:\Khaloufi\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\ref\Client(C-sharp).dll
+E:\Khaloufi\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\Client(C-sharp).pdb
+E:\Khaloufi\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\Client(C-sharp).genruntimeconfig.cache

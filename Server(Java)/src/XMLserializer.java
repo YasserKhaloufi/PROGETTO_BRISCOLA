@@ -157,7 +157,7 @@ public class XMLserializer {
     }
 
     // Potrebbe servire per estrarre una carta (?)
-    public static Carta getArgomento(String ricevuto) throws ParserConfigurationException, SAXException, IOException {
+    public static Carta getCarta(String ricevuto) throws ParserConfigurationException, SAXException, IOException {
         
         Document d = creaDocumento(ricevuto);
 
@@ -166,6 +166,16 @@ public class XMLserializer {
         Carta c = new Carta(o);
 
         return c;
+    }
+
+    public static String getArgomento(String ricevuto) throws ParserConfigurationException, SAXException, IOException {
+        
+        Document d = creaDocumento(ricevuto);
+
+        // TO DO: è ancora da vedere dove sarà posizionata la carta in un comando 
+        Element o = (Element) d.getDocumentElement();
+
+        return o.getTextContent();
     }
 
     // Per creare documento a a partire dal messaggio ricevuto (così non devo sempre riscrivere sempre la stessa cosa per ogni metodo di parsing)
