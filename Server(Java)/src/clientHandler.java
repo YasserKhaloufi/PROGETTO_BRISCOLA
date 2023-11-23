@@ -46,8 +46,9 @@ public class clientHandler extends Thread{
                     switch (comando) {
                         
                         case "Start":
-                            Server.gameStarted = true;
                             Server.notificaInizioPartita(); // Comunico a tutti i client che la partita è iniziata
+                            Server.gameStarted = true;
+                            System.out.println("partita iniziata");
                             break;
 
                         case "Number":

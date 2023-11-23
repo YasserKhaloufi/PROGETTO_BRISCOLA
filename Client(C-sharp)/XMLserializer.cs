@@ -101,6 +101,32 @@ namespace Client_C_sharp_
             return lista;
         }
 
+        // Come sopra, ma legge da stringa in formato XML invece che file
+        public static List<XmlElement> ReadFromStringRawElements(string xmlString)
+        {
+            XmlDocument d = new XmlDocument();
+            d.LoadXml(xmlString);
+
+            List<XmlElement> lista = new List<XmlElement>();
+
+            /* So per certo che root non sarà mai null, dato che questo metodo lo uso esclusivamente
+               per parsare una lista di carte una volta ricevuta dal server, quest'ultimo non invierà
+               mai una lista vuota...*/
+            XmlElement root = d.DocumentElement; //<Carte>
+            XmlNodeList nList = root.GetElementsByTagName("Carta");
+
+            if (nList.Count > 0)
+            {
+                foreach (XmlNode node in nList) // Per ogni elemento xml carta nella lista
+                {
+                    lista.Add((XmlElement)node);
+                }
+            }
+            return lista;
+        }
+
+
+
         // Serve alla finestra di attesa, per capire che istruzioni eseguire in base al comando ricevuto dal server
         public static string getComando(string xmlString)
         {

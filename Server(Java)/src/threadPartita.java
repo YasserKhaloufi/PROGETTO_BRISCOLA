@@ -109,7 +109,7 @@ public class threadPartita extends Thread {
 
     private void inviaBriscola(clientHandler g) throws IOException, TransformerException, ParserConfigurationException
     {
-        Server.invia(g.outToClient, "<Carta>" + XMLserializer.stringfy(briscola.serialize()) + "</Carta>");
+        Server.invia(g.outToClient, "<Carte><Carta>" + XMLserializer.stringfy(briscola.serialize()) + "</Carta></Carte>");
     }
 
     private void toccaA(clientHandler g) throws IOException

@@ -38,7 +38,7 @@ namespace Client_C_sharp_
 
             this.Show();
 
-            Task.Run(() => getBriscola());
+            getBriscola();
 
             //MessageBox.Show("Partita iniziata");
 
@@ -49,9 +49,15 @@ namespace Client_C_sharp_
         public void getBriscola() 
         {
             String s=Server.Receive();
+            Carta c=new Carta(XMLserializer.ReadFromStringRawElements(s).ElementAt(0));
+            //imgboxBriscola.Source = c.GetImg_path();
             txtDebug.Text = s;
         }
 
+        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Application.Current.Shutdown();
+            Server.Disconnect();
         }
     }
 }

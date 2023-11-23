@@ -63,6 +63,7 @@ public class Server {
                     partita.start(); // Avvio il thread
                     partita.join(); // Aspetto che il thread termini
                 }
+                //System.out.println("esecuzione in corso");
             }
         } 
         catch (Exception e) 
@@ -77,23 +78,29 @@ public class Server {
 
     public static void cercaGiocatori(ServerSocket serverSocket) throws IOException, ParserConfigurationException, SAXException
     {
-        String ricevuto; // Predispongo la variabile per memorizzare, ricavata a partire dal contenuto del buffer in ricezione
-         
-        Socket connectionSocket = serverSocket.accept(); // Aspetto finchè un client si connette
-        BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream())); //  Creo  il flusso di ricezione
-        DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream()); // Creo  il flusso di invio
+        while(!gameStarted){
+            try {
+                serverSocket.setSoTimeout(1000);
+                String ricevuto; // Predispongo la variabile per memorizzare, ricavata a partire dal contenuto del buffer in ricezione
+                
+                Socket connectionSocket = serverSocket.accept(); // Aspetto finchè un client si connette
+                BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream())); //  Creo  il flusso di ricezione
+                DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream()); // Creo  il flusso di invio
 
-        ricevuto = ricevi(inFromClient); // Aspetto di ricevere un messaggio dal client che si è connesso 
+                ricevuto = ricevi(inFromClient); // Aspetto di ricevere un messaggio dal client che si è connesso 
+                clientHandler g = new clientHandler(connectionSocket, inFromClient, outToClient); // Il client è nuovo giocatore, creo un thread separato per ascoltare i suoi messaggi
+                String username = XMLserializer.getUsername(ricevuto); g.setUsername(username); // Prima di aggiungerlo ai giocatori connessi, ne estrapolo il nome utente assegnandoglielo
 
-        clientHandler g = new clientHandler(connectionSocket, inFromClient, outToClient); // Il client è nuovo giocatore, creo un thread separato per ascoltare i suoi messaggi
-        String username = XMLserializer.getUsername(ricevuto); g.setUsername(username); // Prima di aggiungerlo ai giocatori connessi, ne estrapolo il nome utente assegnandoglielo
-
-        giocatori.add(g); // aggiungo il client alla lista di giocatori connessi per poterlo ricontattare in futuro
-        g.start(); // Avvio il thread per ascoltare i messaggi del client
-        notificaNgiocatori(); // Comunico a tutti i client già connessi che un nuovo giocatore si è unito alla partita
-                                                   
-        // TO DO: inviare al client che si è connesso un feedback (per debug)
-        System.out.println(username +" si è unito"); // Debug
+                giocatori.add(g); // aggiungo il client alla lista di giocatori connessi per poterlo ricontattare in futuro
+                g.start(); // Avvio il thread per ascoltare i messaggi del client
+                notificaNgiocatori(); // Comunico a tutti i client già connessi che un nuovo giocatore si è unito alla partita
+                                                        
+                // TO DO: inviare al client che si è connesso un feedback (per debug)
+                System.out.println(username +" si è unito"); // Debug
+            } catch (Exception e) {
+                continue;
+            }
+        }     
     }
 
     // I SEGUENTI METODI SONO CONDIVISI CON I THREAD clientHandler e threadPartita
