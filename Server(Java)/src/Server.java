@@ -45,7 +45,7 @@ public class Server {
         }
         XMLserializer.saveLista("./Server(Java)/src/Mazzo.xml", mazzo);*/}
 
-        ServerSocket serverSocket = new ServerSocket(Settings.porta); System.out.println("Server in esecuzione..."); // Creo la socket sulla quale il server ascolterà le connessioni dei client
+        ServerSocket serverSocket = new ServerSocket(Settings.porta); System.out.println("Server in esecuzione...\n"); // Creo la socket sulla quale il server ascolterà le connessioni dei client
 
         try 
         {
@@ -53,12 +53,12 @@ public class Server {
             {
                 if(!gameStarted) // FASE DI RICERCA GIOCATORI
                 {    
-                    System.out.println("In attesa di giocatori..."); // Debug
+                    System.out.println("In attesa di giocatori...\n"); // Debug
                     cercaGiocatori(serverSocket);
                 }
                 else // FASE DI GIOCO
                 {
-                    System.out.println("Partita iniziata"); // Debug
+                    System.out.println("Partita iniziata\n"); // Debug
                     threadPartita partita = new threadPartita(giocatori); // Creo un thread per gestire la partita
                     partita.start(); // Avvio il thread
                     partita.join(); // Aspetto che il thread termini
@@ -68,7 +68,7 @@ public class Server {
         } 
         catch (Exception e) 
         {
-            System.out.println("Connessione interrotta");
+            System.out.println("Connessione interrotta\n");
         }
         
         serverSocket.close();
@@ -96,7 +96,7 @@ public class Server {
                 notificaNgiocatori(); // Comunico a tutti i client già connessi che un nuovo giocatore si è unito alla partita
                                                         
                 // TO DO: inviare al client che si è connesso un feedback (per debug)
-                System.out.println(username +" si è unito"); // Debug
+                System.out.println(username +" si è unito\n"); // Debug
             } catch (Exception e) {
                 continue;
             }

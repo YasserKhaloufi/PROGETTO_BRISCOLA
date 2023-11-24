@@ -17,7 +17,7 @@ namespace Client_C_sharp_
 {
     public partial class WindowAttesa : Window
     {
-        private bool isClosingFromButton = false; // Sentinella per controllare se la finestra si sta chiudendo tramite il pulsante "X" o meno
+        private bool isClosingFromStartButton = false; // Sentinella per controllare se la finestra si sta chiudendo tramite il pulsante "X" o meno
         bool attendi = true; // true = attendi giocatori visualizzando finestra d'attesa, false = passerà alla finestra di gioco
         public WindowAttesa()
         {
@@ -53,7 +53,7 @@ namespace Client_C_sharp_
                         break;
 
                     case "Start": // Quando uno dei giocatori starta il gioco
-                        isClosingFromButton = true; // Setto la sentinella a true, così il processo non verrà chiuso dal metodo MainWindow_Closing
+                        isClosingFromStartButton = true; // Setto la sentinella a true, così il processo non verrà chiuso dal metodo MainWindow_Closing
                         attendi = false; // Smetti di attendere
                         break;
                 }
@@ -70,19 +70,19 @@ namespace Client_C_sharp_
                   quindi faccio nulla qui*/
 
             Server.startGame();
-            isClosingFromButton = true; // Setto la sentinella a true, così la finestra non verrà chiusa dal metodo MainWindow_Closing
+            isClosingFromStartButton = true; // Setto la sentinella a true, così la finestra non verrà chiusa dal metodo MainWindow_Closing
             this.Close(); // Torno al codice della main window (passando alla fase di gioco)
         }
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (!isClosingFromButton)
+            if (!isClosingFromStartButton)
             {
                 Application.Current.Shutdown();
                 Server.Disconnect();
             }
 
-            isClosingFromButton = false;
+            isClosingFromStartButton = false;
         }
 
         // Da vedere

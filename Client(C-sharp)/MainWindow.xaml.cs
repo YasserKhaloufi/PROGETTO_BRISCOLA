@@ -58,7 +58,8 @@ namespace Client_C_sharp_
 
         public MainWindow()
         {
-            InitializeComponent(); 
+            InitializeComponent();
+            Closing += MainWindow_Closing;
             DataContext = this; // Necessario perchè XAML riesca a vedere "Mano" e aggiornare la carte mostrate in base ad essa
 
             this.Hide(); // Nascondo la finestra principale
@@ -83,6 +84,7 @@ namespace Client_C_sharp_
         private void btnCarta_click(object sender, RoutedEventArgs e)
         {
             Button b  = sender as Button;
+            String temp = b.Name;
             int indice=int.Parse(b.Name.Substring(3));
             GiocaCarta(mano.ElementAt(indice));
             Mano.RemoveAt(indice);
@@ -92,12 +94,14 @@ namespace Client_C_sharp_
         private void riceviBriscola()
         {
             Briscola = Server.getBriscola();
+            Server.ackowledge();
         }
 
         //Ricava dal server la mano e la mostra
         private void riceviMano()
         {
             Mano = Server.getMano();
+            Server.ackowledge();
         }
 
         public void GiocaCarta(Carta c)
@@ -108,8 +112,8 @@ namespace Client_C_sharp_
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            Application.Current.Shutdown();
             Server.Disconnect();
+            Application.Current.Shutdown();
         }
 
         protected virtual void OnPropertyChanged(string propertyName)

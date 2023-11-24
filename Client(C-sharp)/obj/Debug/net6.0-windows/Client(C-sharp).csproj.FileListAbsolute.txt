@@ -206,7 +206,6 @@ C:\Users\yasse\Desktop\Scuola\Pro\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C
 C:\Users\yasse\Desktop\Scuola\Pro\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\C-coppe.jpg
 C:\Users\yasse\Desktop\Scuola\Pro\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\C-denari.jpg
 C:\Users\yasse\Desktop\Scuola\Pro\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\C-spade.jpg
-C:\Users\yasse\Desktop\Scuola\Pro\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\carta-retro.jpg
 C:\Users\yasse\Desktop\Scuola\Pro\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\F-bastoni.jpg
 C:\Users\yasse\Desktop\Scuola\Pro\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\F-coppe.jpg
 C:\Users\yasse\Desktop\Scuola\Pro\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\F-denari.jpg
@@ -215,7 +214,6 @@ C:\Users\yasse\Desktop\Scuola\Pro\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C
 C:\Users\yasse\Desktop\Scuola\Pro\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\R-coppe.jpg
 C:\Users\yasse\Desktop\Scuola\Pro\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\R-denari.jpg
 C:\Users\yasse\Desktop\Scuola\Pro\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\R-spade.jpg
-C:\Users\yasse\Desktop\Scuola\Pro\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\sfondo1.jpg
 D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\2-bastoni.jpg
 D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\2-coppe.jpg
 D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\2-denari.jpg

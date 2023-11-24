@@ -37,6 +37,7 @@ namespace Client_C_sharp_
         public static void Disconnect()
         {
             sendComando("Disconnect", "");
+            abbattiConnessione();
         }
 
         public static void startGame()
@@ -57,7 +58,8 @@ namespace Client_C_sharp_
             try { stream.Write(data, 0, data.Length); }
             catch (Exception e) 
             { 
-                MessageBox.Show("Il server non è disponibile"); 
+                MessageBox.Show("Il server non è disponibile");
+                System.Windows.Application.Current.Shutdown();
             }
         }
         public static String Receive()
@@ -79,7 +81,12 @@ namespace Client_C_sharp_
             return completeMessage.ToString().TrimEnd('\n');
         }
 
-        public static void close()
+        public static void ackowledge()
+        {
+            Server.sendComando("ACK", ""); // Invio ACK al server per dire che ho parsato con successo la mano, cosi che possa inviarmi la briscola
+        }
+
+        public static void abbattiConnessione()
         {
             // Chiudi la connessione e il flusso di rete
             stream.Close();
@@ -107,7 +114,6 @@ namespace Client_C_sharp_
 
             return XMLserializer.ReadFromString(ricevuto);
         }
-
 
         public static void InviaCarta(Carta c)
         {

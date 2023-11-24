@@ -48,11 +48,14 @@ public class clientHandler extends Thread{
                         case "Start":
                             Server.notificaInizioPartita(); // Comunico a tutti i client che la partita è iniziata
                             Server.gameStarted = true;
-                            System.out.println("partita iniziata");
                             break;
 
                         case "Number":
                             responses.put(XMLserializer.getArgomento(ricevuto)); // Inserisco il messaggio nella coda di risposte
+                            break;
+
+                        case "ACK":
+                            responses.put("ACK");
                             break;
 
                         case "Disconnect":
@@ -61,7 +64,7 @@ public class clientHandler extends Thread{
                             Server.giocatori.remove(this);
                             Server.notificaNgiocatori(); // Mi disconnetto, quindi aggiorno gli altri giocatori sul numero di giocatori connessi
                             
-                            System.out.println("Giocatore " + username + " disconnesso"); // Debug
+                            System.out.println(username + " si è disconnesso\n"); // Debug
                             break;
                     }
                     

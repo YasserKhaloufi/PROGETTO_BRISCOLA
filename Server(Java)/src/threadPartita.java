@@ -41,8 +41,6 @@ public class threadPartita extends Thread {
         try 
         {
             distribuisciCarte(); 
-            Thread.sleep(1000); // Aspetto un secondo per permettere ai giocatori di parsare le carte separatemente dalle informazioni sul turno
-
         } catch (TransformerException e) {
             System.out.println("Errore serializzazione delle carte");
             e.printStackTrace();
@@ -86,7 +84,12 @@ public class threadPartita extends Thread {
         mazzo.remove(mazzo.size() - 1); // Rimuovo la briscola dal mazzo
     }
 
-    public void distribuisciCarte() throws TransformerException, ParserConfigurationException, IOException
+    /* Se non aspettassi un ack (feedback) da parte del client dopo averli inviato un messaggio, è probabile
+     * che i messaggi a lui inviati dal server si accavallino, impedendoli di parsare correttamente le singole informazioni.
+     * Perciò faccio si che il client restituisca un ack ogni volta che gli viene inviata un informazione, 
+     * per notificare al server che questi ha ricevuto e parsato correttamente l'informazioni.
+     */
+    public void distribuisciCarte() throws TransformerException, ParserConfigurationException, IOException, InterruptedException
     {
 
         int conta = 0; // Per tenere conto del progresso di distribuzione delle carte
@@ -102,8 +105,10 @@ public class threadPartita extends Thread {
                 mano += XMLserializer.stringfyOmitDeclaration(mazzo.get(indice).serialize()); // Aggiungo la carta alla mano (in formato XML)
                 mazzo.remove(indice);
             }
-            inviaBriscola(g); // Assieme alla mano, invio anche la briscola
+            inviaBriscola(g); // Invio la briscola al giocatore
+            g.responses.take(); // Aspetto l'ACK
             inviaMano(g,mano); // Invio la mano al giocatore
+            g.responses.take(); // Aspetto l'ACK
             conta += 3;
         }
     }
