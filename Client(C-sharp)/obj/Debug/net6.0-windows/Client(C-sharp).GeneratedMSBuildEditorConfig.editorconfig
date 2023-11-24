@@ -8,4 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Client_C_sharp_
-build_property.ProjectDir = C:\Users\Yasser\Desktop\Scuola\Projects\Progettazione\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\
+build_property.ProjectDir = C:\Users\yasse\Desktop\Scuola\Pro\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
