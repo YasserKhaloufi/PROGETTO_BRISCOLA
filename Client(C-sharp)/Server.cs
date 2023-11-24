@@ -117,7 +117,8 @@ namespace Client_C_sharp_
 
         public static void InviaCarta(Carta c)
         {
-            Send(XMLserializer.Stringfy(c.Serialize()));
+            String temp = XMLserializer.Stringfy(c.Serialize());
+            Send(c.toXML());
         }
 
     }

@@ -54,6 +54,10 @@ public class clientHandler extends Thread{
                             responses.put(XMLserializer.getArgomento(ricevuto)); // Inserisco il messaggio nella coda di risposte
                             break;
 
+                        case "Carta":
+                            System.out.println(ricevuto); // Debug
+                            break;
+
                         case "ACK":
                             responses.put("ACK");
                             break;

@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 using Path = System.IO.Path;
 
 namespace Client_C_sharp_
@@ -24,7 +25,7 @@ namespace Client_C_sharp_
 
         // Elementi di gioco
         List<Carta> mano = new List<Carta>(); // Mano del giocatore
-        Carta briscola = new Carta(); 
+        Carta briscola = new Carta();
         Carta cartaGiocata = new Carta();
 
         // La seguente property è necessaria per il binding grafico delle carte in mano al giocatore e della briscola
@@ -56,10 +57,13 @@ namespace Client_C_sharp_
             }
         }
 
+        private List<Button> buttons; // Lista di pulsanti generati dinamicamente
+
         public MainWindow()
         {
             InitializeComponent();
             Closing += MainWindow_Closing;
+            LayoutUpdated += MainWindow_LayoutUpdated;
             DataContext = this; // Necessario perchè XAML riesca a vedere "Mano" e aggiornare la carte mostrate in base ad essa
 
             this.Hide(); // Nascondo la finestra principale
@@ -76,16 +80,47 @@ namespace Client_C_sharp_
 
             riceviBriscola();
             riceviMano();
-            
+            nominaPulsanti();
+
+            Task.Run(() => riceviComando()); // Mi metto in ascolto di comandi dal server
+
             //Server.Disconnect(); // Mi disconnetto dal server per debugging
             //Application.Current.Shutdown(); // Chiudo l'applicazione per debug 
         }
 
+        private void riceviComando()
+        {
+            while (true)
+            {
+                String ricevuto = Server.Receive();
+                String comando = XMLserializer.getComando(ricevuto);
+                String argomento = "";
+
+                switch (comando)
+                {
+                    case "Turn":
+                        Dispatcher.Invoke(() =>
+                        {
+                            argomento = XMLserializer.getArgomento(ricevuto);
+
+                            if (argomento == "Yours")
+                                abilitaPulsanti();
+                            else
+                            {
+                                disabilitaPulsanti();
+                                txtDebug.Text = "Turno di " + argomento;
+                            }
+                        });
+                        break;
+                }
+            }
+        }
+
         private void btnCarta_click(object sender, RoutedEventArgs e)
         {
-            Button b  = sender as Button;
+            Button b = sender as Button;
             String temp = b.Name;
-            int indice=int.Parse(b.Name.Substring(3));
+            int indice = int.Parse(b.Name.Substring(b.Name.Length - 1)); // Ricavo l'indice della carta cliccata
             GiocaCarta(mano.ElementAt(indice));
             Mano.RemoveAt(indice);
         }
@@ -106,8 +141,55 @@ namespace Client_C_sharp_
 
         public void GiocaCarta(Carta c)
         {
-            cartaGiocata=c;
+            cartaGiocata = c;
             Server.InviaCarta(c);
+        }
+
+        // I pulsanti presenti nella finestra sono generati dinamicamente, quindi non hanno un nome, perciò glielo assegno
+        public void nominaPulsanti()
+        {
+            int buttonCount = 0;
+            foreach (Button b in buttons)
+                b.Name = "btn" + buttonCount++;
+        }
+
+        public void disabilitaPulsanti()
+        {
+            foreach (Button b in buttons)
+                b.IsEnabled = false;
+        }
+
+        public void abilitaPulsanti()
+        {
+            foreach (Button b in buttons)
+                b.IsEnabled = true;
+        }
+
+        private void MainWindow_LayoutUpdated(object sender, EventArgs e)
+        {
+            // Call the function when the layout is updated
+            buttons = FindButtons(ItemsControl).ToList();
+            nominaPulsanti();
+        }
+
+        public IEnumerable<Button> FindButtons(DependencyObject parent)
+        {
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
+            {
+                var child = VisualTreeHelper.GetChild(parent, i);
+
+                if (child is Button button)
+                {
+                    yield return button;
+                }
+                else
+                {
+                    foreach (var childButton in FindButtons(child))
+                    {
+                        yield return childButton;
+                    }
+                }
+            }
         }
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)

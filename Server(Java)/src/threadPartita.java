@@ -129,7 +129,7 @@ public class threadPartita extends Thread {
             if(p != g)
                 Server.invia(p.outToClient, "<Turn>" + g.getUsername() + "</Turn>");
             else
-                Server.invia(p.outToClient, "<Turn>Yours<Turn/>");
+                Server.invia(p.outToClient, "<Turn>Yours</Turn>");
         }
     }
 }

@@ -125,8 +125,6 @@ namespace Client_C_sharp_
             return lista;
         }
 
-
-
         // Serve alla finestra di attesa, per capire che istruzioni eseguire in base al comando ricevuto dal server
         public static string getComando(string xmlString)
         {
