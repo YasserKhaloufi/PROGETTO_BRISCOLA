@@ -5,34 +5,37 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Client_C_sharp_"
         mc:Ignorable="d"
-        Title="Briscola" Height="1188" Width="1551" Icon="/Icon.png">
+        Title="Briscola" Height="1188" Width="1307" Icon="/Icon.png">
 
     <Grid Height="1138" Margin="0,10,0,0" VerticalAlignment="Top">
-        <Button HorizontalAlignment="Left" Height="300" Margin="496,772,0,0" VerticalAlignment="Top" Width="200" x:Name="btn0" Click="btnCarta_click">
-            <Image Height="300" Width="200" x:Name="imgBox1"/>
-        </Button>
-
-        <Button HorizontalAlignment="Left" Height="300" Margin="836,770,0,0" VerticalAlignment="Top" Width="200" x:Name="btn1" Click="btnCarta_click">
-            <Image Height="300" Width="200" x:Name="imgBox2"/>
-        </Button>
-
-        <Button HorizontalAlignment="Left" Height="300" Margin="1198,770,0,0" VerticalAlignment="Top" Width="200" x:Name="btn2" Click="btnCarta_click">
-            <Image Height="300" Width="200" x:Name="imgBox3"/>
-        </Button>
+        <ItemsControl ItemsSource="{Binding Mano}" HorizontalAlignment="Left" Height="300" VerticalAlignment="Top" Margin="496,772,0,0">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button Height="300" Width="200" Click="btnCarta_click">
+                        <Image Height="300" Width="200" Source="{Binding Img_path}" />
+                    </Button>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
 
         <Image HorizontalAlignment="Left" Height="300" Margin="494,78,0,0" VerticalAlignment="Top" Width="200" Source="/carta-retro.jpg" Stretch="Fill"/>
-        <Image HorizontalAlignment="Left" Height="300" Margin="836,78,0,0" VerticalAlignment="Top" Width="200" Source="/carta-retro.jpg" Stretch="Fill"/>
-        <Image HorizontalAlignment="Left" Height="300" Margin="1198,78,0,0" VerticalAlignment="Top" Width="200" Source="/carta-retro.jpg" Stretch="Fill"/>
+        <Image HorizontalAlignment="Left" Height="300" Margin="694,78,0,0" VerticalAlignment="Top" Width="200" Source="/carta-retro.jpg" Stretch="Fill"/>
+        <Image HorizontalAlignment="Left" Height="300" Margin="894,78,0,0" VerticalAlignment="Top" Width="200" Source="/carta-retro.jpg" Stretch="Fill"/>
 
         <Label Content="Briscola" HorizontalAlignment="Left" Height="66" Margin="216,339,0,0" VerticalAlignment="Top" Width="120" FontSize="35" Foreground="#FF128A01" FontFamily="Bernard MT Condensed"/>
-        <Image x:Name="imgBoxBriscola" HorizontalAlignment="Left" Height="300" Margin="178,405,0,0" VerticalAlignment="Top" Width="200"/>
+        <Image x:Name="imgBoxBriscola" HorizontalAlignment="Left" Height="300" Margin="178,405,0,0" VerticalAlignment="Top" Width="200" Source="{Binding Briscola.Img_path}"/>
 
         <TextBox HorizontalAlignment="Left" Height="320" Margin="124,762,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="304" x:Name="txtDebug" RenderTransformOrigin="0.837,0.536">
             <TextBox.Background>
                 <ImageBrush/>
             </TextBox.Background>
         </TextBox>
-        <Image HorizontalAlignment="Left" Height="300" Margin="836,405,0,0" VerticalAlignment="Top" Width="200" x:Name="imgBoxCartaGiocata"/>
+        <Image HorizontalAlignment="Left" Height="300" Margin="694,405,0,0" VerticalAlignment="Top" Width="200" x:Name="imgBoxCartaGiocata"/>
     </Grid>
 
     <Window.Background>

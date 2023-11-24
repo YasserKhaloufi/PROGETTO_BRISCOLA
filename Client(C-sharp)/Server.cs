@@ -54,7 +54,11 @@ namespace Client_C_sharp_
             // Converti il messaggio (una stringa) in un array di byte
             byte[] data = Encoding.ASCII.GetBytes(messaggio + "\n"); // Aggiungo l'apposito new line alla fine
             // Invia il messaggio al server
-            stream.Write(data, 0, data.Length);
+            try { stream.Write(data, 0, data.Length); }
+            catch (Exception e) 
+            { 
+                MessageBox.Show("Il server non è disponibile"); 
+            }
         }
         public static String Receive()
         {
@@ -84,9 +88,9 @@ namespace Client_C_sharp_
 
         public static bool isSameSrv(String indirizzo, int porta)
         {
-            if(indirizzo == IP && porta == PORT)
+            if (indirizzo == IP && porta == PORT)
                 return true;
-            
+
             return false;
         }
 
@@ -94,7 +98,6 @@ namespace Client_C_sharp_
         {
             String ricevuto = Server.Receive();
             Carta c = new Carta(XMLserializer.ReadFromStringRawElements(ricevuto).ElementAt(0));
-
             return c;
         }
 
@@ -106,8 +109,8 @@ namespace Client_C_sharp_
         }
 
 
-        public static void InviaCarta(Carta c) 
-        { 
+        public static void InviaCarta(Carta c)
+        {
             Send(XMLserializer.Stringfy(c.Serialize()));
         }
 

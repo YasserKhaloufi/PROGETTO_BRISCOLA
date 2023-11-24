@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
@@ -18,36 +19,63 @@ using Path = System.IO.Path;
 
 namespace Client_C_sharp_
 {
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
-        // Settings
-        List<Image> imageBoxes = new List<Image>();
 
         // Elementi di gioco
-        List<Carta> mano=new List<Carta>();
-        Carta briscola = null;
-        Carta cartaGiocata=null;
+        List<Carta> mano = new List<Carta>(); // Mano del giocatore
+        Carta briscola = new Carta(); 
+        Carta cartaGiocata = new Carta();
+
+        // La seguente property è necessaria per il binding grafico delle carte in mano al giocatore e della briscola
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public Carta Briscola
+        {
+            get { return briscola; }
+            set
+            {
+                if (briscola != value)
+                {
+                    briscola = value;
+                    OnPropertyChanged("Briscola");
+                }
+            }
+        }
+
+        public List<Carta> Mano
+        {
+            get { return mano; }
+            set
+            {
+                if (mano != value)
+                {
+                    mano = value;
+                    OnPropertyChanged("Mano"); // Ogni volta che la mano cambia, viene notificato, quindi si aggiorna la grafica
+                }
+            }
+        }
 
         public MainWindow()
         {
-            // Impostazioni finestra
             InitializeComponent(); 
-            preparativi();
+            DataContext = this; // Necessario perchè XAML riesca a vedere "Mano" e aggiornare la carte mostrate in base ad essa
 
             this.Hide(); // Nascondo la finestra principale
 
             // Mostro la finestra iniziale
             Home home = new Home();
-            home.ShowDialog(); //...
+            home.ShowDialog(); // L'utente inserisce il nickname e nel caso cambia le impostazioni....
 
             // Finito con la finestra iniziale mostro quella di attesa
             WindowAttesa windowAttesa = new WindowAttesa();
-            windowAttesa.ShowDialog();
+            windowAttesa.ShowDialog(); // L'utente attende che si colleghi almeno un altro giocatore poi può cliccare su start game
 
-            this.Show();
+            this.Show(); // Finalmente viene mostrata la finestra principale, quella di gioco
 
-            renderCarte();
-
+            riceviBriscola();
+            riceviMano();
+            
             //Server.Disconnect(); // Mi disconnetto dal server per debugging
             //Application.Current.Shutdown(); // Chiudo l'applicazione per debug 
         }
@@ -57,29 +85,19 @@ namespace Client_C_sharp_
             Button b  = sender as Button;
             int indice=int.Parse(b.Name.Substring(3));
             GiocaCarta(mano.ElementAt(indice));
-            mano[indice] = null;
-
-            refresh();
-        }
-
-        private void renderCarte()
-        {
-            renderBriscola();
-            renderMano();
+            Mano.RemoveAt(indice);
         }
 
         // Ricava dal server la briscola e la mostra
-        private void renderBriscola()
+        private void riceviBriscola()
         {
-            briscola = Server.getBriscola();
-            refresh();
+            Briscola = Server.getBriscola();
         }
 
-        // Ricava dal server la mano e la mostra
-        private void renderMano()
+        //Ricava dal server la mano e la mostra
+        private void riceviMano()
         {
-            mano = Server.getMano();
-            refresh();
+            Mano = Server.getMano();
         }
 
         public void GiocaCarta(Carta c)
@@ -88,36 +106,15 @@ namespace Client_C_sharp_
             Server.InviaCarta(c);
         }
 
-        public void refresh()
-        {
-            // Assegno ad ogni immagine il rispettivo path, estraendolo dalla lista di carte
-            for (int i = 0; i < imageBoxes.Count; i++)
-            {
-                String path = "carta-retro.jpg";
-                if (mano.ElementAt(i) != null)
-                {
-                    path = mano.ElementAt(i).GetImg_path();
-                    imageBoxes.ElementAt(i).Source = new BitmapImage(new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "img", path)));
-                }
-                else
-                    imageBoxes.ElementAt(i).Source = new BitmapImage(new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "img", path)));
-            }
-            if(cartaGiocata!=null)
-                imgBoxCartaGiocata.Source = new BitmapImage(new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "img", cartaGiocata.GetImg_path())));
-        }
-
-        public void preparativi()
-        {
-            imageBoxes.Add(imgBox1);
-            imageBoxes.Add(imgBox2);
-            imageBoxes.Add(imgBox3);
-        }
-
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Application.Current.Shutdown();
             Server.Disconnect();
         }
 
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }
