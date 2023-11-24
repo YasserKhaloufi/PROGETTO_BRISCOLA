@@ -32,7 +32,7 @@
                 <ImageBrush/>
             </TextBox.Background>
         </TextBox>
-        <Image HorizontalAlignment="Left" Height="300" Margin="836,405,0,0" VerticalAlignment="Top" Width="200" x:Name="imgBoxPresa"/>
+        <Image HorizontalAlignment="Left" Height="300" Margin="836,405,0,0" VerticalAlignment="Top" Width="200" x:Name="imgBoxCartaGiocata"/>
     </Grid>
 
     <Window.Background>

@@ -21,11 +21,12 @@ namespace Client_C_sharp_
     public partial class MainWindow : Window
     {
         // Settings
-        String username = "";
         List<Image> imageBoxes = new List<Image>();
 
+        // Elementi di gioco
         List<Carta> mano=new List<Carta>();
-        Carta presa=null;
+        Carta briscola = null;
+        Carta cartaGiocata=null;
 
         public MainWindow()
         {
@@ -45,49 +46,45 @@ namespace Client_C_sharp_
 
             this.Show();
 
-            renderBriscola(); renderMano();
+            renderCarte();
 
             //Server.Disconnect(); // Mi disconnetto dal server per debugging
             //Application.Current.Shutdown(); // Chiudo l'applicazione per debug 
         }
 
-        private void renderBriscola()
+        private void btnCarta_click(object sender, RoutedEventArgs e)
         {
-            String path = Server.getBriscola().GetImg_path();
-            imgBoxBriscola.Source = new BitmapImage(new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "img", path)));
+            Button b  = sender as Button;
+            int indice=int.Parse(b.Name.Substring(3));
+            GiocaCarta(mano.ElementAt(indice));
+            mano[indice] = null;
+
+            refresh();
         }
 
+        private void renderCarte()
+        {
+            renderBriscola();
+            renderMano();
+        }
+
+        // Ricava dal server la briscola e la mostra
+        private void renderBriscola()
+        {
+            briscola = Server.getBriscola();
+            refresh();
+        }
+
+        // Ricava dal server la mano e la mostra
         private void renderMano()
         {
             mano = Server.getMano();
-
             refresh();
-            
         }
 
-        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            Application.Current.Shutdown();
-            Server.Disconnect();
-        }
-
-        private void btnCarta_click(object sender, RoutedEventArgs e)
-        {
-            Button b  = sender as Button; // Cast puslante
-            String indice = b.Name;
-            int index=int.Parse(indice.Substring(3));
-            GiocaCarta(mano.ElementAt(index));
-
-            mano.RemoveAt(index);
-            mano.Add(null);
-
-            refresh();
-
-            
-        }
         public void GiocaCarta(Carta c)
         {
-            presa=c;
+            cartaGiocata=c;
             Server.InviaCarta(c);
         }
 
@@ -105,8 +102,8 @@ namespace Client_C_sharp_
                 else
                     imageBoxes.ElementAt(i).Source = new BitmapImage(new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "img", path)));
             }
-            if(presa!=null)
-                imgBoxPresa.Source = new BitmapImage(new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "img", presa.GetImg_path())));
+            if(cartaGiocata!=null)
+                imgBoxCartaGiocata.Source = new BitmapImage(new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "img", cartaGiocata.GetImg_path())));
         }
 
         public void preparativi()
@@ -114,6 +111,12 @@ namespace Client_C_sharp_
             imageBoxes.Add(imgBox1);
             imageBoxes.Add(imgBox2);
             imageBoxes.Add(imgBox3);
+        }
+
+        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Application.Current.Shutdown();
+            Server.Disconnect();
         }
 
     }

@@ -41,6 +41,8 @@ public class threadPartita extends Thread {
         try 
         {
             distribuisciCarte(); 
+            Thread.sleep(1000); // Aspetto un secondo per permettere ai giocatori di parsare le carte separatemente dalle informazioni sul turno
+
         } catch (TransformerException e) {
             System.out.println("Errore serializzazione delle carte");
             e.printStackTrace();
@@ -49,6 +51,9 @@ public class threadPartita extends Thread {
             e.printStackTrace();
         } catch (IOException e) {
             System.out.println("Errore inoltro delle carte");
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            System.out.println("Errore attesa");
             e.printStackTrace();
         }
 
@@ -61,7 +66,6 @@ public class threadPartita extends Thread {
             {
                 try 
                 {
-                    Thread.sleep(1000);
                     toccaA(g);
                     feedback = g.responses.take(); // Aspetto la risposta del giocatore
                     
