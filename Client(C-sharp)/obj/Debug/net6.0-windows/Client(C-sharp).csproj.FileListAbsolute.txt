@@ -216,3 +216,45 @@ C:\Users\yasse\Desktop\Scuola\Pro\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C
 C:\Users\yasse\Desktop\Scuola\Pro\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\R-denari.jpg
 C:\Users\yasse\Desktop\Scuola\Pro\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\R-spade.jpg
 C:\Users\yasse\Desktop\Scuola\Pro\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\sfondo1.jpg
+D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\2-bastoni.jpg
+D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\2-coppe.jpg
+D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\2-denari.jpg
+D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\2-spade.jpg
+D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\3-bastoni.jpg
+D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\3-coppe.jpg
+D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\3-denari.jpg
+D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\3-spade.jpg
+D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\4-bastoni.jpg
+D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\4-coppe.jpg
+D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\4-denari.jpg
+D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\4-spade.jpg
+D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\5-bastoni.jpg
+D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\5-coppe.jpg
+D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\5-denari.jpg
+D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\5-spade.jpg
+D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\6-bastoni.jpg
+D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\6-coppe.jpg
+D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\6-denari.jpg
+D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\6-spade.jpg
+D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\7-bastoni.jpg
+D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\7-coppe.jpg
+D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\7-denari.jpg
+D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\7-spade.jpg
+D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\A-bastoni.jpg
+D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\A-coppe.jpg
+D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\A-denari.jpg
+D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\A-spade.jpg
+D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\C-bastoni.jpg
+D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\C-coppe.jpg
+D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\C-denari.jpg
+D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\C-spade.jpg
+D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\carta-retro.jpg
+D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\F-bastoni.jpg
+D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\F-coppe.jpg
+D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\F-denari.jpg
+D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\F-spade.jpg
+D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\R-Bastoni.jpg
+D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\R-coppe.jpg
+D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\R-denari.jpg
+D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\R-spade.jpg
+D:\desktop\Progetto_Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\sfondo1.jpg
