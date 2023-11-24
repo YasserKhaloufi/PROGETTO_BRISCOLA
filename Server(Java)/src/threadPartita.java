@@ -61,6 +61,7 @@ public class threadPartita extends Thread {
             {
                 try 
                 {
+                    Thread.sleep(1000);
                     toccaA(g);
                     feedback = g.responses.take(); // Aspetto la risposta del giocatore
                     

@@ -104,5 +104,12 @@ namespace Client_C_sharp_
 
             return XMLserializer.ReadFromString(ricevuto);
         }
+
+
+        public static void InviaCarta(Carta c) 
+        { 
+            Send(XMLserializer.Stringfy(c.Serialize()));
+        }
+
     }
 }

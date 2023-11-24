@@ -1,0 +1,8 @@
+"<Carte>
+    <Carta><seed>coppe</seed><number>6</number><value>0</value><img_path>6-coppe.jpg</img_path></Carta>
+    <Carta><seed>spade</seed><number>R</number><value>4</value><img_path>R-spade.jpg</img_path></Carta>
+    <Carta><seed>spade</seed><number>F</number><value>2</value><img_path>F-spade.jpg</img_path></Carta></Carte>
+    \n<Turn>Yours<Turn/>"
+
+
+        "<?xml version="1.0" encoding="utf-16"?>"

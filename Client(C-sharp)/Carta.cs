@@ -21,6 +21,10 @@ namespace Client_C_sharp_
             this.valore = valore;
             this.img_path = img_path;
         }
+        public Carta()
+        {
+
+        }
 
         public Carta(string s)
         {

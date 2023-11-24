@@ -24,10 +24,14 @@ namespace Client_C_sharp_
         String username = "";
         List<Image> imageBoxes = new List<Image>();
 
+        List<Carta> mano=new List<Carta>();
+        Carta presa=null;
+
         public MainWindow()
         {
             // Impostazioni finestra
-            InitializeComponent();
+            InitializeComponent(); 
+            preparativi();
 
             this.Hide(); // Nascondo la finestra principale
 
@@ -55,20 +59,9 @@ namespace Client_C_sharp_
 
         private void renderMano()
         {
-            List<Carta> mano = Server.getMano();
+            mano = Server.getMano();
 
-
-            // Assuming imgBox1, imgBox2, and imgBox3 are defined in XAML and have these names
-            imageBoxes.Add(imgBox1);
-            imageBoxes.Add(imgBox2);
-            imageBoxes.Add(imgBox3);
-
-            // Assegno ad ogni immagine il rispettivo path, estraendolo dalla lista di carte
-            for (int i = 0; i < imageBoxes.Count; i++)
-            {
-                String path = mano.ElementAt(i).GetImg_path();
-                imageBoxes.ElementAt(i).Source = new BitmapImage(new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "img", path)));
-            }   
+            refresh();
             
         }
 
@@ -77,5 +70,51 @@ namespace Client_C_sharp_
             Application.Current.Shutdown();
             Server.Disconnect();
         }
+
+        private void btnCarta_click(object sender, RoutedEventArgs e)
+        {
+            Button b  = sender as Button; // Cast puslante
+            String indice = b.Name;
+            int index=int.Parse(indice.Substring(3));
+            GiocaCarta(mano.ElementAt(index));
+
+            mano.RemoveAt(index);
+            mano.Add(null);
+
+            refresh();
+
+            
+        }
+        public void GiocaCarta(Carta c)
+        {
+            presa=c;
+            Server.InviaCarta(c);
+        }
+
+        public void refresh()
+        {
+            // Assegno ad ogni immagine il rispettivo path, estraendolo dalla lista di carte
+            for (int i = 0; i < imageBoxes.Count; i++)
+            {
+                String path = "carta-retro.jpg";
+                if (mano.ElementAt(i) != null)
+                {
+                    path = mano.ElementAt(i).GetImg_path();
+                    imageBoxes.ElementAt(i).Source = new BitmapImage(new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "img", path)));
+                }
+                else
+                    imageBoxes.ElementAt(i).Source = new BitmapImage(new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "img", path)));
+            }
+            if(presa!=null)
+                imgBoxPresa.Source = new BitmapImage(new Uri(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "img", presa.GetImg_path())));
+        }
+
+        public void preparativi()
+        {
+            imageBoxes.Add(imgBox1);
+            imageBoxes.Add(imgBox2);
+            imageBoxes.Add(imgBox3);
+        }
+
     }
 }
