@@ -288,7 +288,6 @@ C:\Users\Yasser\Desktop\Scuola\Projects\Progettazione\A.S. 23-24\Briscola\PROGET
 C:\Users\Yasser\Desktop\Scuola\Projects\Progettazione\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\C-coppe.jpg
 C:\Users\Yasser\Desktop\Scuola\Projects\Progettazione\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\C-denari.jpg
 C:\Users\Yasser\Desktop\Scuola\Projects\Progettazione\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\C-spade.jpg
-C:\Users\Yasser\Desktop\Scuola\Projects\Progettazione\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\carta-retro.jpg
 C:\Users\Yasser\Desktop\Scuola\Projects\Progettazione\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\F-bastoni.jpg
 C:\Users\Yasser\Desktop\Scuola\Projects\Progettazione\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\F-coppe.jpg
 C:\Users\Yasser\Desktop\Scuola\Projects\Progettazione\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\F-denari.jpg
@@ -297,7 +296,6 @@ C:\Users\Yasser\Desktop\Scuola\Projects\Progettazione\A.S. 23-24\Briscola\PROGET
 C:\Users\Yasser\Desktop\Scuola\Projects\Progettazione\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\R-coppe.jpg
 C:\Users\Yasser\Desktop\Scuola\Projects\Progettazione\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\R-denari.jpg
 C:\Users\Yasser\Desktop\Scuola\Projects\Progettazione\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\R-spade.jpg
-C:\Users\Yasser\Desktop\Scuola\Projects\Progettazione\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\bin\Debug\net6.0-windows\img\sfondo1.jpg
 C:\Users\Yasser\Desktop\Scuola\Projects\Progettazione\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\Home.g.cs
 C:\Users\Yasser\Desktop\Scuola\Projects\Progettazione\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\WindowAttesa.g.cs
 C:\Users\Yasser\Desktop\Scuola\Projects\Progettazione\A.S. 23-24\Briscola\PROGETTO_BRISCOLA\Client(C-sharp)\obj\Debug\net6.0-windows\Home.baml

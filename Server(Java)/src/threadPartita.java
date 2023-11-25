@@ -97,12 +97,12 @@ public class threadPartita extends Thread {
         // Distribuisco le carte a partire da quella più in fondo nel mazzo (3 carte per giocatore)
         for (clientHandler g : giocatori) {
 
-            String mano = ""; 
+            List<Carta> mano = new ArrayList<Carta>();
             int indice = 0;
             for(int i = 0; i < 3; i++)
             {
                 indice = mazzo.size() - i - 1 - conta; // Indice della carta da assegnare
-                mano += XMLserializer.stringfyOmitDeclaration(mazzo.get(indice).serialize()); // Aggiungo la carta alla mano (in formato XML)
+                mano.add(mazzo.get(indice));
                 mazzo.remove(indice);
             }
             inviaBriscola(g); // Invio la briscola al giocatore
@@ -113,14 +113,15 @@ public class threadPartita extends Thread {
         }
     }
 
-    private void inviaMano(clientHandler g, String mano) throws IOException
+    private void inviaMano(clientHandler g, List<Carta> mano) throws IOException, TransformerException, ParserConfigurationException
     {
-        Server.invia(g.outToClient, "<Carte>" + mano + "</Carte>");
+        Server.invia(g.outToClient, XMLserializer.stringfyOmitDeclaration(XMLserializer.serializzaLista(mano)));
     }
 
     private void inviaBriscola(clientHandler g) throws IOException, TransformerException, ParserConfigurationException
     {
-        Server.invia(g.outToClient, "<Carte>" + XMLserializer.stringfyOmitDeclaration(briscola.serialize()) + "</Carte>");
+        List<Carta> temp = new ArrayList<Carta>(); temp.add(briscola);
+        Server.invia(g.outToClient, XMLserializer.stringfyOmitDeclaration(XMLserializer.serializzaLista(temp)));
     }
 
     private void toccaA(clientHandler g) throws IOException

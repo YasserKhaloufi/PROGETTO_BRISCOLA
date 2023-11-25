@@ -104,20 +104,18 @@ namespace Client_C_sharp_
         public static Carta getBriscola()
         {
             String ricevuto = Server.Receive();
-            Carta c = new Carta(XMLserializer.ReadFromStringRawElements(ricevuto).ElementAt(0));
+            Carta c = XMLserializer.ReadFromString(ricevuto).ElementAt(0);
             return c;
         }
 
         public static List<Carta> getMano()
         {
             String ricevuto = Server.Receive();
-
             return XMLserializer.ReadFromString(ricevuto);
         }
 
         public static void InviaCarta(Carta c)
         {
-            String temp = XMLserializer.Stringfy(c.Serialize());
             Send(c.toXML());
         }
 

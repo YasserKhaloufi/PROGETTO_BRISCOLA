@@ -1,3 +1,5 @@
+import java.nio.file.Paths;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -10,38 +12,28 @@ public class Carta{
     private String seme;
     private char numero;
     private int valore;
-    private String img_path;
+    public String Img_path;
     
     public Carta() {
         seme = "null";
         numero = '0';
         valore = 0;
-        img_path = "null";
+        Img_path = "null";
     }
 
     public Carta(String seme, char numero, int valore, String img_path) {
         this.seme = seme;
         this.numero = numero;
         this.valore = valore;
-        this.img_path = img_path;
-    }
-
-    //costruttore da stringa
-    public Carta(String s){
-        //seme;numero;valore;img_path
-        String[] stringaSplittata=s.split(s, ';');
-        this.seme=stringaSplittata[0];
-        this.numero=stringaSplittata[1].charAt(0);
-        this.valore=Integer.parseInt(stringaSplittata[2]);
-        this.img_path=stringaSplittata[3];
+        this.Img_path = img_path;
     }
 
     //costruttore parser XML
     public Carta(Element e){
-        this.seme = XMLserializer.parseTagName(e, "seed");
-        this.numero =  XMLserializer.parseTagName(e, "number").charAt(0);
-        this.valore = Integer.parseInt(XMLserializer.parseTagName(e, "value"));
-        this.img_path = XMLserializer.parseTagName(e, "img_path");
+        this.seme = XMLserializer.parseTagName(e, "seme");
+        this.numero =  XMLserializer.parseTagName(e, "numero").charAt(0);
+        this.valore = Integer.parseInt(XMLserializer.parseTagName(e, "valore"));
+        this.Img_path = XMLserializer.parseTagName(e, "Img_path");
     }
 
     // Per rendere facile la serializzazione di liste di oggetti di questo tipo
@@ -54,13 +46,13 @@ public class Carta{
 
         Element elementoCarta = d.createElement("Carta");
         
-        Element elementoSeed = d.createElement("seed"); elementoSeed.appendChild(d.createTextNode(seme));
+        Element elementoSeed = d.createElement("seme"); elementoSeed.appendChild(d.createTextNode(seme));
         
-        Element elementoNumber = d.createElement("number"); elementoNumber.appendChild(d.createTextNode(String.valueOf(numero)));
+        Element elementoNumber = d.createElement("numero"); elementoNumber.appendChild(d.createTextNode(String.valueOf(numero)));
 
-        Element elementoValue = d.createElement("value"); elementoValue.appendChild(d.createTextNode(String.valueOf(valore)));
+        Element elementoValue = d.createElement("valore"); elementoValue.appendChild(d.createTextNode(String.valueOf(valore)));
         
-        Element elementoPath = d.createElement("img_path"); elementoPath.appendChild(d.createTextNode(img_path));
+        Element elementoPath = d.createElement("Img_path"); elementoPath.appendChild(d.createTextNode(Img_path));
 
         elementoCarta.appendChild(elementoSeed);
         elementoCarta.appendChild(elementoNumber);
@@ -84,6 +76,10 @@ public class Carta{
         return d;   
     }
 
+    public String getImgName() {
+        return Paths.get(Img_path).getFileName().toString();
+    }
+
 
     public String getSeme() {
         return seme;
@@ -98,13 +94,9 @@ public class Carta{
     }
 
     public String getImg_path() {
-        return img_path;
+        return Img_path;
     }
     public String ToString(){
-        return seme+";"+numero+";"+valore+";"+img_path;
-    }
-    public Carta ToCarta(String s){
-        Carta c=new Carta(s);
-        return c;
+        return seme+";"+numero+";"+valore+";"+Img_path;
     }
 }

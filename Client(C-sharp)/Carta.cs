@@ -12,15 +12,15 @@ namespace Client_C_sharp_
 {
     public class Carta : INotifyPropertyChanged
     {
-        private string seme;
-        private char numero;
-        private int valore;
+        public string seme {get; set;}
+        public char numero { get; set; }
+        public int valore   { get; set; }
         private string img_path;
 
         // Per binding della mano con la GUI
         public string Img_path
         {
-            get { return System.IO.Path.Combine(Environment.CurrentDirectory, "img", img_path); }
+            get { return System.IO.Path.Combine(Environment.CurrentDirectory, "img", img_path); } // Ritorna il path completo in base alla disposizione del progetto
             set
             {
                 if (img_path != value)
@@ -56,10 +56,10 @@ namespace Client_C_sharp_
 
         public Carta(XmlElement e)
         {
-            this.seme = XMLserializer.ParseTagName(e, "seed");
-            this.numero = XMLserializer.ParseTagName(e, "number")[0];
-            this.valore = int.Parse(XMLserializer.ParseTagName(e, "value"));
-            this.img_path = XMLserializer.ParseTagName(e, "img_path");
+            this.seme = XMLserializer.ParseTagName(e, "seme");
+            this.numero = XMLserializer.ParseTagName(e, "numero")[0];
+            this.valore = int.Parse(XMLserializer.ParseTagName(e, "valore"));
+            this.img_path = XMLserializer.ParseTagName(e, "Img_path");
         }
 
         // Serializzazione in elemento XML per append a documento superiore
@@ -67,16 +67,16 @@ namespace Client_C_sharp_
         {
             XmlElement elementoCarta = d.CreateElement("Carta");
 
-            XmlElement elementoSeed = d.CreateElement("seed");
+            XmlElement elementoSeed = d.CreateElement("seme");
             elementoSeed.AppendChild(d.CreateTextNode(seme));
 
-            XmlElement elementoNumber = d.CreateElement("number");
+            XmlElement elementoNumber = d.CreateElement("numero");
             elementoNumber.AppendChild(d.CreateTextNode(numero.ToString()));
 
-            XmlElement elementoValue = d.CreateElement("value");
+            XmlElement elementoValue = d.CreateElement("valore");
             elementoValue.AppendChild(d.CreateTextNode(valore.ToString()));
 
-            XmlElement elementoPath = d.CreateElement("img_path");
+            XmlElement elementoPath = d.CreateElement("Img_path");
             elementoPath.AppendChild(d.CreateTextNode(img_path));
 
             elementoCarta.AppendChild(elementoSeed);
@@ -137,7 +137,7 @@ namespace Client_C_sharp_
             */
             settings.ConformanceLevel = ConformanceLevel.Fragment;
 
-            settings.Indent = true; // non sono sicuro che questo attivi effettivamente l'indentazione
+            // settings.Indent = true; // non sono sicuro che questo attivi effettivamente l'indentazione
 
             /* L'XMLWriter serve a scrivere una stringa in formato xml,
             * scrivendo all'interno di uno stringwriter, è anche possibile utilizzare impostazioni specifiche */

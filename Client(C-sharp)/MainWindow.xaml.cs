@@ -141,7 +141,6 @@ namespace Client_C_sharp_
 
         public void GiocaCarta(Carta c)
         {
-            cartaGiocata = c;
             Server.InviaCarta(c);
         }
 

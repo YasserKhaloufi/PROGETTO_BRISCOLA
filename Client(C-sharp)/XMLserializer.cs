@@ -101,7 +101,6 @@ namespace Client_C_sharp_
             return lista;
         }
 
-        // Come sopra, ma legge da stringa in formato XML invece che file
         public static List<XmlElement> ReadFromStringRawElements(string xmlString)
         {
             XmlDocument d = new XmlDocument();

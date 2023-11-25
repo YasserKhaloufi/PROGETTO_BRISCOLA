@@ -41,7 +41,7 @@ public class XMLserializer {
         t.transform(new DOMSource(d), result);
     }
 
-    private static Document serializzaLista(List<Carta> lista)
+    public static Document serializzaLista(List<Carta> lista)
             throws ParserConfigurationException, TransformerException {
 
         DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
@@ -177,7 +177,7 @@ public class XMLserializer {
         Document d = creaDocumento(ricevuto);
 
         // TO DO: è ancora da vedere dove sarà posizionata la carta in un comando 
-        Element o = (Element) d.getDocumentElement().getFirstChild();
+        Element o = (Element) d.getDocumentElement();
         Carta c = new Carta(o);
 
         return c;

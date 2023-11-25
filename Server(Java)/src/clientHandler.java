@@ -55,7 +55,10 @@ public class clientHandler extends Thread{
                             break;
 
                         case "Carta":
-                            System.out.println(ricevuto); // Debug
+                            Carta c = XMLserializer.getCarta(ricevuto);
+                            String temp =c.getImgName();
+                            c.Img_path = temp;
+                            System.out.println(c.ToString()); // Debug
                             break;
 
                         case "ACK":

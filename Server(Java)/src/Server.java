@@ -26,24 +26,24 @@ public class Server {
     {
         
         // Codice per generare il mazzo in formato XML
-        {
-        /*String[] semi = {"bastoni", "coppe", "denari", "spade"}; // Semi napoletani
-        char[] numeri = {'A', '2', '3', '4', '5', '6', '7', 'F', 'C', 'R'}; // 1=asso, 8=fante, 9=cavallo, 10=re
-        int[] valori = {11, 0, 10, 0, 0, 0, 0, 2, 3, 4}; // Valori di presa
+        
+        // String[] semi = {"bastoni", "coppe", "denari", "spade"}; // Semi napoletani
+        // char[] numeri = {'A', '2', '3', '4', '5', '6', '7', 'F', 'C', 'R'}; // 1=asso, 8=fante, 9=cavallo, 10=re
+        // int[] valori = {11, 0, 10, 0, 0, 0, 0, 2, 3, 4}; // Valori di presa
 
-        List<Carta> mazzo = new ArrayList<>();
+        // List<Carta> mazzo = new ArrayList<>();
 
-        for (String seme : semi) {
-            for (int i = 0; i < numeri.length; i++) {
-                char numero = numeri[i];
-                int valore = valori[i];
-                String img_path = numero + "-" + seme + ".jpg";
+        // for (String seme : semi) {
+        //     for (int i = 0; i < numeri.length; i++) {
+        //         char numero = numeri[i];
+        //         int valore = valori[i];
+        //         String img_path = numero + "-" + seme + ".jpg";
 
-                Carta carta = new Carta(seme, numero, valore, img_path);
-                mazzo.add(carta);
-            }
-        }
-        XMLserializer.saveLista("./Server(Java)/src/Mazzo.xml", mazzo);*/}
+        //         Carta carta = new Carta(seme, numero, valore, img_path);
+        //         mazzo.add(carta);
+        //     }
+        // }
+        // XMLserializer.saveLista("./Server(Java)/src/Mazzo.xml", mazzo);
 
         ServerSocket serverSocket = new ServerSocket(Settings.porta); System.out.println("Server in esecuzione...\n"); // Creo la socket sulla quale il server ascolterà le connessioni dei client
 
