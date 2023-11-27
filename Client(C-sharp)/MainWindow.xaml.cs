@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace Client_C_sharp_
     {
 
         // Elementi di gioco
-        List<Carta> mano = new List<Carta>(); // Mano del giocatore
+        ObservableCollection<Carta> mano = new ObservableCollection<Carta>(); // Mano del giocatore
         Carta briscola = new Carta();
         Carta cartaGiocata = new Carta();
 
@@ -44,7 +45,7 @@ namespace Client_C_sharp_
             }
         }
 
-        public List<Carta> Mano
+        public ObservableCollection<Carta> Mano
         {
             get { return mano; }
             set
@@ -84,6 +85,8 @@ namespace Client_C_sharp_
 
             Task.Run(() => riceviComando()); // Mi metto in ascolto di comandi dal server
 
+
+
             //Server.Disconnect(); // Mi disconnetto dal server per debugging
             //Application.Current.Shutdown(); // Chiudo l'applicazione per debug 
         }
@@ -112,6 +115,16 @@ namespace Client_C_sharp_
                             }
                         });
                         break;
+                    
+                    case "Carta":
+                        Dispatcher.Invoke(() =>
+                        {
+                            argomento = XMLserializer.getArgomento(ricevuto);
+                            Carta c = XMLserializer.ReadFromString(argomento).ElementAt(0);
+                            cartaGiocata = c;
+                            txtDebug.Text = "Carta giocata: " + c.ToString();
+                        });
+                        break;
                 }
             }
         }
@@ -135,7 +148,7 @@ namespace Client_C_sharp_
         //Ricava dal server la mano e la mostra
         private void riceviMano()
         {
-            Mano = Server.getMano();
+            Mano = new ObservableCollection<Carta>(Server.getMano());
             Server.ackowledge();
         }
 

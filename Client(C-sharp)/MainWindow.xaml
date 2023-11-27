@@ -5,7 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Client_C_sharp_"
         mc:Ignorable="d"
-        Title="Briscola" Height="1188" Width="1307" Icon="img/Icon.png">
+        Title="Briscola" Height="1188" Width="1307" Icon="img/Icon.png"
+        WindowStyle="None"
+        WindowState="Maximized"
+        ResizeMode="NoResize">
 
     <Grid Height="1188" VerticalAlignment="Center">
         <ItemsControl ItemsSource="{Binding Mano}" HorizontalAlignment="Left" Height="300" VerticalAlignment="Top" Margin="496,772,0,0" x:Name="ItemsControl">
