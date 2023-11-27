@@ -1,28 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Khaloufi\\PROGETTO_BRISCOLA\\Client(C-sharp)\\Client(C-sharp).csproj": {}
+    "C:\\Users\\Yasser\\Desktop\\Scuola\\Projects\\Progettazione\\A.S. 23-24\\PROGETTO_BRISCOLA\\Client(C-sharp)\\Client(C-sharp).csproj": {}
   },
   "projects": {
-    "E:\\Khaloufi\\PROGETTO_BRISCOLA\\Client(C-sharp)\\Client(C-sharp).csproj": {
+    "C:\\Users\\Yasser\\Desktop\\Scuola\\Projects\\Progettazione\\A.S. 23-24\\PROGETTO_BRISCOLA\\Client(C-sharp)\\Client(C-sharp).csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Khaloufi\\PROGETTO_BRISCOLA\\Client(C-sharp)\\Client(C-sharp).csproj",
+        "projectUniqueName": "C:\\Users\\Yasser\\Desktop\\Scuola\\Projects\\Progettazione\\A.S. 23-24\\PROGETTO_BRISCOLA\\Client(C-sharp)\\Client(C-sharp).csproj",
         "projectName": "Client(C-sharp)",
-        "projectPath": "E:\\Khaloufi\\PROGETTO_BRISCOLA\\Client(C-sharp)\\Client(C-sharp).csproj",
-        "packagesPath": "C:\\Users\\khaloufi_yasser\\.nuget\\packages\\",
-        "outputPath": "E:\\Khaloufi\\PROGETTO_BRISCOLA\\Client(C-sharp)\\obj\\",
+        "projectPath": "C:\\Users\\Yasser\\Desktop\\Scuola\\Projects\\Progettazione\\A.S. 23-24\\PROGETTO_BRISCOLA\\Client(C-sharp)\\Client(C-sharp).csproj",
+        "packagesPath": "C:\\Users\\Yasser\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Yasser\\Desktop\\Scuola\\Projects\\Progettazione\\A.S. 23-24\\PROGETTO_BRISCOLA\\Client(C-sharp)\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\khaloufi_yasser\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\Yasser\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net6.0-windows"
@@ -52,7 +45,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -64,7 +58,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     }
