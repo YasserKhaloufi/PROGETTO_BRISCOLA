@@ -52,14 +52,14 @@ public class XMLserializer {
         Element root = d.createElement("Carte");
         d.appendChild(root);
 
-        for (Carta o : lista) {
+        for (Carta c : lista) {
             /* Utilizzo il metodo serialize(Document d) (dovrai crearlo)
                nella classe dell'oggeto per farmi restituire
                quell'oggetto serializzato, il tutto sottoforma di Document, cosicchè io 
                ne possa fare l'append in "d" facilmente (nota bene che dovrai passargli
                il document di questa funzione in modo da utilizzarlo anche nel metodo 
                serialize dell'oggetto stesso per poterne poi permettere l'append a "d")*/
-            root.appendChild(o.serialize(d));
+            root.appendChild(c.serialize(d));
         }
 
         return d;
@@ -116,6 +116,7 @@ public class XMLserializer {
         fw.close(); // chiude il file, occorre riaprirlo se si vorrà fare un altra scrittura
     }
 
+    // Ometto la dichiarazione per poter concatenare il documento XML a un altro
     public static String stringfy(Document d) throws TransformerException {
         // SALVA SU STRINGA
         // Creare un oggetto Transformer per la trasformazione in stringa
@@ -131,8 +132,8 @@ public class XMLserializer {
         return xmlString;
     }
 
-    // In questo caso ometto la dichiarazione per poter concatenare il documento XML a un altro, o semplicemente inviarlo al client
-    public static String stringfyOmitDeclaration(Document d) throws TransformerException {
+    // In questo caso oltra ad omettere la dichiarazione, non indento, per farlo parsare al client correttamente
+    public static String stringfyNoIndent(Document d) throws TransformerException {
         // SALVA SU STRINGA
         // Creare un oggetto Transformer per la trasformazione in stringa
         TransformerFactory tf = TransformerFactory.newInstance();

@@ -3,6 +3,7 @@ import java.nio.file.Paths;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -74,6 +75,11 @@ public class Carta{
         d.appendChild(root);
         
         return d;   
+    }
+
+    public String toXML() throws TransformerException, ParserConfigurationException
+    {
+        return XMLserializer.stringfyNoIndent(serialize());
     }
 
     public String getImgName() {

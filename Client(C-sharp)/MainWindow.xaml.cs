@@ -58,6 +58,19 @@ namespace Client_C_sharp_
             }
         }
 
+        public Carta CartaGiocata
+        {
+            get { return cartaGiocata; }
+            set
+            {
+                if (cartaGiocata != value)
+                {
+                    cartaGiocata = value;
+                    OnPropertyChanged("CartaGiocata");
+                }
+            }
+        }
+
         private List<Button> buttons; // Lista di pulsanti generati dinamicamente
 
         public MainWindow()
@@ -116,12 +129,11 @@ namespace Client_C_sharp_
                         });
                         break;
                     
-                    case "Carta":
+                    case "Carte":
                         Dispatcher.Invoke(() =>
                         {
-                            argomento = XMLserializer.getArgomento(ricevuto);
-                            Carta c = XMLserializer.ReadFromString(argomento).ElementAt(0);
-                            cartaGiocata = c;
+                            Carta c = XMLserializer.ReadCarteFromString(ricevuto).ElementAt(0);
+                            CartaGiocata = c;
                             txtDebug.Text = "Carta giocata: " + c.ToString();
                         });
                         break;

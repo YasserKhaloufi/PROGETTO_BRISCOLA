@@ -115,13 +115,13 @@ public class threadPartita extends Thread {
 
     private void inviaMano(clientHandler g, List<Carta> mano) throws IOException, TransformerException, ParserConfigurationException
     {
-        Server.invia(g.outToClient, XMLserializer.stringfyOmitDeclaration(XMLserializer.serializzaLista(mano)));
+        Server.invia(g.outToClient, XMLserializer.stringfyNoIndent(XMLserializer.serializzaLista(mano)));
     }
 
     private void inviaBriscola(clientHandler g) throws IOException, TransformerException, ParserConfigurationException
     {
         List<Carta> temp = new ArrayList<Carta>(); temp.add(briscola);
-        Server.invia(g.outToClient, XMLserializer.stringfyOmitDeclaration(XMLserializer.serializzaLista(temp)));
+        Server.invia(g.outToClient, XMLserializer.stringfyNoIndent(XMLserializer.serializzaLista(temp)));
     }
 
     private void toccaA(clientHandler g) throws IOException

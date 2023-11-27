@@ -74,7 +74,7 @@ namespace Client_C_sharp_
         }
 
         // Come sopra, ma legge da stringa in formato XML invece che file
-        public static List<Carta> ReadFromString(string xmlString)
+        public static List<Carta> ReadCarteFromString(string xmlString)
         {
             XmlDocument d = new XmlDocument();
             d.LoadXml(xmlString);

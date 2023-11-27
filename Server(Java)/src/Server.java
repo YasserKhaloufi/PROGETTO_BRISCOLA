@@ -24,7 +24,7 @@ public class Server {
     
     public static void main(String[] args) throws IOException, TransformerException, ParserConfigurationException, SAXException
     {
-        
+        {
         // Codice per generare il mazzo in formato XML
         
         // String[] semi = {"bastoni", "coppe", "denari", "spade"}; // Semi napoletani
@@ -44,6 +44,7 @@ public class Server {
         //     }
         // }
         // XMLserializer.saveLista("./Server(Java)/src/Mazzo.xml", mazzo);
+        }
 
         ServerSocket serverSocket = new ServerSocket(Settings.porta); System.out.println("Server in esecuzione...\n"); // Creo la socket sulla quale il server ascolterà le connessioni dei client
 
@@ -115,6 +116,13 @@ public class Server {
     public static void notificaNgiocatori() throws IOException
     {
         notificaGiocatori("NumeroGiocatori", Integer.toString(giocatori.size()));
+    }
+    
+    public static void notificaCartaGiocata(Carta c) throws IOException, TransformerException, ParserConfigurationException
+    {
+        List<Carta> temp = new ArrayList<Carta>(); temp.add(c);
+        for (clientHandler g : Server.giocatori) 
+            invia(g.outToClient, XMLserializer.stringfyNoIndent(XMLserializer.serializzaLista(temp)));
     }
 
     /* Metodi per comunicazione generica */

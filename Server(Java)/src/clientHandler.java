@@ -6,6 +6,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 
 import org.xml.sax.SAXException;
 
@@ -18,6 +19,7 @@ public class clientHandler extends Thread{
     public DataOutputStream outToClient;
 
     public BlockingQueue<String> responses;
+    public Carta cartaGiocata;
 
     private String username;
 
@@ -48,21 +50,26 @@ public class clientHandler extends Thread{
                         case "Start":
                             Server.notificaInizioPartita(); // Comunico a tutti i client che la partita è iniziata
                             Server.gameStarted = true;
+                            System.out.println(username + " ha iniziato la partita\n"); // Debug
                             break;
 
                         case "Number":
-                            responses.put(XMLserializer.getArgomento(ricevuto)); // Inserisco il messaggio nella coda di risposte
+                            String n = XMLserializer.getArgomento(ricevuto);
+                            responses.put(n); // Inserisco il messaggio nella coda di risposte
+                            System.out.println(username + " ha" + n + " carte\n"); // Debug
                             break;
 
                         case "Carta":
-                            Carta c = XMLserializer.getCarta(ricevuto);
-                            String temp =c.getImgName();
-                            c.Img_path = temp;
-                            System.out.println(c.ToString()); // Debug
+                            Carta c = XMLserializer.getCarta(ricevuto); c.Img_path = c.getImgName();
+                            cartaGiocata = c;
+                            responses.put("ACK");
+                            Server.notificaCartaGiocata(c);
+                            System.out.println(c.ToString() + "giocata\n"); // Debug
                             break;
 
                         case "ACK":
                             responses.put("ACK");
+                            System.out.println(username + " ha ricevuto\n"); // Debug
                             break;
 
                         case "Disconnect":
@@ -77,7 +84,7 @@ public class clientHandler extends Thread{
                     
                 }
             } 
-            catch (IOException | SAXException | ParserConfigurationException | InterruptedException e) 
+            catch (IOException | SAXException | ParserConfigurationException | InterruptedException | TransformerException e) 
             {
                 e.printStackTrace();
             }
@@ -90,6 +97,7 @@ public class clientHandler extends Thread{
         this.inFromClient = inFromClient;
         this.outToClient = outToClient;
         this.responses = new LinkedBlockingQueue<>();
+        cartaGiocata = null;
     }
 
     public void abbattiConnessione() throws IOException {
