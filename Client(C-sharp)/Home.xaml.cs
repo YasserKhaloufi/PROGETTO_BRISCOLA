@@ -17,6 +17,7 @@ namespace Client_C_sharp_
     public partial class Home : Window
     {
         private bool isClosingFromButton = false; // Sentinella per controllare se la finestra si sta chiudendo tramite il pulsante "X" o meno
+        public string username = "";
 
         // Questa finestra si aprirà prima della main window
         public Home()
@@ -35,6 +36,7 @@ namespace Client_C_sharp_
                 // TO DO: ricevere da server un feedback e scriverlo su console (per debug)
 
                 isClosingFromButton = true; // Setto la sentinella a true, così il processo non verrà chiuso dal metodo MainWindow_Closing
+                username = txtNome.Text;
                 this.Close(); // Torno al codice della main window (passando alla fase di attesa)
             }
             else

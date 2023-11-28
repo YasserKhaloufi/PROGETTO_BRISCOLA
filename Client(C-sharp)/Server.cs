@@ -81,7 +81,7 @@ namespace Client_C_sharp_
             return completeMessage.ToString().TrimEnd('\n');
         }
 
-        public static void ackowledge()
+        public static void acknowledge()
         {
             Server.sendComando("ACK", ""); // Invio ACK al server per dire che ho parsato con successo la mano, cosi che possa inviarmi la briscola
         }

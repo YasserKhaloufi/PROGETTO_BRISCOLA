@@ -15,7 +15,6 @@ public class threadPartita extends Thread {
     private List<Carta> mazzo;
 
     // Elementi di gioco
-    private List<Carta> tavolo; // Carte giocate in tutto il corso della partita
     private List <Carta> carteGiocate; // E' un buffer di n carte, dove n è il numero di giocatori (tiene conto delle carte giocate in un giro)
     private Carta briscola;
 
@@ -25,7 +24,6 @@ public class threadPartita extends Thread {
         this.giocatori = giocatori;
         mazzo = XMLserializer.read("./Server(Java)/src/Mazzo.xml"); // Leggo il mazzo dal file XML
 
-        tavolo = new ArrayList<Carta>();
         carteGiocate = new ArrayList<Carta>();
         briscola = new Carta(); // Briscola di default
 
@@ -58,17 +56,29 @@ public class threadPartita extends Thread {
         // Fase di gioco
         while (!endGame) {
             
-            String feedback = "";
+            String scelta = "";
+            int conta = 0;
 
             for (clientHandler g : giocatori) 
             {
                 try 
                 {
                     toccaA(g);
-                    feedback = g.responses.take(); // Aspetto la risposta del giocatore
+                    scelta = g.risposte.take(); // Aspetto la scelta del giocatore
+                    Carta c = XMLserializer.getCarta(scelta); c.Img_path = c.getImgName();
+                    
+                    Server.notificaCartaGiocata(c);
+                    carteGiocate.add(c);
+                    System.out.println(c.ToString() + "giocata\n"); // Debug
+                    
+                    if(carteGiocate.size() == giocatori.size()) // Se tutti i giocatori hanno giocato la propria carta
+                    {   
+                        notificaVincitoreGiroEpunteggio();
+                        carteGiocate.clear(); // Svuoto il buffer delle carte giocate
+                    }
                     
                     
-                } catch (IOException | InterruptedException e) 
+                } catch (IOException | InterruptedException | ParserConfigurationException | SAXException | TransformerException e) 
                 {
                     e.printStackTrace();
                 }
@@ -82,6 +92,57 @@ public class threadPartita extends Thread {
         Collections.shuffle(mazzo); // Mischio il mazzo
         briscola = mazzo.get(mazzo.size() - 1); // Ricavo la briscola
         mazzo.remove(mazzo.size() - 1); // Rimuovo la briscola dal mazzo
+    }
+
+    // TO DO: inviare ad ognuno il proprio punteggio 
+    public void notificaVincitoreGiroEpunteggio() throws IOException, InterruptedException
+    {
+        int indiceVincitore = getVincitoreGiro();
+        int presa = getValorePresa();
+        clientHandler vincitore = giocatori.get(indiceVincitore);
+        for (clientHandler g : giocatori) {
+            if(g != vincitore)
+                Server.invia(g.outToClient, "<Winner>" + g.getUsername() + "</Winner>");
+            else
+                Server.invia(g.outToClient, "<Winner>Yours</Winner>");
+            
+            g.risposte.take(); // Aspetto l'ACK
+
+            Server.invia(g.outToClient, "<Score>" + presa + "</Score>");
+            
+            g.risposte.take(); // Aspetto l'ACK
+        }
+    }
+
+    public int getVincitoreGiro() {
+
+        Carta cartaVincitrice = carteGiocate.get(0); // Inizio il confronto per determinare la carta vincitrice a partire dalla prima
+
+        String semeDiMano = cartaVincitrice.getSeme(); // Il seme che ha più priorità dopo quello della briscola è quello della prima carta giocata
+        String semeBriscola = this.briscola.getSeme();
+        
+        int indiceVincitore = 0; // Indice della carta vincitrice che corrisponde all'indice del giocatore che l'ha giocata
+
+        for (int i = 1; i < carteGiocate.size(); i++) 
+        {
+            Carta nuovaCarta = carteGiocate.get(i);
+            if (nuovaCarta.miglioreDi(cartaVincitrice, semeBriscola, semeDiMano)) // Se la nuova carta rispetta le condizioni per essere la nuova carta vincitrice
+            {
+                // Aggiorno opportunamente i dati
+                cartaVincitrice = nuovaCarta;
+                indiceVincitore = i;
+            }
+        }
+
+        return indiceVincitore;
+    }
+
+    public int getValorePresa() {
+        int presa = 0;
+        for (Carta c : carteGiocate) {
+            presa += c.getValore();
+        }
+        return presa;
     }
 
     /* Se non aspettassi un ack (feedback) da parte del client dopo averli inviato un messaggio, è probabile
@@ -106,9 +167,9 @@ public class threadPartita extends Thread {
                 mazzo.remove(indice);
             }
             inviaBriscola(g); // Invio la briscola al giocatore
-            g.responses.take(); // Aspetto l'ACK
+            g.risposte.take(); // Aspetto l'ACK
             inviaMano(g,mano); // Invio la mano al giocatore
-            g.responses.take(); // Aspetto l'ACK
+            g.risposte.take(); // Aspetto l'ACK
             conta += 3;
         }
     }

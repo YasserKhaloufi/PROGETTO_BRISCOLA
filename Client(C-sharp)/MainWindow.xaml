@@ -32,12 +32,28 @@
         <Label Content="Briscola" HorizontalAlignment="Left" Height="66" Margin="216,339,0,0" VerticalAlignment="Top" Width="120" FontSize="35" Foreground="#FF128A01" FontFamily="Bernard MT Condensed"/>
         <Image x:Name="imgBoxBriscola" HorizontalAlignment="Left" Height="300" Margin="178,405,0,0" VerticalAlignment="Top" Width="200" Source="{Binding Briscola.Img_path}"/>
 
-        <TextBox HorizontalAlignment="Left" Height="320" Margin="124,762,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="304" x:Name="txtDebug" RenderTransformOrigin="0.837,0.536">
+        <TextBox HorizontalAlignment="Left" Height="320" Margin="124,762,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="304" x:Name="txtDebug" RenderTransformOrigin="0.837,0.536" IsReadOnly="True">
             <TextBox.Background>
                 <ImageBrush/>
             </TextBox.Background>
         </TextBox>
-        <Image HorizontalAlignment="Left" Height="300" Margin="694,405,0,0" VerticalAlignment="Top" Width="200" x:Name="imgBoxCartaGiocata" Source="{Binding CartaGiocata.Img_path}"/>
+
+        <ItemsControl ItemsSource="{Binding CarteGiocate}" HorizontalAlignment="Left" Height="300" Margin="694,405,0,0" VerticalAlignment="Top" Width="200" x:Name="itemSource2">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button Height="300" Width="200">
+                        <Image Height="300" Width="200" Source="{Binding Img_path}" />
+                    </Button>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+        
+        <TextBox x:Name="txtScore" HorizontalAlignment="Left" Margin="216,725,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsReadOnly="True" Text="0"/>
     </Grid>
 
     <Window.Background>

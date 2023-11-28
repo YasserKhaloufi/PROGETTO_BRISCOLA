@@ -25,9 +25,13 @@ namespace Client_C_sharp_
     {
 
         // Elementi di gioco
-        ObservableCollection<Carta> mano = new ObservableCollection<Carta>(); // Mano del giocatore
         Carta briscola = new Carta();
-        Carta cartaGiocata = new Carta();
+        ObservableCollection<Carta> mano = new ObservableCollection<Carta>(); // Mano del giocatore
+        ObservableCollection<Carta> carteGiocate = new ObservableCollection<Carta>();
+
+        bool hoVinto = false;
+        string username = "";
+
 
         // La seguente property è necessaria per il binding grafico delle carte in mano al giocatore e della briscola
         public event PropertyChangedEventHandler PropertyChanged;
@@ -58,15 +62,15 @@ namespace Client_C_sharp_
             }
         }
 
-        public Carta CartaGiocata
+        public ObservableCollection<Carta> CarteGiocate
         {
-            get { return cartaGiocata; }
+            get { return carteGiocate; }
             set
             {
-                if (cartaGiocata != value)
+                if (carteGiocate != value)
                 {
-                    cartaGiocata = value;
-                    OnPropertyChanged("CartaGiocata");
+                    carteGiocate = value;
+                    OnPropertyChanged("CarteGiocate");
                 }
             }
         }
@@ -85,6 +89,8 @@ namespace Client_C_sharp_
             // Mostro la finestra iniziale
             Home home = new Home();
             home.ShowDialog(); // L'utente inserisce il nickname e nel caso cambia le impostazioni....
+            username = home.username;
+            
 
             // Finito con la finestra iniziale mostro quella di attesa
             WindowAttesa windowAttesa = new WindowAttesa();
@@ -133,8 +139,37 @@ namespace Client_C_sharp_
                         Dispatcher.Invoke(() =>
                         {
                             Carta c = XMLserializer.ReadCarteFromString(ricevuto).ElementAt(0);
-                            CartaGiocata = c;
+                            CarteGiocate.Add(c);
                             txtDebug.Text = "Carta giocata: " + c.ToString();
+                        });
+                        break;
+
+                    case "Winner":
+                        Dispatcher.Invoke(() =>
+                        {
+                            argomento = XMLserializer.getArgomento(ricevuto);
+                            txtDebug.Text = "Vincitore giro: " + argomento;
+                            if (argomento == "Yours")
+                                hoVinto = true;
+                            Server.acknowledge();
+                        });
+                        break;
+
+                    case "Score":
+                        Dispatcher.Invoke(() =>
+                        {
+                            argomento = XMLserializer.getArgomento(ricevuto);
+
+                            // TO DO: rimuovere "hoVinto" e "username" e mandare ad ognuno il proprio punteggio
+                            if(hoVinto)
+                            {
+                                int punteggio = int.Parse(txtScore.Text) + int.Parse(argomento);
+                                txtScore.Text = punteggio.ToString();
+                            }
+
+                            CarteGiocate.Clear();
+                            hoVinto = false;
+                            Server.acknowledge();
                         });
                         break;
                 }
@@ -154,14 +189,14 @@ namespace Client_C_sharp_
         private void riceviBriscola()
         {
             Briscola = Server.getBriscola();
-            Server.ackowledge();
+            Server.acknowledge();
         }
 
         //Ricava dal server la mano e la mostra
         private void riceviMano()
         {
             Mano = new ObservableCollection<Carta>(Server.getMano());
-            Server.ackowledge();
+            Server.acknowledge();
         }
 
         public void GiocaCarta(Carta c)

@@ -6,7 +6,6 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 
 import org.xml.sax.SAXException;
 
@@ -18,10 +17,12 @@ public class clientHandler extends Thread{
     public BufferedReader inFromClient;
     public DataOutputStream outToClient;
 
-    public BlockingQueue<String> responses;
+    public BlockingQueue<String> risposte;
     public Carta cartaGiocata;
 
     private String username;
+
+    // Aggiungere punteggio
 
     @Override
     public void run() {
@@ -55,21 +56,17 @@ public class clientHandler extends Thread{
 
                         case "Number":
                             String n = XMLserializer.getArgomento(ricevuto);
-                            responses.put(n); // Inserisco il messaggio nella coda di risposte
+                            risposte.put(n); // Inserisco il messaggio nella coda di risposte
                             System.out.println(username + " ha" + n + " carte\n"); // Debug
                             break;
 
                         case "Carta":
-                            Carta c = XMLserializer.getCarta(ricevuto); c.Img_path = c.getImgName();
-                            cartaGiocata = c;
-                            responses.put("ACK");
-                            Server.notificaCartaGiocata(c);
-                            System.out.println(c.ToString() + "giocata\n"); // Debug
+                            risposte.put(ricevuto); 
                             break;
 
                         case "ACK":
-                            responses.put("ACK");
-                            System.out.println(username + " ha ricevuto\n"); // Debug
+                            risposte.put("ACK");
+                            // System.out.println(username + " ha ricevuto\n"); // Debug
                             break;
 
                         case "Disconnect":
@@ -77,14 +74,14 @@ public class clientHandler extends Thread{
                             disconnesso = true;
                             Server.giocatori.remove(this);
                             Server.notificaNgiocatori(); // Mi disconnetto, quindi aggiorno gli altri giocatori sul numero di giocatori connessi
-                            
+    
                             System.out.println(username + " si è disconnesso\n"); // Debug
                             break;
                     }
                     
                 }
             } 
-            catch (IOException | SAXException | ParserConfigurationException | InterruptedException | TransformerException e) 
+            catch (IOException | SAXException | ParserConfigurationException | InterruptedException e) 
             {
                 e.printStackTrace();
             }
@@ -96,7 +93,7 @@ public class clientHandler extends Thread{
         this.connectionSocket = connectionSocket;
         this.inFromClient = inFromClient;
         this.outToClient = outToClient;
-        this.responses = new LinkedBlockingQueue<>();
+        this.risposte = new LinkedBlockingQueue<>();
         cartaGiocata = null;
     }
 

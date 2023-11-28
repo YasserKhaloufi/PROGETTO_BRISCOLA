@@ -77,6 +77,53 @@ public class Carta{
         return d;   
     }
 
+    // Confronta this carta con un'altra carta, ritornando true se, data una briscola e un seme di mano, this è migliore di altraCarta
+    public boolean miglioreDi(Carta altraCarta, String semeBriscola, String semeDiMano) 
+    {
+        String semeAltraCarta = altraCarta.getSeme();
+        int valoreAltraCarta = altraCarta.getValore();
+
+        /*
+         * Logica con cui è stato implementato il confronto tra carte:
+         *  - Casi di this:
+            *  1. This ha il seme di briscola 
+                    altra può vincere se:
+                        - ha il seme di briscola e un valore maggiore
+
+            *  2. This ha il seme di mano 
+                    altra può vincere se:
+                        - ha il seme di briscola 
+                        - ha il seme di mano e un valore maggiore
+                        
+            *  3. This ha un seme diverso sia da quello di briscola che da quello di mano
+                    altra può vincere se:
+                        - ha il seme di briscola
+                        - ha il seme di mano
+                        - ha un valore maggiore
+         */
+
+        if (seme.equals(semeBriscola)) // Se this ha il seme della briscola
+            return !semeAltraCarta.equals(semeBriscola) || valore > valoreAltraCarta; // This vince a prescindere se altraCarta non ha il seme della briscola, altrimenti vince se ha un valore maggiore
+        else if (seme.equals(semeDiMano)) // Se this ha lo stesso seme della prima carta giocata (ma non della briscola)
+        {
+            if (semeAltraCarta.equals(semeBriscola)) // Se altraCarta ha il seme della briscola
+                return false; // AltraCarta vince a prescindere
+            else if (semeAltraCarta.equals(semeDiMano)) // Se altraCarta ha lo stesso seme della prima carta giocata
+                return valore > valoreAltraCarta; // This vince se ha un valore maggiore
+            else // Se altraCarta ha un seme diverso sia dalla briscola che dalla prima carta giocata
+                return true; // This vince a prescindere
+        }
+        else // Se this ha un seme diverso sia dalla briscola che dalla prima carta giocata
+        {
+            if (semeAltraCarta.equals(semeBriscola)) // Se altraCarta ha il seme della briscola
+                return false; // AltraCarta vince a prescindere
+            else if (semeAltraCarta.equals(semeDiMano)) // Se altraCarta ha lo stesso seme della prima carta giocata
+                return false; // AltraCarta vince a prescindere
+            else // Se altraCarta ha un seme diverso sia dalla briscola che dalla prima carta giocata
+                return valore > valoreAltraCarta; // This vince se ha un valore maggiore
+        }
+    }
+
     public String toXML() throws TransformerException, ParserConfigurationException
     {
         return XMLserializer.stringfyNoIndent(serialize());
