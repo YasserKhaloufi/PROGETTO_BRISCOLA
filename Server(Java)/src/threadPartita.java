@@ -79,6 +79,8 @@ public class threadPartita extends Thread {
             }
         }
 
+        Server.endGame = true;
+
         try {
             notificaVincitore();
         } catch (IOException e) {
@@ -91,7 +93,6 @@ public class threadPartita extends Thread {
             e.printStackTrace();
         }
 
-        Server.endGame = true;
     }
 
     // Mischia e sceglie la briscola

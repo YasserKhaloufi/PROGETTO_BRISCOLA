@@ -45,7 +45,7 @@ namespace Client_C_sharp_
                     case "NumeroGiocatori": // Quando un nuovo giocatore si unisce, aggiorno il contatore e abilito il btnStart se i giocatori sono almeno 2
                         Dispatcher.Invoke(() => {
                             txtNgiocatori.Text = XMLserializer.getArgomento(ricevuto);
-                            if (int.Parse(txtNgiocatori.Text) >= 1)//CAMBIARE 1 CON 2 (1 usato per debug)
+                            if (int.Parse(txtNgiocatori.Text) >= 2)//CAMBIARE 1 CON 2 (1 usato per debug)
                                 btnStartGame.IsEnabled = true;
                             else
                                 btnStartGame.IsEnabled = false;
