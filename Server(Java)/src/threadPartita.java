@@ -13,7 +13,9 @@ public class threadPartita extends Thread {
     // Elementi di gioco
     private static List<Carta> mazzo;
     private List <Carta> carteGiocate; // E' un buffer di n carte, dove n è il numero di giocatori (tiene conto delle carte giocate in un giro)
-    private Carta briscola; // Viene scelta all'inizio della partita
+    private static Carta briscola; // Viene scelta all'inizio della partita
+
+    private static boolean briscolaPescata = false;
 
     public threadPartita() throws SAXException, IOException, ParserConfigurationException {        
         mazzo = generaMazzo(); 
@@ -205,6 +207,12 @@ public class threadPartita extends Thread {
             Carta c = mazzo.get(mazzo.size() - 1); mazzo.remove(mazzo.size() - 1); List<Carta> temp = new ArrayList<Carta>(); temp.add(c);
             Server.invia(g, XMLserializer.stringfyNoIndent(XMLserializer.serializzaLista(temp)));
         }
+        else if(!briscolaPescata)
+        {
+            // Pesco una carta e la invio al giocatore
+            List<Carta> temp = new ArrayList<Carta>(); temp.add(briscola); briscolaPescata = true;
+            Server.invia(g, XMLserializer.stringfyNoIndent(XMLserializer.serializzaLista(temp)));
+        }
         else
             Server.invia(g, "");
     }
@@ -222,7 +230,7 @@ public class threadPartita extends Thread {
         Carta cartaVincitrice = carteGiocate.get(0); // Inizio il confronto per determinare la carta vincitrice a partire dalla prima
 
         String semeDiMano = cartaVincitrice.getSeme(); // Il seme che ha più priorità dopo quello della briscola è quello della prima carta giocata
-        String semeBriscola = this.briscola.getSeme();
+        String semeBriscola = briscola.getSeme();
         
         int indiceVincitore = 0; // Indice della carta vincitrice che corrisponde all'indice del giocatore che l'ha giocata
 
