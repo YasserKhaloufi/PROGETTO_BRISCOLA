@@ -23,6 +23,8 @@ public class clientHandler extends Thread{
     private String username;
     private int punteggio;
 
+    public boolean carteFinite = false; // Sentinella carte finite
+
     @Override
     public void run() {
 
@@ -77,11 +79,17 @@ public class clientHandler extends Thread{
                             System.out.println(username + " ha ricevuto\n"); // Debug
                             break;
 
+                        case "End":
+                            carteFinite = true;
+                            break;
+
                         case "Disconnect":
                             abbattiConnessione(); // Chiudo la connessione con il client
                             disconnesso = true;
                             Server.giocatori.remove(this);
-                            Server.notificaNumeroGiocatori(); // Mi disconnetto, quindi aggiorno gli altri giocatori sul numero di giocatori connessi
+
+                            if(Server.giocatori.size() > 0)
+                                Server.notificaNumeroGiocatori(); // Mi disconnetto, quindi aggiorno gli altri giocatori sul numero di giocatori connessi
     
                             System.out.println(username + " si è disconnesso\n"); // Debug
                             break;

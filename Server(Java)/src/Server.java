@@ -25,42 +25,45 @@ public class Server {
     public static List<clientHandler> giocatori =  new ArrayList<clientHandler>(); // Predispongo una lista per memorizzare i giocatori connessi, verrà anche utilizzata dal threadPartita
 
     /* Sentinelle */ 
-    private static boolean shutdown = false; // Sentinella di spegnimento server
     public static boolean gameStarted = false; // Sentinella partita iniziata (condivisa tra i clientHandler)
+    public static boolean endGame = false; // Sentinella partita iniziata (condivisa tra i clientHandler)
     
-    public static void main(String[] args) throws IOException, TransformerException, ParserConfigurationException, SAXException
+    public static void main(String[] args) throws IOException, TransformerException, ParserConfigurationException, SAXException, InterruptedException
     {
         ServerSocket serverSocket = new ServerSocket(Settings.porta); // Creo la socket sulla quale il server ascolterà le connessioni dei client
         System.out.println("Server in esecuzione...\n"); // Debug
 
-        try 
-        {
-            while (!shutdown) 
+        while(!endGame){
+            try 
             {
-                if(!gameStarted)
-                {
-                    // Fase di attesa giocatori    
-                    System.out.println("In attesa di giocatori...\n"); // Debug
-                    cercaGiocatori(serverSocket);
-                }
-                else
-                {
-                    // Fase di gioco
-                    System.out.println("Partita iniziata\n"); // Debug
 
-                    // Creo e avvio un thread per gestire la partita
-                    threadPartita partita = new threadPartita(); partita.start();
+                    if(!gameStarted)
+                    {
+                        // Fase di attesa giocatori    
+                        System.out.println("In attesa di giocatori...\n"); // Debug
+                        cercaGiocatori(serverSocket);
+                    }
+                    else
+                    {
+                        // Fase di gioco
+                        System.out.println("Partita iniziata\n"); // Debug
+
+                        // Creo e avvio un thread per gestire la partita
+                        threadPartita partita = new threadPartita(); partita.start();
+                    
+                        partita.join(); // Aspetto che il thread termini
+                    }
+                    //System.out.println("esecuzione in corso");
                 
-                    partita.join(); // Aspetto che il thread termini
-                }
-                //System.out.println("esecuzione in corso");
+            } 
+            catch (Exception e) 
+            {
+                System.out.println("Connessione interrotta\n");
             }
-        } 
-        catch (Exception e) 
-        {
-            System.out.println("Connessione interrotta\n");
         }
         
+        System.out.println("Partita terminata\n");
+
         serverSocket.close();
     }
     
@@ -117,9 +120,10 @@ public class Server {
             invia(g, "<" + notifica + ">" + messaggio + "</" +  notifica + ">");
     }
 
-    public static void notificaUnicast(clientHandler g, String notifica, String messaggio) throws IOException
+    public static void notificaUnicast(clientHandler g, String notifica, String messaggio) throws IOException, InterruptedException
     {
         invia(g, "<" + notifica + ">" + messaggio + "</" +  notifica + ">");
+        g.risposte.take(); // Aspetto che il client risponda
     }
 
     // Invia un messaggio a un client con il quale è stato instaurato un flusso di invio

@@ -15,15 +15,11 @@ public class threadPartita extends Thread {
     private List <Carta> carteGiocate; // E' un buffer di n carte, dove n è il numero di giocatori (tiene conto delle carte giocate in un giro)
     private Carta briscola; // Viene scelta all'inizio della partita
 
-    private boolean endGame; // Sentinella fine partita
-
     public threadPartita() throws SAXException, IOException, ParserConfigurationException {        
         mazzo = generaMazzo(); 
         
         carteGiocate = new ArrayList<Carta>();
         briscola = new Carta();
-
-        endGame = false;
     }
 
     @Override
@@ -50,8 +46,7 @@ public class threadPartita extends Thread {
         }
 
         // Fase di gioco
-        while (!endGame) {
-            
+        while (!finePartita()) {
             for (clientHandler g : Server.giocatori) 
             {
                 try 
@@ -69,7 +64,7 @@ public class threadPartita extends Thread {
                     
                     if(carteGiocate.size() == Server.giocatori.size()) // Se tutti i giocatori hanno giocato la propria carta
                     {   
-                        notificaVincitore();
+                        notificaVincitoreGiro();
                         notificaPunteggio();
                         carteGiocate.clear(); // Svuoto il buffer delle carte giocate
                     }
@@ -82,6 +77,19 @@ public class threadPartita extends Thread {
             }
         }
 
+        try {
+            notificaVincitore();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        }
+
+        Server.endGame = true;
     }
 
     // Mischia e sceglie la briscola
@@ -136,6 +144,19 @@ public class threadPartita extends Thread {
         }
     }
 
+    private void notificaVincitore() throws IOException, InterruptedException, TransformerException, ParserConfigurationException
+    {
+        clientHandler vincitore = getVincitore();
+        // Dato un giocatore g1 a cui tocca, scorro tutti i giocatori
+        for (clientHandler g : Server.giocatori) 
+        {
+            if(g != vincitore)
+                Server.notificaUnicast(g, "Winner_", vincitore.getUsername()); // Se g2 non corrisponde g1, gli dico che non è il suo turno, inviandoli il nome del giocatore a cui tocca
+            else
+                Server.notificaUnicast(g, "Winner_", "Yours");; // Altrimenti gli dico che è il suo turno (Yours)
+        }
+    }
+
     // Serve ad aggiornare tutti i giocatori sulla carta giocata da uno di essi, durante un giro
     private void cartaGiocata(Carta c) throws IOException, TransformerException, ParserConfigurationException
     {
@@ -146,20 +167,19 @@ public class threadPartita extends Thread {
     }
 
     // TO DO: inviare ad ognuno il proprio punteggio 
-    private void notificaVincitore() throws IOException, InterruptedException
+    private void notificaVincitoreGiro() throws IOException, InterruptedException
     {
         int indiceVincitore = getVincitoreGiro();
         int presa = getValorePresa();
         clientHandler vincitore = Server.giocatori.get(indiceVincitore);
-        vincitore.setPunteggio(vincitore.getPunteggio() + presa);
+        int nuovoPunteggio = vincitore.getPunteggio() + presa;
+        vincitore.setPunteggio(nuovoPunteggio);
 
         for (clientHandler g : Server.giocatori) {
             if(g != vincitore)
                 Server.notificaUnicast(g, "Winner", vincitore.getUsername());
             else
                 Server.notificaUnicast(g, "Winner", "Yours");
-            
-            g.risposte.take(); // Aspetto l'ACK
         }
     }
 
@@ -168,8 +188,6 @@ public class threadPartita extends Thread {
     {        
         for (clientHandler g : Server.giocatori) {
             Server.notificaUnicast(g, "Score", Integer.toString(g.getPunteggio()));
-
-            g.risposte.take(); // Aspetto l'ACK
         }
     }
 
@@ -227,6 +245,29 @@ public class threadPartita extends Thread {
             presa += c.getValore();
         }
         return presa;
+    }
+
+    private clientHandler getVincitore() {
+        clientHandler vincitore = Server.giocatori.get(0);
+    
+        for(clientHandler clientHandler : Server.giocatori) {
+            if(clientHandler.getPunteggio() > vincitore.getPunteggio()) {
+                vincitore = clientHandler;
+            }
+        }
+    
+        return vincitore;
+    }
+
+    private boolean finePartita() {
+
+        for(clientHandler clientHandler : Server.giocatori) {
+            if(!clientHandler.carteFinite) { // Se un giocatore ha ancora carte, la partita non è finita
+                return false;
+            }
+        }
+
+        return true;
     }
 
     // Generazione mazzo

@@ -95,22 +95,26 @@ namespace Client_C_sharp_
 
             this.Show(); // Finalmente viene mostrata la finestra principale, quella di gioco
 
+            this.Title = username; // Assegno il nome della finestra al nome del giocatore
+
             riceviBriscola();
             riceviMano();
             nominaPulsanti();
 
             Task.Run(() => riceviComando()); // Mi metto in ascolto di comandi dal server
 
-
-
-            //Server.Disconnect(); // Mi disconnetto dal server per debugging
             //Application.Current.Shutdown(); // Chiudo l'applicazione per debug 
         }
 
         private void riceviComando()
         {
-            while (true)
+            bool finePartita = false;
+            while (!finePartita)
             {
+
+                if(Mano.Count == 0)
+                    Server.sendComando("End", "");
+                    
                 String ricevuto = Server.Receive();
                 String comando = XMLserializer.getComando(ricevuto);
                 String argomento = "";
@@ -134,6 +138,7 @@ namespace Client_C_sharp_
                                 disabilitaPulsanti();
                                 txtDebug.Text = "Turno di " + argomento;
                             }
+                            Server.acknowledge();
                         });
                         break;
                     
@@ -162,15 +167,36 @@ namespace Client_C_sharp_
 
                             // TO DO: rimuovere "hoVinto" e "username" e mandare ad ognuno il proprio punteggio
                             
-                            int punteggio = int.Parse(txtScore.Text) + int.Parse(argomento);
+                            int punteggio = int.Parse(argomento);
                             txtScore.Text = punteggio.ToString();
 
                             CarteGiocate.Clear();
                             Server.acknowledge();
                         });
                         break;
+
+                    case "Winner_":
+                        Dispatcher.Invoke(() =>
+                        {
+                            argomento = XMLserializer.getArgomento(ricevuto);
+
+                            if (argomento == "Yours") 
+                                MessageBox.Show("Hai vinto!");
+                            else
+                                MessageBox.Show("Ha vinto " + argomento);
+
+                            Server.acknowledge();
+
+                            finePartita = true;
+                        });
+                        break;
                 }
             }
+
+            Dispatcher.Invoke(() =>
+            {
+                Application.Current.Shutdown();
+            });
         }
 
         private void btnCarta_click(object sender, RoutedEventArgs e)
