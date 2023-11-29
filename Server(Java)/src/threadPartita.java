@@ -10,22 +10,18 @@ import org.xml.sax.SAXException;
 
 public class threadPartita extends Thread {
 
-    // Elementi principali
-    private List<clientHandler> giocatori; 
-    private List<Carta> mazzo;
-
     // Elementi di gioco
+    private static List<Carta> mazzo;
     private List <Carta> carteGiocate; // E' un buffer di n carte, dove n è il numero di giocatori (tiene conto delle carte giocate in un giro)
-    private Carta briscola;
+    private Carta briscola; // Viene scelta all'inizio della partita
 
     private boolean endGame; // Sentinella fine partita
 
-    public threadPartita(List<clientHandler> giocatori) throws SAXException, IOException, ParserConfigurationException {
-        this.giocatori = giocatori;
-        mazzo = XMLserializer.read("./Server(Java)/src/Mazzo.xml"); // Leggo il mazzo dal file XML
-
+    public threadPartita() throws SAXException, IOException, ParserConfigurationException {        
+        mazzo = generaMazzo(); 
+        
         carteGiocate = new ArrayList<Carta>();
-        briscola = new Carta(); // Briscola di default
+        briscola = new Carta();
 
         endGame = false;
     }
@@ -56,24 +52,25 @@ public class threadPartita extends Thread {
         // Fase di gioco
         while (!endGame) {
             
-            String scelta = "";
-            int conta = 0;
-
-            for (clientHandler g : giocatori) 
+            for (clientHandler g : Server.giocatori) 
             {
                 try 
                 {
-                    toccaA(g);
-                    scelta = g.risposte.take(); // Aspetto la scelta del giocatore
-                    Carta c = XMLserializer.getCarta(scelta); c.Img_path = c.getImgName();
+                    toccaA(g); // Informo i giocatori di chi è il turno
                     
-                    Server.notificaCartaGiocata(c);
+                    String scelta = g.risposte.take(); // Aspetto la scelta del giocatore di turno
+                    Carta c = XMLserializer.getCarta(scelta); c.Img_path = c.getImgName(); // Ricavo la carta scelta dal giocatore
+                    
+                    // Avviso i giocatori della carta giocata e la aggiungo al buffer del giro
+                    cartaGiocata(c);
                     carteGiocate.add(c);
+                    
                     System.out.println(c.ToString() + "giocata\n"); // Debug
                     
-                    if(carteGiocate.size() == giocatori.size()) // Se tutti i giocatori hanno giocato la propria carta
+                    if(carteGiocate.size() == Server.giocatori.size()) // Se tutti i giocatori hanno giocato la propria carta
                     {   
-                        notificaVincitoreGiroEpunteggio();
+                        notificaVincitore();
+                        notificaPunteggio();
                         carteGiocate.clear(); // Svuoto il buffer delle carte giocate
                     }
                     
@@ -87,34 +84,122 @@ public class threadPartita extends Thread {
 
     }
 
-    public void preparativi()
+    // Mischia e sceglie la briscola
+    private void preparativi()
     {
         Collections.shuffle(mazzo); // Mischio il mazzo
-        briscola = mazzo.get(mazzo.size() - 1); // Ricavo la briscola
-        mazzo.remove(mazzo.size() - 1); // Rimuovo la briscola dal mazzo
+
+        // Estraggo la briscola dal mazzo (l'ultima carta)
+        briscola = mazzo.get(mazzo.size() - 1);
+        mazzo.remove(mazzo.size() - 1);
+    }
+
+    // Distribuisce a tutti i giocatori le carte e gli informa della briscola
+    private void distribuisciCarte() throws TransformerException, ParserConfigurationException, IOException, InterruptedException
+    {
+        int conta = 0; // Per tenere conto del progresso di distribuzione delle carte
+
+        // Distribuisco le carte a partire da quella più in fondo nel mazzo (3 carte per giocatore)
+        for (clientHandler g : Server.giocatori) {
+
+            List<Carta> mano = new ArrayList<Carta>();
+            int indice = 0;
+            for(int i = 0; i < 3; i++)
+            {
+                indice = mazzo.size() - i - 1 - conta; // Indice della carta da assegnare
+                mano.add(mazzo.get(indice));
+                mazzo.remove(indice);
+            }
+            
+            inviaBriscola(g); // Invio la briscola al giocatore
+            g.risposte.take(); // Aspetto l'ACK
+
+            inviaMano(g,mano); // Invio la mano al giocatore
+            g.risposte.take(); // Aspetto l'ACK
+
+            conta += 3;
+        }
+    }
+
+    /* Invio informazione specifica relativa alla partita */
+
+    // Informa i giocatori del se è il loro turno o meno
+    private void toccaA(clientHandler g1) throws IOException, InterruptedException, TransformerException, ParserConfigurationException
+    {
+        // Dato un giocatore g1 a cui tocca, scorro tutti i giocatori
+        for (clientHandler g2 : Server.giocatori) 
+        {
+            if(g2 != g1)
+                Server.notificaUnicast(g2, "Turn", g1.getUsername()); // Se g2 non corrisponde g1, gli dico che non è il suo turno, inviandoli il nome del giocatore a cui tocca
+            else
+                Server.notificaUnicast(g2, "Turn", "Yours");; // Altrimenti gli dico che è il suo turno (Yours)
+        }
+    }
+
+    // Serve ad aggiornare tutti i giocatori sulla carta giocata da uno di essi, durante un giro
+    private void cartaGiocata(Carta c) throws IOException, TransformerException, ParserConfigurationException
+    {
+        List<Carta> temp = new ArrayList<Carta>(); temp.add(c); // Per poter riciclare il metodo di serializzazione di più carte, inserisco la carta in una lista
+
+        for (clientHandler g : Server.giocatori) 
+            Server.invia(g, XMLserializer.stringfyNoIndent(XMLserializer.serializzaLista(temp)));
     }
 
     // TO DO: inviare ad ognuno il proprio punteggio 
-    public void notificaVincitoreGiroEpunteggio() throws IOException, InterruptedException
+    private void notificaVincitore() throws IOException, InterruptedException
     {
         int indiceVincitore = getVincitoreGiro();
         int presa = getValorePresa();
-        clientHandler vincitore = giocatori.get(indiceVincitore);
-        for (clientHandler g : giocatori) {
-            if(g != vincitore)
-                Server.invia(g.outToClient, "<Winner>" + g.getUsername() + "</Winner>");
-            else
-                Server.invia(g.outToClient, "<Winner>Yours</Winner>");
-            
-            g.risposte.take(); // Aspetto l'ACK
+        clientHandler vincitore = Server.giocatori.get(indiceVincitore);
+        vincitore.setPunteggio(vincitore.getPunteggio() + presa);
 
-            Server.invia(g.outToClient, "<Score>" + presa + "</Score>");
+        for (clientHandler g : Server.giocatori) {
+            if(g != vincitore)
+                Server.notificaUnicast(g, "Winner", vincitore.getUsername());
+            else
+                Server.notificaUnicast(g, "Winner", "Yours");
             
             g.risposte.take(); // Aspetto l'ACK
         }
     }
 
-    public int getVincitoreGiro() {
+    // 
+    private void notificaPunteggio() throws IOException, InterruptedException
+    {        
+        for (clientHandler g : Server.giocatori) {
+            Server.notificaUnicast(g, "Score", Integer.toString(g.getPunteggio()));
+
+            g.risposte.take(); // Aspetto l'ACK
+        }
+    }
+
+    // Invia una lista di carte (la mano) ad un giocatore
+    private void inviaMano(clientHandler g, List<Carta> mano) throws IOException, TransformerException, ParserConfigurationException
+    {
+        Server.invia(g, XMLserializer.stringfyNoIndent(XMLserializer.serializzaLista(mano)));
+    }
+
+    public static void inviaCarta(clientHandler g) throws IOException, TransformerException, ParserConfigurationException
+    {
+        if(mazzo.size() > 0)
+        {
+            // Pesco una carta e la invio al giocatore
+            Carta c = mazzo.get(mazzo.size() - 1); mazzo.remove(mazzo.size() - 1); List<Carta> temp = new ArrayList<Carta>(); temp.add(c);
+            Server.invia(g, XMLserializer.stringfyNoIndent(XMLserializer.serializzaLista(temp)));
+        }
+        else
+            Server.invia(g, "");
+    }
+
+    // Invia la briscola ad un dato giocatore
+    private void inviaBriscola(clientHandler g) throws IOException, TransformerException, ParserConfigurationException
+    {
+        List<Carta> temp = new ArrayList<Carta>(); temp.add(briscola);
+        Server.invia(g, XMLserializer.stringfyNoIndent(XMLserializer.serializzaLista(temp)));
+    }
+
+    /* Elaborazione */
+    private int getVincitoreGiro() {
 
         Carta cartaVincitrice = carteGiocate.get(0); // Inizio il confronto per determinare la carta vincitrice a partire dalla prima
 
@@ -133,11 +218,10 @@ public class threadPartita extends Thread {
                 indiceVincitore = i;
             }
         }
-
         return indiceVincitore;
     }
 
-    public int getValorePresa() {
+    private int getValorePresa() {
         int presa = 0;
         for (Carta c : carteGiocate) {
             presa += c.getValore();
@@ -145,53 +229,29 @@ public class threadPartita extends Thread {
         return presa;
     }
 
-    /* Se non aspettassi un ack (feedback) da parte del client dopo averli inviato un messaggio, è probabile
-     * che i messaggi a lui inviati dal server si accavallino, impedendoli di parsare correttamente le singole informazioni.
-     * Perciò faccio si che il client restituisca un ack ogni volta che gli viene inviata un informazione, 
-     * per notificare al server che questi ha ricevuto e parsato correttamente l'informazioni.
-     */
-    public void distribuisciCarte() throws TransformerException, ParserConfigurationException, IOException, InterruptedException
-    {
+    // Generazione mazzo
+    private List<Carta> generaMazzo() {
 
-        int conta = 0; // Per tenere conto del progresso di distribuzione delle carte
+        String[] semi = {"bastoni", "coppe", "denari", "spade"}; // Semi napoletani
+        char[] numeri = {'A', '2', '3', '4', '5', '6', '7', 'F', 'C', 'R'}; // 1=asso, 8=fante, 9=cavallo, 10=re
+        int[] valori = {11, 0, 10, 0, 0, 0, 0, 2, 3, 4}; // Valori di presa
 
-        // Distribuisco le carte a partire da quella più in fondo nel mazzo (3 carte per giocatore)
-        for (clientHandler g : giocatori) {
+        List<Carta> mazzo = new ArrayList<>();
 
-            List<Carta> mano = new ArrayList<Carta>();
-            int indice = 0;
-            for(int i = 0; i < 3; i++)
-            {
-                indice = mazzo.size() - i - 1 - conta; // Indice della carta da assegnare
-                mano.add(mazzo.get(indice));
-                mazzo.remove(indice);
+        for (String seme : semi) {
+            for (int i = 0; i < numeri.length; i++) {
+                char numero = numeri[i];
+                int valore = valori[i];
+                String img_path = numero + "-" + seme + ".jpg";
+
+                Carta carta = new Carta(seme, numero, valore, img_path);
+                mazzo.add(carta);
             }
-            inviaBriscola(g); // Invio la briscola al giocatore
-            g.risposte.take(); // Aspetto l'ACK
-            inviaMano(g,mano); // Invio la mano al giocatore
-            g.risposte.take(); // Aspetto l'ACK
-            conta += 3;
         }
-    }
 
-    private void inviaMano(clientHandler g, List<Carta> mano) throws IOException, TransformerException, ParserConfigurationException
-    {
-        Server.invia(g.outToClient, XMLserializer.stringfyNoIndent(XMLserializer.serializzaLista(mano)));
-    }
+        // Se volessi salvarlo su file:
+        // XMLserializer.saveLista("./Server(Java)/src/Mazzo.xml", mazzo);
 
-    private void inviaBriscola(clientHandler g) throws IOException, TransformerException, ParserConfigurationException
-    {
-        List<Carta> temp = new ArrayList<Carta>(); temp.add(briscola);
-        Server.invia(g.outToClient, XMLserializer.stringfyNoIndent(XMLserializer.serializzaLista(temp)));
-    }
-
-    private void toccaA(clientHandler g) throws IOException
-    {
-        for (clientHandler p : giocatori) {
-            if(p != g)
-                Server.invia(p.outToClient, "<Turn>" + g.getUsername() + "</Turn>");
-            else
-                Server.invia(p.outToClient, "<Turn>Yours</Turn>");
-        }
+        return mazzo;
     }
 }

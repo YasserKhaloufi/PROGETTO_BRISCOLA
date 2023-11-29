@@ -6,6 +6,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 
 import org.xml.sax.SAXException;
 
@@ -18,11 +19,9 @@ public class clientHandler extends Thread{
     public DataOutputStream outToClient;
 
     public BlockingQueue<String> risposte;
-    public Carta cartaGiocata;
 
     private String username;
-
-    // Aggiungere punteggio
+    private int punteggio;
 
     @Override
     public void run() {
@@ -64,16 +63,25 @@ public class clientHandler extends Thread{
                             risposte.put(ricevuto); 
                             break;
 
+                        case "Draw":
+                            threadPartita.inviaCarta(this); // Chiedo una carta per questo client
+                            break;
+
+                        /* Se non aspettassi un ack (feedback) da parte del client dopo averli inviato un messaggio, è probabile
+                        * che il server invvi messaggi diversi troppo velocemente, accavallando le info., impedendo di parsare correttamente le singole informazioni.
+                        * Perciò faccio si che il client restituisca un ack ogni volta che gli viene inviata un informazione, 
+                        * per notificare al server che questi ha ricevuto e parsato correttamente l'informazioni, quindi di essere pronto ad una nuova ricezione.
+                        */
                         case "ACK":
                             risposte.put("ACK");
-                            // System.out.println(username + " ha ricevuto\n"); // Debug
+                            System.out.println(username + " ha ricevuto\n"); // Debug
                             break;
 
                         case "Disconnect":
                             abbattiConnessione(); // Chiudo la connessione con il client
                             disconnesso = true;
                             Server.giocatori.remove(this);
-                            Server.notificaNgiocatori(); // Mi disconnetto, quindi aggiorno gli altri giocatori sul numero di giocatori connessi
+                            Server.notificaNumeroGiocatori(); // Mi disconnetto, quindi aggiorno gli altri giocatori sul numero di giocatori connessi
     
                             System.out.println(username + " si è disconnesso\n"); // Debug
                             break;
@@ -81,7 +89,7 @@ public class clientHandler extends Thread{
                     
                 }
             } 
-            catch (IOException | SAXException | ParserConfigurationException | InterruptedException e) 
+            catch (IOException | SAXException | ParserConfigurationException | InterruptedException | TransformerException e) 
             {
                 e.printStackTrace();
             }
@@ -94,7 +102,7 @@ public class clientHandler extends Thread{
         this.inFromClient = inFromClient;
         this.outToClient = outToClient;
         this.risposte = new LinkedBlockingQueue<>();
-        cartaGiocata = null;
+        punteggio = 0;
     }
 
     public void abbattiConnessione() throws IOException {
@@ -121,5 +129,13 @@ public class clientHandler extends Thread{
 
     public DataOutputStream getOutToClient() {
         return outToClient;
+    }
+
+    public int getPunteggio() {
+        return punteggio;
+    }
+
+    public void setPunteggio(int punteggio) {
+        this.punteggio = punteggio;
     }
 }

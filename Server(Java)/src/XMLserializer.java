@@ -104,34 +104,6 @@ public class XMLserializer {
         return attribute;
     }
 
-    // Nel caso servisse buttare in un file direttamente un oggetto serializzato in append
-    public static void saveOggetto(Carta c, String filePath)
-            throws ParserConfigurationException, IOException, TransformerException {
-
-        File file = new File(filePath);
-        FileWriter fw = new FileWriter(file, true);
-        Document d = c.serialize();
-        fw.write(stringfy(d));
-        fw.flush(); // svuota il buffer di scrittura, forza la scrittura sul disco
-        fw.close(); // chiude il file, occorre riaprirlo se si vorrà fare un altra scrittura
-    }
-
-    // Ometto la dichiarazione per poter concatenare il documento XML a un altro
-    public static String stringfy(Document d) throws TransformerException {
-        // SALVA SU STRINGA
-        // Creare un oggetto Transformer per la trasformazione in stringa
-        TransformerFactory tf = TransformerFactory.newInstance();
-        Transformer t = tf.newTransformer();
-
-        t.setOutputProperty(OutputKeys.INDENT, "yes"); // Indentazione
-        t.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes"); // se volessi omettere la dichiarazione xml
-
-        StringWriter writer = new StringWriter();
-        t.transform(new DOMSource(d), new StreamResult(writer));
-        String xmlString = writer.toString();
-        return xmlString;
-    }
-
     // In questo caso oltra ad omettere la dichiarazione, non indento, per farlo parsare al client correttamente
     public static String stringfyNoIndent(Document d) throws TransformerException {
         // SALVA SU STRINGA
@@ -161,7 +133,6 @@ public class XMLserializer {
         return root.getTagName(); // Lo ricavo dal nome del tag
     }
 
-    // Potrebbe servire per estrarre una carta (?)
     public static String getUsername(String ricevuto) throws ParserConfigurationException, SAXException, IOException {
         
         Document d = creaDocumento(ricevuto);
@@ -172,7 +143,6 @@ public class XMLserializer {
         return root.getTextContent();
     }
 
-    // Potrebbe servire per estrarre una carta (?)
     public static Carta getCarta(String ricevuto) throws ParserConfigurationException, SAXException, IOException {
         
         Document d = creaDocumento(ricevuto);
@@ -207,4 +177,35 @@ public class XMLserializer {
 
         return d;
     }
+
+    // NON UTILIZZATI:
+
+    // Nel caso servisse buttare in un file direttamente un oggetto serializzato in append
+    public static void saveOggetto(Carta c, String filePath)
+            throws ParserConfigurationException, IOException, TransformerException {
+
+        File file = new File(filePath);
+        FileWriter fw = new FileWriter(file, true);
+        Document d = c.serialize();
+        fw.write(stringfy(d));
+        fw.flush(); // svuota il buffer di scrittura, forza la scrittura sul disco
+        fw.close(); // chiude il file, occorre riaprirlo se si vorrà fare un altra scrittura
+    }
+
+    // Ometto la dichiarazione per poter concatenare il documento XML a un altro
+    public static String stringfy(Document d) throws TransformerException {
+        // SALVA SU STRINGA
+        // Creare un oggetto Transformer per la trasformazione in stringa
+        TransformerFactory tf = TransformerFactory.newInstance();
+        Transformer t = tf.newTransformer();
+
+        t.setOutputProperty(OutputKeys.INDENT, "yes"); // Indentazione
+        t.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes"); // se volessi omettere la dichiarazione xml
+
+        StringWriter writer = new StringWriter();
+        t.transform(new DOMSource(d), new StreamResult(writer));
+        String xmlString = writer.toString();
+        return xmlString;
+    }
+
 }

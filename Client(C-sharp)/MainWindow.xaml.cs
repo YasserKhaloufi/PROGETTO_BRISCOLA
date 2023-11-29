@@ -24,16 +24,15 @@ namespace Client_C_sharp_
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
 
+        string username = "";
+        private List<Button> buttons; // Lista di pulsanti generati dinamicamente
+
         // Elementi di gioco
         Carta briscola = new Carta();
         ObservableCollection<Carta> mano = new ObservableCollection<Carta>(); // Mano del giocatore
         ObservableCollection<Carta> carteGiocate = new ObservableCollection<Carta>();
 
-        bool hoVinto = false;
-        string username = "";
-
-
-        // La seguente property è necessaria per il binding grafico delle carte in mano al giocatore e della briscola
+        // La seguenti property sono necessarie per il binding grafico delle carte in mano al giocatore,per la briscola e le carte giocate in un giro di turni dai vari giocatori
         public event PropertyChangedEventHandler PropertyChanged;
 
         public Carta Briscola
@@ -74,8 +73,6 @@ namespace Client_C_sharp_
                 }
             }
         }
-
-        private List<Button> buttons; // Lista di pulsanti generati dinamicamente
 
         public MainWindow()
         {
@@ -125,8 +122,13 @@ namespace Client_C_sharp_
                         {
                             argomento = XMLserializer.getArgomento(ricevuto);
 
-                            if (argomento == "Yours")
+                            if (argomento == "Yours") 
+                            {
                                 abilitaPulsanti();
+
+                                if(Mano.Count < 3)
+                                    pesca();
+                            }
                             else
                             {
                                 disabilitaPulsanti();
@@ -149,8 +151,6 @@ namespace Client_C_sharp_
                         {
                             argomento = XMLserializer.getArgomento(ricevuto);
                             txtDebug.Text = "Vincitore giro: " + argomento;
-                            if (argomento == "Yours")
-                                hoVinto = true;
                             Server.acknowledge();
                         });
                         break;
@@ -161,14 +161,11 @@ namespace Client_C_sharp_
                             argomento = XMLserializer.getArgomento(ricevuto);
 
                             // TO DO: rimuovere "hoVinto" e "username" e mandare ad ognuno il proprio punteggio
-                            if(hoVinto)
-                            {
-                                int punteggio = int.Parse(txtScore.Text) + int.Parse(argomento);
-                                txtScore.Text = punteggio.ToString();
-                            }
+                            
+                            int punteggio = int.Parse(txtScore.Text) + int.Parse(argomento);
+                            txtScore.Text = punteggio.ToString();
 
                             CarteGiocate.Clear();
-                            hoVinto = false;
                             Server.acknowledge();
                         });
                         break;
@@ -185,26 +182,40 @@ namespace Client_C_sharp_
             Mano.RemoveAt(indice);
         }
 
+        /* Ricezione informazioni specifiche*/
+
         // Ricava dal server la briscola e la mostra
         private void riceviBriscola()
         {
-            Briscola = Server.getBriscola();
+            Briscola = Server.getCarta();
             Server.acknowledge();
         }
 
-        //Ricava dal server la mano e la mostra
+        // Ricava dal server la mano e la mostra
         private void riceviMano()
         {
             Mano = new ObservableCollection<Carta>(Server.getMano());
             Server.acknowledge();
         }
 
-        public void GiocaCarta(Carta c)
+        private void pesca()
+        {
+            Carta c = Server.pesca();
+            if(c != null)
+                Mano.Add(c);
+        }
+
+        /* Invio informazioni specifiche */
+
+        // Invia al server la carta giocata, che verrà poi inviata a tutti gli altri giocatori
+        private void GiocaCarta(Carta c)
         {
             Server.InviaCarta(c);
         }
 
-        // I pulsanti presenti nella finestra sono generati dinamicamente, quindi non hanno un nome, perciò glielo assegno
+        /* Metodi di elaborazione per la finestra */
+
+        // I pulsanti presenti nella finestra sono generati dinamicamente, quindi non hanno un nome, perciò glieli assegno
         public void nominaPulsanti()
         {
             int buttonCount = 0;

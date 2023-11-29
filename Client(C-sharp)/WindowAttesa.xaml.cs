@@ -49,6 +49,7 @@ namespace Client_C_sharp_
                                 btnStartGame.IsEnabled = true;
                             else
                                 btnStartGame.IsEnabled = false;
+
                         });
                         break;
 

@@ -41,9 +41,7 @@
         <ItemsControl ItemsSource="{Binding CarteGiocate}" HorizontalAlignment="Left" Height="300" Margin="694,405,0,0" VerticalAlignment="Top" Width="200" x:Name="itemSource2">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Button Height="300" Width="200">
                         <Image Height="300" Width="200" Source="{Binding Img_path}" />
-                    </Button>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
             <ItemsControl.ItemsPanel>

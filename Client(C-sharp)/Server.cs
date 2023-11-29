@@ -28,7 +28,24 @@ namespace Client_C_sharp_
             stream = client.GetStream();
         }
 
-        // Metodi per invio comando specifico
+        /* Invio comando specifico */
+        public static void InviaCarta(Carta c)
+        {
+            Send(c.toXML());
+        }
+
+        public static Carta pesca()
+        {
+            sendComando("Draw", "");
+            Carta c = getCarta();
+            return c;
+        }
+
+        public static void acknowledge()
+        {
+            sendComando("ACK", ""); // Invio ACK al server per dire che ho parsato con successo la mano, cosi che possa inviarmi la briscola
+        }
+
         public static void Connect(String username)
         {
             sendComando("Connect", username);
@@ -45,6 +62,28 @@ namespace Client_C_sharp_
             sendComando("Start", "");
         }
 
+        /* Ricezione informazione specifica */
+        
+        public static Carta getCarta()
+        {
+            String ricevuto = Server.Receive();
+            
+            if(ricevuto != "")
+            {
+                Carta c = XMLserializer.ReadCarteFromString(ricevuto).ElementAt(0);
+                return c;
+            }
+            else
+                return null;
+        }
+
+        public static List<Carta> getMano()
+        {
+            String ricevuto = Server.Receive();
+            return XMLserializer.ReadCarteFromString(ricevuto);
+        }
+
+        /* Comunicazione generica */
         public static void sendComando(String comando, String argomento)
         {
             Send("<" + comando + ">" + argomento + "</" + comando + ">");
@@ -81,10 +120,7 @@ namespace Client_C_sharp_
             return completeMessage.ToString().TrimEnd('\n');
         }
 
-        public static void acknowledge()
-        {
-            Server.sendComando("ACK", ""); // Invio ACK al server per dire che ho parsato con successo la mano, cosi che possa inviarmi la briscola
-        }
+        /* Altro */
 
         public static void abbattiConnessione()
         {
@@ -100,24 +136,5 @@ namespace Client_C_sharp_
 
             return false;
         }
-
-        public static Carta getBriscola()
-        {
-            String ricevuto = Server.Receive();
-            Carta c = XMLserializer.ReadCarteFromString(ricevuto).ElementAt(0);
-            return c;
-        }
-
-        public static List<Carta> getMano()
-        {
-            String ricevuto = Server.Receive();
-            return XMLserializer.ReadCarteFromString(ricevuto);
-        }
-
-        public static void InviaCarta(Carta c)
-        {
-            Send(c.toXML());
-        }
-
     }
 }
