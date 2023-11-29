@@ -84,7 +84,7 @@ public class threadPartita extends Thread {
         try {
             notificaVincitore();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("");
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (TransformerException e) {
