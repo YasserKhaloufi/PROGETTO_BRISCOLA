@@ -15,6 +15,29 @@ You'll need .NET framework and Java installed, after that you can just clone or 
 * [Java](https://www.java.com) - The server side language
 * [C#](https://www.microsoft.com/net) - The client side language
 
+## Project Structure
+
+This project is structured into three main directories:
+
+### Client (C#)
+
+This directory contains the solution that implements the client. It includes:
+
+* WPF interface XAML modules and their relative .cs files.
+* The resources necessary for the client to work.
+
+### Server (Java)
+
+This directory contains the source code for the server, consisting of all its modules.
+
+### docs
+
+This directory contains documentation relative to the project. It includes:
+
+* Javadoc documentation for the server.
+* XML documentation for the client.
+* UML diagrams.
+
 ## Authors
 
 * **Yasser Khaloufi**
