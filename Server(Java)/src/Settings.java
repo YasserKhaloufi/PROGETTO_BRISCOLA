@@ -1,5 +1,5 @@
 /**
- * Stores constant values used during the management of the game.
+ * Stores constant values used all around the project.
  * <p>
  * Its values are static, so they can be accessed from every class.
  */
