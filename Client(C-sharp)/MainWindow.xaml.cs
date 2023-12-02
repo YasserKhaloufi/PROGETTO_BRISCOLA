@@ -148,6 +148,7 @@ namespace Client_C_sharp_
                             Carta c = XMLserializer.ReadCarteFromString(ricevuto).ElementAt(0);
                             CarteGiocate.Add(c);
                             txtDebug.Text = "Carta giocata: " + c.ToString();
+                            Server.acknowledge();
                         });
                         break;
 

@@ -234,13 +234,17 @@ public class threadPartita extends Thread {
      * It sends the command "Card" to all the players, encapsuling the card played.
      * Uses {@link server#invia(clientHandler, String)} to send the notification to each player.
      * @param c The card played.
+     * @throws InterruptedException
      */
-    private void cartaGiocata(Carta c) throws IOException, TransformerException, ParserConfigurationException
+    private void cartaGiocata(Carta c) throws IOException, TransformerException, ParserConfigurationException, InterruptedException
     {
         List<Carta> temp = new ArrayList<Carta>(); temp.add(c); // Per poter riciclare il metodo di serializzazione di più carte, inserisco la carta in una lista
 
         for (clientHandler g : Server.giocatori) 
+        {
             Server.invia(g, XMLserializer.stringfyNoIndent(XMLserializer.serializzaLista(temp)));
+            g.risposte.take();
+        }
     }
 
     // TO DO: inviare ad ognuno il proprio punteggio 
