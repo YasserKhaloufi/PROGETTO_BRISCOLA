@@ -1,6 +1,7 @@
 # PROGETTO_BRISCOLA
 
 PROGETTO_BRISCOLA is a client-server card game called Briscola. The server is written in Java and the client in C#, and they communicate with each other over TCP.
+It allows a minimum of 2 connected clients to play, to a maximum of 4, but since the deck consists of 40 cards, it's not possible for 3 clients to play.
 
 ## Game Rules
 
