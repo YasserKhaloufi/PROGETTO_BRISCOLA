@@ -19,7 +19,7 @@ The main method is the entry point of the server application.
 
 ## Carta Class
 
-The `Carta` class represents a playing card in the game.
+Represents a playing card in the game.
 
 ### Key Features
 
@@ -28,7 +28,7 @@ The `Carta` class represents a playing card in the game.
 
 ## XMLserializer Class
 
-The `XMLserializer` class provides methods to serialize and parse `Carta` objects and messages received from clients.
+Provides methods to serialize and parse `Carta` objects and messages received from clients.
 
 ### Key Features
 
@@ -37,7 +37,7 @@ The `XMLserializer` class provides methods to serialize and parse `Carta` object
 
 ## clientHandler Class
 
-The `clientHandler` class mantains and handles the communication with a single client.
+Mantains and handles the communication with a single client.
 
 ### Key Features
 
@@ -55,7 +55,7 @@ Once the game is started (2 or 4 players are necessary) this thread manages it.
 
 ## Settings Class
 
-The `Settings` class stores constant values used all around the project.
+Stores constant values used all around the project.
 
 ### Key Features
 
