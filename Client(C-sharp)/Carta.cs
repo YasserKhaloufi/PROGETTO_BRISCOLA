@@ -10,13 +10,34 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 
+/// <summary>
+/// Represents a playing card.
+/// </summary>
+/// <remarks>
+/// It contains information about the suit, number, value, and image path of the card.
+/// </remarks>
+/// <remarks>
+/// It can be serialized and deserialized from XML.
+/// </remarks>
 namespace Client_C_sharp_
 {
     public class Carta : INotifyPropertyChanged
     {
+        /// <summary>
+        /// The suit of a playing card, with its properties.
+        /// </summary>
         public string seme {get; set;}
+        /// <summary>
+        /// The number of the card, with its properties.
+        /// </summary>
         public char numero { get; set; }
+        /// <summary>
+        /// The value of a card, with its properties.
+        /// </summary>
         public int valore   { get; set; }
+        /// <summary>
+        /// he path of the image of the card in the img folder, with its properties.
+        /// </summary>
         private string img_path;
 
         // Per binding della mano con la GUI
